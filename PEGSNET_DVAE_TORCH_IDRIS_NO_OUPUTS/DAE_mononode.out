@@ -1,0 +1,122 @@
+Loading pytorch-gpu/py3/1.7.0
+  Loading requirement: gcc/8.3.1 cuda/10.2 nccl/2.6.4-1-cuda
+    cudnn/7.6.5.32-cuda-10.2 intel-mkl/2020.1 magma/2.5.3-cuda
+    openmpi/4.0.2-cuda
++ srun python -u run_train_model_torch.py --db_name ../DATABASES/run_db15 --train_nsamp 400000 --val_nsamp 50000 --test_nsamp 50000 --batch_size 512 --n_epochs 100 --log_interval 500 --model_outname DAE_set_epoch_zero_workers
+- Process 1 corresponds to GPU 1 of node 0
+- Process 2 corresponds to GPU 2 of node 0
+>>> Training on  1  nodes and  4  processes, master node is  r8i3n3
+- Process 0 corresponds to GPU 0 of node 0
+- Process 3 corresponds to GPU 3 of node 0
+Train Epoch: 1 [0/400000 (0%)]	Loss: 41103.891901
+Train Epoch: 1 [64000/400000 (64%)]	Loss: 1387.160203
+====> Epoch: 1 Average loss: 1696.8969
+====> Test set loss: 142.1612
+Train Epoch: 2 [0/400000 (0%)]	Loss: 625.086489
+Train Epoch: 2 [64000/400000 (64%)]	Loss: 1569.340565
+====> Epoch: 2 Average loss: 677.7042
+====> Test set loss: 214.2411
+Train Epoch: 3 [0/400000 (0%)]	Loss: 628.348868
+Train Epoch: 3 [64000/400000 (64%)]	Loss: 859.128673
+====> Epoch: 3 Average loss: 211.6088
+====> Test set loss: 162.4591
+Train Epoch: 4 [0/400000 (0%)]	Loss: 770.632411
+Train Epoch: 4 [64000/400000 (64%)]	Loss: 627.917290
+====> Epoch: 4 Average loss: 139.9582
+====> Test set loss: 134.3567
+Train Epoch: 5 [0/400000 (0%)]	Loss: 786.792209
+Train Epoch: 5 [64000/400000 (64%)]	Loss: 615.472603
+====> Epoch: 5 Average loss: 104.2159
+====> Test set loss: 98.6290
+Train Epoch: 6 [0/400000 (0%)]	Loss: 1044.385239
+Train Epoch: 6 [64000/400000 (64%)]	Loss: 810.155680
+====> Epoch: 6 Average loss: 98.2378
+====> Test set loss: 67.2584
+Train Epoch: 7 [0/400000 (0%)]	Loss: 169.448001
+Train Epoch: 7 [64000/400000 (64%)]	Loss: 217.527788
+====> Epoch: 7 Average loss: 19.0569
+====> Test set loss: 85.4798
+Train Epoch: 8 [0/400000 (0%)]	Loss: 442.924003
+Train Epoch: 8 [64000/400000 (64%)]	Loss: 636.657557
+====> Epoch: 8 Average loss: 730.7091
+====> Test set loss: 235.8989
+Train Epoch: 9 [0/400000 (0%)]	Loss: 404.949569
+Train Epoch: 9 [64000/400000 (64%)]	Loss: 1302.673385
+====> Epoch: 9 Average loss: 336.1832
+====> Test set loss: 212.1204
+Train Epoch: 10 [0/400000 (0%)]	Loss: 1240.524584
+Train Epoch: 10 [64000/400000 (64%)]	Loss: 710.037987
+====> Epoch: 10 Average loss: 227.9635
+====> Test set loss: 161.3217
+Train Epoch: 11 [0/400000 (0%)]	Loss: 793.964997
+Train Epoch: 11 [64000/400000 (64%)]	Loss: 317.906260
+====> Epoch: 11 Average loss: 150.8175
+====> Test set loss: 224.0418
+Train Epoch: 12 [0/400000 (0%)]	Loss: 1219.099344
+Train Epoch: 12 [64000/400000 (64%)]	Loss: -20.062339
+====> Epoch: 12 Average loss: 196149107.6659
+====> Test set loss: 258.9817
+Train Epoch: 13 [0/400000 (0%)]	Loss: 1175.541363
+Train Epoch: 13 [64000/400000 (64%)]	Loss: 1947.990228
+====> Epoch: 13 Average loss: 88392.6744
+====> Test set loss: 296.9444
+Train Epoch: 14 [0/400000 (0%)]	Loss: 433.289944
+Train Epoch: 14 [64000/400000 (64%)]	Loss: 1682.662601
+====> Epoch: 14 Average loss: 232.6275
+====> Test set loss: 258.6481
+Train Epoch: 15 [0/400000 (0%)]	Loss: 1052.619379
+Train Epoch: 15 [64000/400000 (64%)]	Loss: 140.587048
+====> Epoch: 15 Average loss: 1039.1973
+====> Test set loss: 290.8041
+Train Epoch: 16 [0/400000 (0%)]	Loss: 136.351913
+Train Epoch: 16 [64000/400000 (64%)]	Loss: 640.357346
+====> Epoch: 16 Average loss: 299.8675
+====> Test set loss: 379.0278
+Train Epoch: 17 [0/400000 (0%)]	Loss: 2369.409058
+Train Epoch: 17 [64000/400000 (64%)]	Loss: 1456.707601
+====> Epoch: 17 Average loss: 313.0282
+====> Test set loss: 444.6364
+Train Epoch: 18 [0/400000 (0%)]	Loss: -657.542728
+Train Epoch: 18 [64000/400000 (64%)]	Loss: 617.286083
+====> Epoch: 18 Average loss: 3515.3171
+====> Test set loss: 370.5535
+Train Epoch: 19 [0/400000 (0%)]	Loss: 2121.644345
+Train Epoch: 19 [64000/400000 (64%)]	Loss: 2205.482884
+====> Epoch: 19 Average loss: 375.7610
+====> Test set loss: 417.3360
+Train Epoch: 20 [0/400000 (0%)]	Loss: -189.808202
+Train Epoch: 20 [64000/400000 (64%)]	Loss: 1243.254246
+====> Epoch: 20 Average loss: 156725.8224
+====> Test set loss: 565.3578
+Train Epoch: 21 [0/400000 (0%)]	Loss: 2607.572978
+Train Epoch: 21 [64000/400000 (64%)]	Loss: 1841.775040
+====> Epoch: 21 Average loss: 532.4728
+====> Test set loss: 490.7539
+Train Epoch: 22 [0/400000 (0%)]	Loss: 3028.701300
+Train Epoch: 22 [64000/400000 (64%)]	Loss: 2236.486808
+====> Epoch: 22 Average loss: 3877.8210
+====> Test set loss: 580.9911
+Train Epoch: 23 [0/400000 (0%)]	Loss: 2550.109335
+Train Epoch: 23 [64000/400000 (64%)]	Loss: 3002.328620
+====> Epoch: 23 Average loss: 904.9207
+====> Test set loss: 1790.7497
+Train Epoch: 24 [0/400000 (0%)]	Loss: 2328.955151
+Train Epoch: 24 [64000/400000 (64%)]	Loss: 868.637577
+====> Epoch: 24 Average loss: 10263.8528
+====> Test set loss: 3162.1185
+Train Epoch: 25 [0/400000 (0%)]	Loss: 2904.162748
+Train Epoch: 25 [64000/400000 (64%)]	Loss: 965.840786
+====> Epoch: 25 Average loss: 1481.9271
+====> Test set loss: 729.1199
+Train Epoch: 26 [0/400000 (0%)]	Loss: 3433.730966
+Train Epoch: 26 [64000/400000 (64%)]	Loss: 2823.103414
+====> Epoch: 26 Average loss: 808.3555
+====> Test set loss: 971.1018
+Train Epoch: 27 [0/400000 (0%)]	Loss: 3527.036343
+Train Epoch: 27 [64000/400000 (64%)]	Loss: 3345.408810
+====> Epoch: 27 Average loss: 865.0877
+====> Test set loss: 867.1679
+Train Epoch: 28 [0/400000 (0%)]	Loss: 3442.501805
+srun: Job step aborted: Waiting up to 62 seconds for job step to finish.
+slurmstepd: error: *** STEP 1394837.0 ON r8i3n3 CANCELLED AT 2020-12-06T15:55:36 ***
+slurmstepd: error: *** JOB 1394837 ON r8i3n3 CANCELLED AT 2020-12-06T15:55:36 ***

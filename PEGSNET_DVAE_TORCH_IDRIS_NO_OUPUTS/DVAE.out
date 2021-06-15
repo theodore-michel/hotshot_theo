@@ -1,0 +1,1228 @@
+Loading pytorch-gpu/py3/1.7.0
+  Loading requirement: gcc/8.3.1 cuda/10.2 nccl/2.6.4-1-cuda
+    cudnn/7.6.5.32-cuda-10.2 intel-mkl/2020.1 magma/2.5.3-cuda
+    openmpi/4.0.2-cuda
++ outname=DVAE_test
++ srun python -u run_train_model_torch.py --db_name ../DATABASES/run_db_DVAE_PEGS_only --train_nsamp 347600 --val_nsamp 102400 --test_nsamp 50000 --batch_size 512 --lr 0.001 --n_epochs 100 --log_interval 100 --ncomp 1 --check_interval 20 --model_outname DVAE_test
+Running PEGSNET_DVAE (DDP) on rank 0.
+ME, PROCESS 0, I am MASTER
+Running PEGSNET_DVAE (DDP) on rank 2.
+Running PEGSNET_DVAE (DDP) on rank 1.
+Running PEGSNET_DVAE (DDP) on rank 3.
+Train Epoch: 1 [0/347600 (0%)]	 BCE Loss: 1854714.148294 KLD Loss: 2223.993816  Time data load: 16532.574ms, Time training: 2246.999ms
+Train Epoch: 1 [51200/347600 (15%)]	 BCE Loss: 663390.840926 KLD Loss: 6434.913008  Time data load: 8858.146ms, Time training: 208.589ms
+Train Epoch: 1 [102400/347600 (29%)]	 BCE Loss: 332079.982851 KLD Loss: 1086.264035  Time data load: 21790.811ms, Time training: 56.443ms
+Train Epoch: 1 [153600/347600 (44%)]	 BCE Loss: 180526.249843 KLD Loss: 617.686742  Time data load: 22220.080ms, Time training: 1328.157ms
+Train Epoch: 1 [204800/347600 (59%)]	 BCE Loss: 110597.757986 KLD Loss: 520.710368  Time data load: 18495.765ms, Time training: 200.327ms
+Train Epoch: 1 [256000/347600 (74%)]	 BCE Loss: 74822.651000 KLD Loss: 375.905370  Time data load: 19468.454ms, Time training: 294.250ms
+Train Epoch: 1 [307200/347600 (88%)]	 BCE Loss: 55544.069486 KLD Loss: 274.732576  Time data load: 19014.329ms, Time training: 145.512ms
+====> Epoch: 1 Average loss: 315900.0510 -- nbatches: 679
+====> Epoch: 1 Average loss: 316135.2822 -- nbatches: 679
+Test Epoch: 1 [0/102400 (0%)]	 val loss: 45893.591250 Time val data load: 9628.398ms, Time testing: 34.355ms
+Test Epoch: 1 [51200/102400 (50%)]	 val loss: 45259.061443 Time val data load: 21573.753ms, Time testing: 12.606ms
+Train Epoch: 2 [0/347600 (0%)]	 BCE Loss: 46438.697445 KLD Loss: 133.857791  Time data load: 13956.941ms, Time training: 25.936ms
+Train Epoch: 2 [51200/347600 (15%)]	 BCE Loss: 35298.060939 KLD Loss: 263.124395  Time data load: 11536.343ms, Time training: 229.523ms
+Train Epoch: 2 [102400/347600 (29%)]	 BCE Loss: 28900.158069 KLD Loss: 138.638262  Time data load: 20307.934ms, Time training: 52.013ms
+Train Epoch: 2 [153600/347600 (44%)]	 BCE Loss: 24794.888889 KLD Loss: 138.886500  Time data load: 21848.500ms, Time training: 198.020ms
+Train Epoch: 2 [204800/347600 (59%)]	 BCE Loss: 26579.021731 KLD Loss: 296.709508  Time data load: 18428.620ms, Time training: 58.092ms
+Train Epoch: 2 [256000/347600 (74%)]	 BCE Loss: 23071.557647 KLD Loss: 146.178923  Time data load: 20116.242ms, Time training: 55.734ms
+Train Epoch: 2 [307200/347600 (88%)]	 BCE Loss: 17975.264267 KLD Loss: 177.776581  Time data load: 18327.575ms, Time training: 51.736ms
+====> Epoch: 2 Average loss: 27395.8673 -- nbatches: 679
+====> Epoch: 2 Average loss: 27386.4133 -- nbatches: 679
+Test Epoch: 2 [0/102400 (0%)]	 val loss: 20532.575614 Time val data load: 13059.171ms, Time testing: 13.153ms
+Test Epoch: 2 [51200/102400 (50%)]	 val loss: 19748.322672 Time val data load: 17461.576ms, Time testing: 12.636ms
+====> Test set loss: 18720.4204 -- nbatches 200
++++ Saving best model because test_loss: 18720.420404989036 < miniloss: 44395.34950799678 +++
+Train Epoch: 3 [0/347600 (0%)]	 BCE Loss: 16078.677832 KLD Loss: 227.666067  Time data load: 15025.131ms, Time training: 25.516ms
+Train Epoch: 3 [51200/347600 (15%)]	 BCE Loss: 17275.651637 KLD Loss: 322.873966  Time data load: 15685.107ms, Time training: 54.277ms
+Train Epoch: 3 [102400/347600 (29%)]	 BCE Loss: 16984.585567 KLD Loss: 488.538356  Time data load: 21235.404ms, Time training: 20.639ms
+Train Epoch: 3 [153600/347600 (44%)]	 BCE Loss: 13502.600877 KLD Loss: 356.454923  Time data load: 17772.387ms, Time training: 55.942ms
+Train Epoch: 3 [204800/347600 (59%)]	 BCE Loss: 15261.975532 KLD Loss: 524.243724  Time data load: 19781.690ms, Time training: 22.725ms
+Train Epoch: 3 [256000/347600 (74%)]	 BCE Loss: 15577.473504 KLD Loss: 508.055873  Time data load: 17365.144ms, Time training: 56.301ms
+Train Epoch: 3 [307200/347600 (88%)]	 BCE Loss: 12290.544658 KLD Loss: 416.794337  Time data load: 19019.988ms, Time training: 56.412ms
+====> Epoch: 3 Average loss: 15633.4596 -- nbatches: 679
+====> Epoch: 3 Average loss: 15600.2196 -- nbatches: 679
+Test Epoch: 3 [0/102400 (0%)]	 val loss: 15370.240079 Time val data load: 10938.442ms, Time testing: 13.263ms
+Test Epoch: 3 [51200/102400 (50%)]	 val loss: 14289.186091 Time val data load: 18894.641ms, Time testing: 12.621ms
+====> Test set loss: 13671.3968 -- nbatches 200
++++ Saving best model because test_loss: 13671.39684499683 < miniloss: 18720.420404989036 +++
+Train Epoch: 4 [0/347600 (0%)]	 BCE Loss: 14078.419045 KLD Loss: 512.290088  Time data load: 14129.872ms, Time training: 23.440ms
+Train Epoch: 4 [51200/347600 (15%)]	 BCE Loss: 13758.646888 KLD Loss: 494.644926  Time data load: 15664.793ms, Time training: 78.458ms
+Train Epoch: 4 [102400/347600 (29%)]	 BCE Loss: 13250.187813 KLD Loss: 550.344272  Time data load: 20085.406ms, Time training: 20.849ms
+Train Epoch: 4 [153600/347600 (44%)]	 BCE Loss: 14223.536854 KLD Loss: 451.025805  Time data load: 18738.106ms, Time training: 56.091ms
+Train Epoch: 4 [204800/347600 (59%)]	 BCE Loss: 13477.084083 KLD Loss: 470.015989  Time data load: 21434.169ms, Time training: 22.134ms
+Train Epoch: 4 [256000/347600 (74%)]	 BCE Loss: 9943.940938 KLD Loss: 471.659241  Time data load: 16476.787ms, Time training: 59.127ms
+Train Epoch: 4 [307200/347600 (88%)]	 BCE Loss: 13685.653244 KLD Loss: 596.288978  Time data load: 22190.921ms, Time training: 20.659ms
+====> Epoch: 4 Average loss: 12817.8671 -- nbatches: 679
+====> Epoch: 4 Average loss: 12755.2539 -- nbatches: 679
+Test Epoch: 4 [0/102400 (0%)]	 val loss: 14035.213571 Time val data load: 10130.144ms, Time testing: 12.732ms
+Test Epoch: 4 [51200/102400 (50%)]	 val loss: 13209.701387 Time val data load: 19710.701ms, Time testing: 13.038ms
+====> Test set loss: 12478.3878 -- nbatches 200
++++ Saving best model because test_loss: 12478.38782986677 < miniloss: 13671.39684499683 +++
+Train Epoch: 5 [0/347600 (0%)]	 BCE Loss: 9120.084752 KLD Loss: 433.552752  Time data load: 10219.454ms, Time training: 24.491ms
+Train Epoch: 5 [51200/347600 (15%)]	 BCE Loss: 12051.425230 KLD Loss: 596.352030  Time data load: 16250.874ms, Time training: 233.436ms
+Train Epoch: 5 [102400/347600 (29%)]	 BCE Loss: 9907.437575 KLD Loss: 510.101962  Time data load: 19937.274ms, Time training: 52.573ms
+Train Epoch: 5 [153600/347600 (44%)]	 BCE Loss: 10143.418888 KLD Loss: 457.649003  Time data load: 20791.083ms, Time training: 56.241ms
+Train Epoch: 5 [204800/347600 (59%)]	 BCE Loss: 12252.350877 KLD Loss: 562.595408  Time data load: 17007.791ms, Time training: 55.526ms
+Train Epoch: 5 [256000/347600 (74%)]	 BCE Loss: 10087.793714 KLD Loss: 503.026396  Time data load: 19098.403ms, Time training: 55.871ms
+Train Epoch: 5 [307200/347600 (88%)]	 BCE Loss: 12260.422531 KLD Loss: 643.861850  Time data load: 19529.068ms, Time training: 20.733ms
+====> Epoch: 5 Average loss: 11590.6427 -- nbatches: 679
+====> Epoch: 5 Average loss: 11612.6443 -- nbatches: 679
+Test Epoch: 5 [0/102400 (0%)]	 val loss: 14353.111366 Time val data load: 10229.949ms, Time testing: 13.174ms
+Test Epoch: 5 [51200/102400 (50%)]	 val loss: 13564.524595 Time val data load: 20329.412ms, Time testing: 12.578ms
+====> Test set loss: 12762.1225 -- nbatches 200
+Train Epoch: 6 [0/347600 (0%)]	 BCE Loss: 11607.342863 KLD Loss: 522.083471  Time data load: 12110.575ms, Time training: 24.714ms
+Train Epoch: 6 [51200/347600 (15%)]	 BCE Loss: 12158.225475 KLD Loss: 561.685751  Time data load: 17179.757ms, Time training: 55.903ms
+Train Epoch: 6 [102400/347600 (29%)]	 BCE Loss: 9822.511847 KLD Loss: 489.060903  Time data load: 19670.868ms, Time training: 57.372ms
+Train Epoch: 6 [153600/347600 (44%)]	 BCE Loss: 10841.043098 KLD Loss: 582.242136  Time data load: 20228.677ms, Time training: 169.710ms
+Train Epoch: 6 [204800/347600 (59%)]	 BCE Loss: 8023.971708 KLD Loss: 499.438835  Time data load: 18869.690ms, Time training: 52.044ms
+Train Epoch: 6 [256000/347600 (74%)]	 BCE Loss: 8813.436656 KLD Loss: 506.727973  Time data load: 18676.324ms, Time training: 52.055ms
+Train Epoch: 6 [307200/347600 (88%)]	 BCE Loss: 8390.732835 KLD Loss: 466.447497  Time data load: 18305.043ms, Time training: 52.443ms
+====> Epoch: 6 Average loss: 10943.4839 -- nbatches: 679
+====> Epoch: 6 Average loss: 10972.1506 -- nbatches: 679
+Test Epoch: 6 [0/102400 (0%)]	 val loss: 13041.126740 Time val data load: 12805.111ms, Time testing: 13.126ms
+Test Epoch: 6 [51200/102400 (50%)]	 val loss: 12156.075482 Time val data load: 16827.259ms, Time testing: 12.607ms
+====> Test set loss: 11313.7761 -- nbatches 200
++++ Saving best model because test_loss: 11313.776148969147 < miniloss: 12478.38782986677 +++
+Train Epoch: 7 [0/347600 (0%)]	 BCE Loss: 10192.223028 KLD Loss: 555.192072  Time data load: 9332.419ms, Time training: 24.891ms
+Train Epoch: 7 [51200/347600 (15%)]	 BCE Loss: 11257.944712 KLD Loss: 615.799432  Time data load: 15121.301ms, Time training: 173.532ms
+Train Epoch: 7 [102400/347600 (29%)]	 BCE Loss: 9517.127265 KLD Loss: 511.064375  Time data load: 20601.435ms, Time training: 186.065ms
+Train Epoch: 7 [153600/347600 (44%)]	 BCE Loss: 9341.612497 KLD Loss: 550.170596  Time data load: 19939.115ms, Time training: 55.882ms
+Train Epoch: 7 [204800/347600 (59%)]	 BCE Loss: 13602.536114 KLD Loss: 665.860664  Time data load: 19251.942ms, Time training: 53.123ms
+Train Epoch: 7 [256000/347600 (74%)]	 BCE Loss: 9148.132225 KLD Loss: 533.521247  Time data load: 18773.783ms, Time training: 290.688ms
+Train Epoch: 7 [307200/347600 (88%)]	 BCE Loss: 7672.024539 KLD Loss: 541.911008  Time data load: 17461.789ms, Time training: 58.089ms
+====> Epoch: 7 Average loss: 10535.8352 -- nbatches: 679
+====> Epoch: 7 Average loss: 10496.8034 -- nbatches: 679
+Test Epoch: 7 [0/102400 (0%)]	 val loss: 12788.144209 Time val data load: 13280.326ms, Time testing: 13.140ms
+Test Epoch: 7 [51200/102400 (50%)]	 val loss: 11579.042032 Time val data load: 17150.125ms, Time testing: 12.636ms
+====> Test set loss: 11099.2514 -- nbatches 200
++++ Saving best model because test_loss: 11099.251445236727 < miniloss: 11313.776148969147 +++
+Train Epoch: 8 [0/347600 (0%)]	 BCE Loss: 10280.393457 KLD Loss: 637.705957  Time data load: 10536.220ms, Time training: 23.821ms
+Train Epoch: 8 [51200/347600 (15%)]	 BCE Loss: 10758.747017 KLD Loss: 610.635387  Time data load: 16606.699ms, Time training: 56.206ms
+Train Epoch: 8 [102400/347600 (29%)]	 BCE Loss: 7570.191387 KLD Loss: 518.168311  Time data load: 20046.199ms, Time training: 42.456ms
+Train Epoch: 8 [153600/347600 (44%)]	 BCE Loss: 10535.730468 KLD Loss: 592.647882  Time data load: 20535.325ms, Time training: 56.602ms
+Train Epoch: 8 [204800/347600 (59%)]	 BCE Loss: 11175.437859 KLD Loss: 514.027546  Time data load: 18158.457ms, Time training: 51.237ms
+Train Epoch: 8 [256000/347600 (74%)]	 BCE Loss: 8838.635137 KLD Loss: 571.539078  Time data load: 20408.353ms, Time training: 475.770ms
+Train Epoch: 8 [307200/347600 (88%)]	 BCE Loss: 11945.219128 KLD Loss: 524.418969  Time data load: 17903.762ms, Time training: 62.643ms
+====> Epoch: 8 Average loss: 10161.0523 -- nbatches: 679
+====> Epoch: 8 Average loss: 10159.5421 -- nbatches: 679
+Test Epoch: 8 [0/102400 (0%)]	 val loss: 12103.210494 Time val data load: 14050.047ms, Time testing: 13.114ms
+Test Epoch: 8 [51200/102400 (50%)]	 val loss: 10983.673022 Time val data load: 15986.664ms, Time testing: 12.572ms
+====> Test set loss: 10429.8145 -- nbatches 200
++++ Saving best model because test_loss: 10429.814542299508 < miniloss: 11099.251445236727 +++
+Train Epoch: 9 [0/347600 (0%)]	 BCE Loss: 11804.098166 KLD Loss: 540.144976  Time data load: 11909.498ms, Time training: 23.337ms
+Train Epoch: 9 [51200/347600 (15%)]	 BCE Loss: 8791.256737 KLD Loss: 537.265394  Time data load: 14458.843ms, Time training: 172.113ms
+Train Epoch: 9 [102400/347600 (29%)]	 BCE Loss: 11954.510477 KLD Loss: 673.306944  Time data load: 21555.574ms, Time training: 50.788ms
+Train Epoch: 9 [153600/347600 (44%)]	 BCE Loss: 9274.461355 KLD Loss: 560.759744  Time data load: 20612.035ms, Time training: 55.812ms
+Train Epoch: 9 [204800/347600 (59%)]	 BCE Loss: 8927.670822 KLD Loss: 598.121419  Time data load: 18329.288ms, Time training: 51.519ms
+Train Epoch: 9 [256000/347600 (74%)]	 BCE Loss: 11263.214420 KLD Loss: 621.652233  Time data load: 20216.271ms, Time training: 53.761ms
+Train Epoch: 9 [307200/347600 (88%)]	 BCE Loss: 9441.570549 KLD Loss: 590.239329  Time data load: 17531.965ms, Time training: 112.394ms
+====> Epoch: 9 Average loss: 9909.3609 -- nbatches: 679
+====> Epoch: 9 Average loss: 9862.5507 -- nbatches: 679
+Test Epoch: 9 [0/102400 (0%)]	 val loss: 16977.654193 Time val data load: 14837.780ms, Time testing: 13.434ms
+Test Epoch: 9 [51200/102400 (50%)]	 val loss: 15701.033780 Time val data load: 15791.015ms, Time testing: 12.650ms
+====> Test set loss: 14874.2519 -- nbatches 200
+Train Epoch: 10 [0/347600 (0%)]	 BCE Loss: 9755.547420 KLD Loss: 631.212059  Time data load: 13891.454ms, Time training: 25.740ms
+Train Epoch: 10 [51200/347600 (15%)]	 BCE Loss: 8422.749260 KLD Loss: 575.107790  Time data load: 13493.257ms, Time training: 56.055ms
+Train Epoch: 10 [102400/347600 (29%)]	 BCE Loss: 9640.015091 KLD Loss: 576.135584  Time data load: 19976.094ms, Time training: 20.249ms
+Train Epoch: 10 [153600/347600 (44%)]	 BCE Loss: 7627.860043 KLD Loss: 541.183065  Time data load: 21317.870ms, Time training: 56.948ms
+Train Epoch: 10 [204800/347600 (59%)]	 BCE Loss: 9344.854146 KLD Loss: 540.002229  Time data load: 18323.348ms, Time training: 58.844ms
+Train Epoch: 10 [256000/347600 (74%)]	 BCE Loss: 8098.100686 KLD Loss: 477.740647  Time data load: 19104.348ms, Time training: 732.155ms
+Train Epoch: 10 [307200/347600 (88%)]	 BCE Loss: 8722.746540 KLD Loss: 638.876504  Time data load: 17932.025ms, Time training: 51.614ms
+====> Epoch: 10 Average loss: 9692.3811 -- nbatches: 679
+====> Epoch: 10 Average loss: 9633.3781 -- nbatches: 679
+Test Epoch: 10 [0/102400 (0%)]	 val loss: 15775.247141 Time val data load: 13719.337ms, Time testing: 13.232ms
+Test Epoch: 10 [51200/102400 (50%)]	 val loss: 14670.476519 Time val data load: 16270.757ms, Time testing: 12.590ms
+====> Test set loss: 14041.8097 -- nbatches 200
+Train Epoch: 11 [0/347600 (0%)]	 BCE Loss: 9316.362150 KLD Loss: 642.035081  Time data load: 11212.296ms, Time training: 23.754ms
+Train Epoch: 11 [51200/347600 (15%)]	 BCE Loss: 8086.178898 KLD Loss: 492.253035  Time data load: 14780.943ms, Time training: 362.183ms
+Train Epoch: 11 [102400/347600 (29%)]	 BCE Loss: 7115.516384 KLD Loss: 474.385032  Time data load: 21553.598ms, Time training: 20.907ms
+Train Epoch: 11 [153600/347600 (44%)]	 BCE Loss: 7132.286570 KLD Loss: 522.455527  Time data load: 19299.066ms, Time training: 56.492ms
+Train Epoch: 11 [204800/347600 (59%)]	 BCE Loss: 6566.225311 KLD Loss: 427.623114  Time data load: 18166.126ms, Time training: 52.036ms
+Train Epoch: 11 [256000/347600 (74%)]	 BCE Loss: 6932.356394 KLD Loss: 559.528824  Time data load: 17106.218ms, Time training: 174.349ms
+Train Epoch: 11 [307200/347600 (88%)]	 BCE Loss: 8377.168221 KLD Loss: 638.207106  Time data load: 19755.347ms, Time training: 52.351ms
+====> Epoch: 11 Average loss: 9466.7242 -- nbatches: 679
+====> Epoch: 11 Average loss: 9478.7908 -- nbatches: 679
+Test Epoch: 11 [0/102400 (0%)]	 val loss: 13827.417880 Time val data load: 11966.480ms, Time testing: 13.208ms
+Test Epoch: 11 [51200/102400 (50%)]	 val loss: 12848.522476 Time val data load: 18654.534ms, Time testing: 12.603ms
+====> Test set loss: 12046.8393 -- nbatches 200
+Train Epoch: 12 [0/347600 (0%)]	 BCE Loss: 7869.375474 KLD Loss: 544.291799  Time data load: 11952.954ms, Time training: 23.442ms
+Train Epoch: 12 [51200/347600 (15%)]	 BCE Loss: 9010.206298 KLD Loss: 531.221315  Time data load: 18330.795ms, Time training: 56.149ms
+Train Epoch: 12 [102400/347600 (29%)]	 BCE Loss: 8361.837027 KLD Loss: 491.681713  Time data load: 18219.988ms, Time training: 46.106ms
+Train Epoch: 12 [153600/347600 (44%)]	 BCE Loss: 8176.992788 KLD Loss: 616.576173  Time data load: 20559.540ms, Time training: 55.122ms
+Train Epoch: 12 [204800/347600 (59%)]	 BCE Loss: 7531.242079 KLD Loss: 459.846829  Time data load: 16640.764ms, Time training: 51.867ms
+Train Epoch: 12 [256000/347600 (74%)]	 BCE Loss: 8678.417298 KLD Loss: 649.803428  Time data load: 20264.689ms, Time training: 52.843ms
+Train Epoch: 12 [307200/347600 (88%)]	 BCE Loss: 9017.143862 KLD Loss: 641.043069  Time data load: 15659.062ms, Time training: 56.999ms
+====> Epoch: 12 Average loss: 9308.5347 -- nbatches: 679
+====> Epoch: 12 Average loss: 9324.5831 -- nbatches: 679
+Test Epoch: 12 [0/102400 (0%)]	 val loss: 16848.754914 Time val data load: 14705.073ms, Time testing: 13.065ms
+Test Epoch: 12 [51200/102400 (50%)]	 val loss: 15479.643141 Time val data load: 15598.593ms, Time testing: 12.647ms
+====> Test set loss: 14978.9863 -- nbatches 200
+Train Epoch: 13 [0/347600 (0%)]	 BCE Loss: 10525.716560 KLD Loss: 690.840324  Time data load: 11480.311ms, Time training: 24.605ms
+Train Epoch: 13 [51200/347600 (15%)]	 BCE Loss: 9985.381510 KLD Loss: 519.677390  Time data load: 13965.423ms, Time training: 188.101ms
+Train Epoch: 13 [102400/347600 (29%)]	 BCE Loss: 8611.629201 KLD Loss: 553.145446  Time data load: 20600.009ms, Time training: 54.468ms
+Train Epoch: 13 [153600/347600 (44%)]	 BCE Loss: 11183.160761 KLD Loss: 583.560233  Time data load: 21877.506ms, Time training: 55.603ms
+Train Epoch: 13 [204800/347600 (59%)]	 BCE Loss: 8729.747741 KLD Loss: 612.941676  Time data load: 19031.651ms, Time training: 51.910ms
+Train Epoch: 13 [256000/347600 (74%)]	 BCE Loss: 7204.662435 KLD Loss: 588.416847  Time data load: 19651.546ms, Time training: 56.052ms
+Train Epoch: 13 [307200/347600 (88%)]	 BCE Loss: 7161.687420 KLD Loss: 579.495808  Time data load: 18626.521ms, Time training: 87.909ms
+====> Epoch: 13 Average loss: 9163.3327 -- nbatches: 679
+====> Epoch: 13 Average loss: 9098.5095 -- nbatches: 679
+Test Epoch: 13 [0/102400 (0%)]	 val loss: 15717.645795 Time val data load: 11630.579ms, Time testing: 15.755ms
+Test Epoch: 13 [51200/102400 (50%)]	 val loss: 14454.967660 Time val data load: 18442.568ms, Time testing: 12.563ms
+====> Test set loss: 14061.1530 -- nbatches 200
+Train Epoch: 14 [0/347600 (0%)]	 BCE Loss: 7112.662608 KLD Loss: 722.418058  Time data load: 11469.789ms, Time training: 23.774ms
+Train Epoch: 14 [51200/347600 (15%)]	 BCE Loss: 7170.931265 KLD Loss: 504.802524  Time data load: 15306.103ms, Time training: 56.419ms
+Train Epoch: 14 [102400/347600 (29%)]	 BCE Loss: 8031.601196 KLD Loss: 550.225433  Time data load: 22275.189ms, Time training: 52.127ms
+Train Epoch: 14 [153600/347600 (44%)]	 BCE Loss: 7075.174010 KLD Loss: 524.400830  Time data load: 17564.173ms, Time training: 126.648ms
+Train Epoch: 14 [204800/347600 (59%)]	 BCE Loss: 7320.922468 KLD Loss: 538.657011  Time data load: 18840.343ms, Time training: 51.334ms
+Train Epoch: 14 [256000/347600 (74%)]	 BCE Loss: 6388.712477 KLD Loss: 547.378828  Time data load: 18324.438ms, Time training: 56.825ms
+Train Epoch: 14 [307200/347600 (88%)]	 BCE Loss: 5814.543763 KLD Loss: 464.569852  Time data load: 17995.487ms, Time training: 68.567ms
+====> Epoch: 14 Average loss: 9013.0274 -- nbatches: 679
+====> Epoch: 14 Average loss: 9073.4702 -- nbatches: 679
+Test Epoch: 14 [0/102400 (0%)]	 val loss: 21304.127294 Time val data load: 12946.364ms, Time testing: 13.247ms
+Test Epoch: 14 [51200/102400 (50%)]	 val loss: 17772.743465 Time val data load: 17187.105ms, Time testing: 12.610ms
+====> Test set loss: 18018.6004 -- nbatches 200
+Train Epoch: 15 [0/347600 (0%)]	 BCE Loss: 8723.759039 KLD Loss: 569.059697  Time data load: 14117.082ms, Time training: 25.613ms
+Train Epoch: 15 [51200/347600 (15%)]	 BCE Loss: 9041.647253 KLD Loss: 631.183696  Time data load: 11580.844ms, Time training: 21.171ms
+Train Epoch: 15 [102400/347600 (29%)]	 BCE Loss: 8881.620968 KLD Loss: 530.621971  Time data load: 22226.628ms, Time training: 21.457ms
+Train Epoch: 15 [153600/347600 (44%)]	 BCE Loss: 6576.886597 KLD Loss: 555.601941  Time data load: 20524.776ms, Time training: 56.579ms
+Train Epoch: 15 [204800/347600 (59%)]	 BCE Loss: 5900.601638 KLD Loss: 512.558617  Time data load: 18606.140ms, Time training: 56.583ms
+Train Epoch: 15 [256000/347600 (74%)]	 BCE Loss: 8261.634754 KLD Loss: 561.259893  Time data load: 18929.401ms, Time training: 179.745ms
+Train Epoch: 15 [307200/347600 (88%)]	 BCE Loss: 8544.436004 KLD Loss: 513.008288  Time data load: 18765.162ms, Time training: 52.288ms
+====> Epoch: 15 Average loss: 8956.0867 -- nbatches: 679
+====> Epoch: 15 Average loss: 8903.6887 -- nbatches: 679
+Test Epoch: 15 [0/102400 (0%)]	 val loss: 18643.660653 Time val data load: 9480.067ms, Time testing: 13.040ms
+Test Epoch: 15 [51200/102400 (50%)]	 val loss: 17983.305416 Time val data load: 20674.438ms, Time testing: 12.607ms
+====> Test set loss: 17283.0444 -- nbatches 200
+Train Epoch: 16 [0/347600 (0%)]	 BCE Loss: 11972.815020 KLD Loss: 712.972612  Time data load: 9881.688ms, Time training: 25.450ms
+Train Epoch: 16 [51200/347600 (15%)]	 BCE Loss: 8609.591547 KLD Loss: 534.595589  Time data load: 20434.326ms, Time training: 56.124ms
+Train Epoch: 16 [102400/347600 (29%)]	 BCE Loss: 7059.601369 KLD Loss: 552.090286  Time data load: 16798.281ms, Time training: 51.957ms
+Train Epoch: 16 [153600/347600 (44%)]	 BCE Loss: 10917.447725 KLD Loss: 632.716780  Time data load: 22229.689ms, Time training: 55.665ms
+Train Epoch: 16 [204800/347600 (59%)]	 BCE Loss: 6614.288294 KLD Loss: 458.106723  Time data load: 12789.153ms, Time training: 47.525ms
+Train Epoch: 16 [256000/347600 (74%)]	 BCE Loss: 10701.554095 KLD Loss: 560.230813  Time data load: 20471.264ms, Time training: 155.372ms
+Train Epoch: 16 [307200/347600 (88%)]	 BCE Loss: 6873.616571 KLD Loss: 589.312074  Time data load: 20982.755ms, Time training: 65.853ms
+====> Epoch: 16 Average loss: 8820.4420 -- nbatches: 679
+====> Epoch: 16 Average loss: 8743.0143 -- nbatches: 679
+Test Epoch: 16 [0/102400 (0%)]	 val loss: 14597.846657 Time val data load: 10620.738ms, Time testing: 13.176ms
+Test Epoch: 16 [51200/102400 (50%)]	 val loss: 13769.343581 Time val data load: 19657.892ms, Time testing: 12.588ms
+====> Test set loss: 13313.0527 -- nbatches 200
+Train Epoch: 17 [0/347600 (0%)]	 BCE Loss: 6150.298679 KLD Loss: 551.859648  Time data load: 14147.743ms, Time training: 25.277ms
+Train Epoch: 17 [51200/347600 (15%)]	 BCE Loss: 8136.361068 KLD Loss: 633.586162  Time data load: 13146.446ms, Time training: 190.487ms
+Train Epoch: 17 [102400/347600 (29%)]	 BCE Loss: 8145.062007 KLD Loss: 562.026634  Time data load: 20620.558ms, Time training: 20.981ms
+Train Epoch: 17 [153600/347600 (44%)]	 BCE Loss: 7431.091931 KLD Loss: 578.564573  Time data load: 19437.202ms, Time training: 173.750ms
+Train Epoch: 17 [204800/347600 (59%)]	 BCE Loss: 8950.711932 KLD Loss: 613.972634  Time data load: 19732.412ms, Time training: 21.384ms
+Train Epoch: 17 [256000/347600 (74%)]	 BCE Loss: 7454.991592 KLD Loss: 546.448742  Time data load: 20087.420ms, Time training: 805.862ms
+Train Epoch: 17 [307200/347600 (88%)]	 BCE Loss: 9966.447634 KLD Loss: 636.665598  Time data load: 16915.215ms, Time training: 51.459ms
+====> Epoch: 17 Average loss: 8822.9054 -- nbatches: 679
+====> Epoch: 17 Average loss: 8754.6823 -- nbatches: 679
+Test Epoch: 17 [0/102400 (0%)]	 val loss: 15265.816784 Time val data load: 9957.332ms, Time testing: 13.151ms
+Test Epoch: 17 [51200/102400 (50%)]	 val loss: 14082.839556 Time val data load: 20196.534ms, Time testing: 14.797ms
+====> Test set loss: 13449.4474 -- nbatches 200
+Train Epoch: 18 [0/347600 (0%)]	 BCE Loss: 7224.401074 KLD Loss: 631.230934  Time data load: 10881.289ms, Time training: 27.194ms
+Train Epoch: 18 [51200/347600 (15%)]	 BCE Loss: 8880.353167 KLD Loss: 591.027677  Time data load: 18870.035ms, Time training: 56.593ms
+Train Epoch: 18 [102400/347600 (29%)]	 BCE Loss: 9406.850131 KLD Loss: 540.836484  Time data load: 19991.705ms, Time training: 21.163ms
+Train Epoch: 18 [153600/347600 (44%)]	 BCE Loss: 8815.073519 KLD Loss: 651.626669  Time data load: 19537.829ms, Time training: 56.515ms
+Train Epoch: 18 [204800/347600 (59%)]	 BCE Loss: 6786.207083 KLD Loss: 542.084961  Time data load: 19450.255ms, Time training: 21.238ms
+Train Epoch: 18 [256000/347600 (74%)]	 BCE Loss: 8249.159188 KLD Loss: 648.064839  Time data load: 18114.444ms, Time training: 56.104ms
+Train Epoch: 18 [307200/347600 (88%)]	 BCE Loss: 8057.102476 KLD Loss: 603.990824  Time data load: 18084.275ms, Time training: 52.123ms
+====> Epoch: 18 Average loss: 8727.0607 -- nbatches: 679
+====> Epoch: 18 Average loss: 8680.6396 -- nbatches: 679
+Test Epoch: 18 [0/102400 (0%)]	 val loss: 12931.720930 Time val data load: 11146.076ms, Time testing: 13.250ms
+Test Epoch: 18 [51200/102400 (50%)]	 val loss: 12218.601938 Time val data load: 18504.437ms, Time testing: 12.462ms
+====> Test set loss: 11204.4921 -- nbatches 200
+Train Epoch: 19 [0/347600 (0%)]	 BCE Loss: 10044.333820 KLD Loss: 634.217896  Time data load: 11844.558ms, Time training: 29.883ms
+Train Epoch: 19 [51200/347600 (15%)]	 BCE Loss: 6980.257811 KLD Loss: 515.169364  Time data load: 17939.952ms, Time training: 56.104ms
+Train Epoch: 19 [102400/347600 (29%)]	 BCE Loss: 7429.100592 KLD Loss: 657.797930  Time data load: 16084.828ms, Time training: 52.652ms
+Train Epoch: 19 [153600/347600 (44%)]	 BCE Loss: 8776.650500 KLD Loss: 502.962808  Time data load: 20595.808ms, Time training: 56.770ms
+Train Epoch: 19 [204800/347600 (59%)]	 BCE Loss: 10451.875081 KLD Loss: 670.617560  Time data load: 17822.495ms, Time training: 51.652ms
+Train Epoch: 19 [256000/347600 (74%)]	 BCE Loss: 9742.318575 KLD Loss: 699.073646  Time data load: 18640.271ms, Time training: 52.104ms
+Train Epoch: 19 [307200/347600 (88%)]	 BCE Loss: 7590.135021 KLD Loss: 563.163432  Time data load: 18146.146ms, Time training: 54.127ms
+====> Epoch: 19 Average loss: 8659.2127 -- nbatches: 679
+====> Epoch: 19 Average loss: 8624.5996 -- nbatches: 679
+Test Epoch: 19 [0/102400 (0%)]	 val loss: 18236.321548 Time val data load: 10051.714ms, Time testing: 13.194ms
+Test Epoch: 19 [51200/102400 (50%)]	 val loss: 16614.649256 Time val data load: 19399.053ms, Time testing: 12.636ms
+====> Test set loss: 16296.5827 -- nbatches 200
++++ Saving checkpoint in ./outputs/model_DVAE_test/model_DVAE_test_347k102k_CHECK_EPOCH_20.pth +++
+Train Epoch: 20 [0/347600 (0%)]	 BCE Loss: 6316.740503 KLD Loss: 547.795803  Time data load: 11654.508ms, Time training: 25.254ms
+Train Epoch: 20 [51200/347600 (15%)]	 BCE Loss: 6798.661903 KLD Loss: 540.175026  Time data load: 16487.473ms, Time training: 95.863ms
+Train Epoch: 20 [102400/347600 (29%)]	 BCE Loss: 6538.499073 KLD Loss: 624.717710  Time data load: 21028.654ms, Time training: 52.369ms
+Train Epoch: 20 [153600/347600 (44%)]	 BCE Loss: 9157.744397 KLD Loss: 632.791590  Time data load: 20016.858ms, Time training: 69.544ms
+Train Epoch: 20 [204800/347600 (59%)]	 BCE Loss: 7135.978322 KLD Loss: 576.460931  Time data load: 17823.182ms, Time training: 52.969ms
+Train Epoch: 20 [256000/347600 (74%)]	 BCE Loss: 6456.318322 KLD Loss: 567.316367  Time data load: 19459.825ms, Time training: 409.795ms
+Train Epoch: 20 [307200/347600 (88%)]	 BCE Loss: 6701.543614 KLD Loss: 523.351878  Time data load: 17708.904ms, Time training: 57.499ms
+====> Epoch: 20 Average loss: 8597.1894 -- nbatches: 679
+====> Epoch: 20 Average loss: 8534.7693 -- nbatches: 679
+Test Epoch: 20 [0/102400 (0%)]	 val loss: 15077.379018 Time val data load: 14377.460ms, Time testing: 13.313ms
+Test Epoch: 20 [51200/102400 (50%)]	 val loss: 14473.102478 Time val data load: 16351.899ms, Time testing: 12.895ms
+====> Test set loss: 13556.1990 -- nbatches 200
+Train Epoch: 21 [0/347600 (0%)]	 BCE Loss: 8671.731064 KLD Loss: 676.665196  Time data load: 13970.139ms, Time training: 25.494ms
+Train Epoch: 21 [51200/347600 (15%)]	 BCE Loss: 8410.873298 KLD Loss: 626.364070  Time data load: 17192.469ms, Time training: 88.089ms
+Train Epoch: 21 [102400/347600 (29%)]	 BCE Loss: 6519.398177 KLD Loss: 518.726866  Time data load: 17374.717ms, Time training: 62.334ms
+Train Epoch: 21 [153600/347600 (44%)]	 BCE Loss: 6875.779147 KLD Loss: 604.826759  Time data load: 19286.264ms, Time training: 1054.750ms
+Train Epoch: 21 [204800/347600 (59%)]	 BCE Loss: 9357.339161 KLD Loss: 674.756212  Time data load: 17952.817ms, Time training: 57.167ms
+Train Epoch: 21 [256000/347600 (74%)]	 BCE Loss: 7961.184566 KLD Loss: 565.798199  Time data load: 19615.992ms, Time training: 56.425ms
+Train Epoch: 21 [307200/347600 (88%)]	 BCE Loss: 8011.341412 KLD Loss: 574.352251  Time data load: 17937.380ms, Time training: 63.223ms
+====> Epoch: 21 Average loss: 8618.5990 -- nbatches: 679
+====> Epoch: 21 Average loss: 8434.6317 -- nbatches: 679
+Test Epoch: 21 [0/102400 (0%)]	 val loss: 15757.228186 Time val data load: 11891.824ms, Time testing: 13.340ms
+Test Epoch: 21 [51200/102400 (50%)]	 val loss: 15077.608541 Time val data load: 18443.429ms, Time testing: 12.588ms
+====> Test set loss: 13873.4142 -- nbatches 200
+Train Epoch: 22 [0/347600 (0%)]	 BCE Loss: 7944.310403 KLD Loss: 632.832165  Time data load: 14422.966ms, Time training: 24.186ms
+Train Epoch: 22 [51200/347600 (15%)]	 BCE Loss: 7952.255454 KLD Loss: 612.191363  Time data load: 17948.593ms, Time training: 56.165ms
+Train Epoch: 22 [102400/347600 (29%)]	 BCE Loss: 10263.943718 KLD Loss: 729.513153  Time data load: 15610.035ms, Time training: 56.881ms
+Train Epoch: 22 [153600/347600 (44%)]	 BCE Loss: 7497.746159 KLD Loss: 592.127224  Time data load: 20963.193ms, Time training: 52.893ms
+Train Epoch: 22 [204800/347600 (59%)]	 BCE Loss: 9991.823669 KLD Loss: 657.051249  Time data load: 17951.118ms, Time training: 52.650ms
+Train Epoch: 22 [256000/347600 (74%)]	 BCE Loss: 8394.033050 KLD Loss: 597.021370  Time data load: 19356.258ms, Time training: 56.604ms
+Train Epoch: 22 [307200/347600 (88%)]	 BCE Loss: 5891.829341 KLD Loss: 547.718264  Time data load: 18042.796ms, Time training: 52.424ms
+====> Epoch: 22 Average loss: 8534.0115 -- nbatches: 679
+====> Epoch: 22 Average loss: 8504.7627 -- nbatches: 679
+Test Epoch: 22 [0/102400 (0%)]	 val loss: 20503.092418 Time val data load: 12933.179ms, Time testing: 13.141ms
+Test Epoch: 22 [51200/102400 (50%)]	 val loss: 18087.282397 Time val data load: 16913.140ms, Time testing: 12.619ms
+====> Test set loss: 17943.7399 -- nbatches 200
+Train Epoch: 23 [0/347600 (0%)]	 BCE Loss: 8442.805356 KLD Loss: 592.972226  Time data load: 9758.787ms, Time training: 25.635ms
+Train Epoch: 23 [51200/347600 (15%)]	 BCE Loss: 7310.269066 KLD Loss: 530.221328  Time data load: 15940.603ms, Time training: 433.505ms
+Train Epoch: 23 [102400/347600 (29%)]	 BCE Loss: 7096.990082 KLD Loss: 581.427069  Time data load: 20220.424ms, Time training: 51.567ms
+Train Epoch: 23 [153600/347600 (44%)]	 BCE Loss: 7845.739643 KLD Loss: 580.445404  Time data load: 22144.738ms, Time training: 289.935ms
+Train Epoch: 23 [204800/347600 (59%)]	 BCE Loss: 8855.398109 KLD Loss: 598.251244  Time data load: 18030.297ms, Time training: 52.394ms
+Train Epoch: 23 [256000/347600 (74%)]	 BCE Loss: 8979.860363 KLD Loss: 590.340863  Time data load: 18722.374ms, Time training: 55.719ms
+Train Epoch: 23 [307200/347600 (88%)]	 BCE Loss: 6817.606176 KLD Loss: 582.389176  Time data load: 18728.051ms, Time training: 57.158ms
+====> Epoch: 23 Average loss: 8501.0394 -- nbatches: 679
+====> Epoch: 23 Average loss: 8469.1563 -- nbatches: 679
+Test Epoch: 23 [0/102400 (0%)]	 val loss: 11395.088238 Time val data load: 13210.309ms, Time testing: 13.156ms
+Test Epoch: 23 [51200/102400 (50%)]	 val loss: 9975.099060 Time val data load: 16973.356ms, Time testing: 12.620ms
+====> Test set loss: 9481.6987 -- nbatches 200
++++ Saving best model because test_loss: 9481.698711402973 < miniloss: 10429.814542299508 +++
+Train Epoch: 24 [0/347600 (0%)]	 BCE Loss: 6758.223856 KLD Loss: 565.091192  Time data load: 11798.428ms, Time training: 30.311ms
+Train Epoch: 24 [51200/347600 (15%)]	 BCE Loss: 8528.656357 KLD Loss: 615.300018  Time data load: 17985.478ms, Time training: 55.420ms
+Train Epoch: 24 [102400/347600 (29%)]	 BCE Loss: 7930.361773 KLD Loss: 594.268009  Time data load: 18131.364ms, Time training: 20.396ms
+Train Epoch: 24 [153600/347600 (44%)]	 BCE Loss: 7623.002530 KLD Loss: 593.034468  Time data load: 19362.697ms, Time training: 56.252ms
+Train Epoch: 24 [204800/347600 (59%)]	 BCE Loss: 7236.687216 KLD Loss: 582.495122  Time data load: 17085.526ms, Time training: 20.683ms
+Train Epoch: 24 [256000/347600 (74%)]	 BCE Loss: 5824.264921 KLD Loss: 556.158487  Time data load: 21233.336ms, Time training: 55.801ms
+Train Epoch: 24 [307200/347600 (88%)]	 BCE Loss: 6247.529214 KLD Loss: 556.010214  Time data load: 17133.832ms, Time training: 57.266ms
+====> Epoch: 24 Average loss: 8395.2022 -- nbatches: 679
+====> Epoch: 24 Average loss: 8506.8510 -- nbatches: 679
+Test Epoch: 24 [0/102400 (0%)]	 val loss: 14366.755812 Time val data load: 12947.619ms, Time testing: 13.337ms
+Test Epoch: 24 [51200/102400 (50%)]	 val loss: 13845.249382 Time val data load: 17398.065ms, Time testing: 12.589ms
+====> Test set loss: 12723.7790 -- nbatches 200
+Train Epoch: 25 [0/347600 (0%)]	 BCE Loss: 8302.982064 KLD Loss: 562.499859  Time data load: 9690.040ms, Time training: 24.483ms
+Train Epoch: 25 [51200/347600 (15%)]	 BCE Loss: 7292.544365 KLD Loss: 575.486562  Time data load: 18454.350ms, Time training: 57.096ms
+Train Epoch: 25 [102400/347600 (29%)]	 BCE Loss: 6669.713860 KLD Loss: 573.930741  Time data load: 17029.511ms, Time training: 52.229ms
+Train Epoch: 25 [153600/347600 (44%)]	 BCE Loss: 8382.108232 KLD Loss: 603.737899  Time data load: 19895.547ms, Time training: 228.127ms
+Train Epoch: 25 [204800/347600 (59%)]	 BCE Loss: 6794.009465 KLD Loss: 633.526521  Time data load: 16957.256ms, Time training: 322.990ms
+Train Epoch: 25 [256000/347600 (74%)]	 BCE Loss: 9250.918466 KLD Loss: 613.271185  Time data load: 18509.901ms, Time training: 46.086ms
+Train Epoch: 25 [307200/347600 (88%)]	 BCE Loss: 9592.443396 KLD Loss: 643.929868  Time data load: 18406.820ms, Time training: 52.924ms
+====> Epoch: 25 Average loss: 8463.0800 -- nbatches: 679
+====> Epoch: 25 Average loss: 8370.8323 -- nbatches: 679
+Test Epoch: 25 [0/102400 (0%)]	 val loss: 15825.141751 Time val data load: 14401.582ms, Time testing: 13.192ms
+Test Epoch: 25 [51200/102400 (50%)]	 val loss: 14623.124088 Time val data load: 16110.125ms, Time testing: 12.626ms
+====> Test set loss: 14206.8659 -- nbatches 200
+Train Epoch: 26 [0/347600 (0%)]	 BCE Loss: 5822.735803 KLD Loss: 561.126644  Time data load: 12372.193ms, Time training: 24.092ms
+Train Epoch: 26 [51200/347600 (15%)]	 BCE Loss: 7231.498750 KLD Loss: 531.709407  Time data load: 17123.598ms, Time training: 56.582ms
+Train Epoch: 26 [102400/347600 (29%)]	 BCE Loss: 8307.381760 KLD Loss: 557.833772  Time data load: 18529.371ms, Time training: 52.536ms
+Train Epoch: 26 [153600/347600 (44%)]	 BCE Loss: 9562.441900 KLD Loss: 599.950535  Time data load: 21420.741ms, Time training: 316.742ms
+Train Epoch: 26 [204800/347600 (59%)]	 BCE Loss: 9096.592258 KLD Loss: 589.299397  Time data load: 17404.396ms, Time training: 52.557ms
+Train Epoch: 26 [256000/347600 (74%)]	 BCE Loss: 5361.671328 KLD Loss: 542.272717  Time data load: 21381.044ms, Time training: 56.375ms
+Train Epoch: 26 [307200/347600 (88%)]	 BCE Loss: 4127.504308 KLD Loss: 679.264134  Time data load: 16409.672ms, Time training: 53.002ms
+====> Epoch: 26 Average loss: 8338.9206 -- nbatches: 679
+====> Epoch: 26 Average loss: 8406.6851 -- nbatches: 679
+Test Epoch: 26 [0/102400 (0%)]	 val loss: 14087.719168 Time val data load: 13091.440ms, Time testing: 18.486ms
+Test Epoch: 26 [51200/102400 (50%)]	 val loss: 13388.416953 Time val data load: 17279.473ms, Time testing: 12.661ms
+====> Test set loss: 12500.0351 -- nbatches 200
+Train Epoch: 27 [0/347600 (0%)]	 BCE Loss: 5384.271151 KLD Loss: 548.389972  Time data load: 9809.206ms, Time training: 24.277ms
+Train Epoch: 27 [51200/347600 (15%)]	 BCE Loss: 8038.932138 KLD Loss: 616.171342  Time data load: 15237.997ms, Time training: 61.521ms
+Train Epoch: 27 [102400/347600 (29%)]	 BCE Loss: 10771.724587 KLD Loss: 718.967602  Time data load: 20829.095ms, Time training: 21.010ms
+Train Epoch: 27 [153600/347600 (44%)]	 BCE Loss: 9942.285865 KLD Loss: 613.359948  Time data load: 16978.920ms, Time training: 56.769ms
+Train Epoch: 27 [204800/347600 (59%)]	 BCE Loss: 7261.079245 KLD Loss: 585.330991  Time data load: 20278.680ms, Time training: 21.102ms
+Train Epoch: 27 [256000/347600 (74%)]	 BCE Loss: 7698.321538 KLD Loss: 594.274101  Time data load: 17567.193ms, Time training: 56.936ms
+Train Epoch: 27 [307200/347600 (88%)]	 BCE Loss: 6661.639592 KLD Loss: 549.309996  Time data load: 20217.447ms, Time training: 21.280ms
+====> Epoch: 27 Average loss: 8359.0047 -- nbatches: 679
+====> Epoch: 27 Average loss: 8413.3605 -- nbatches: 679
+Test Epoch: 27 [0/102400 (0%)]	 val loss: 17474.457727 Time val data load: 13067.011ms, Time testing: 12.732ms
+Test Epoch: 27 [51200/102400 (50%)]	 val loss: 16385.712067 Time val data load: 16261.511ms, Time testing: 14.557ms
+====> Test set loss: 15579.6695 -- nbatches 200
+Train Epoch: 28 [0/347600 (0%)]	 BCE Loss: 8975.946814 KLD Loss: 571.845328  Time data load: 14231.932ms, Time training: 24.030ms
+Train Epoch: 28 [51200/347600 (15%)]	 BCE Loss: 6385.604801 KLD Loss: 622.739338  Time data load: 16012.250ms, Time training: 55.338ms
+Train Epoch: 28 [102400/347600 (29%)]	 BCE Loss: 6571.228494 KLD Loss: 578.790961  Time data load: 19216.728ms, Time training: 20.900ms
+Train Epoch: 28 [153600/347600 (44%)]	 BCE Loss: 6994.157478 KLD Loss: 570.560521  Time data load: 17815.390ms, Time training: 57.042ms
+Train Epoch: 28 [204800/347600 (59%)]	 BCE Loss: 7343.667560 KLD Loss: 590.236149  Time data load: 21390.732ms, Time training: 20.633ms
+Train Epoch: 28 [256000/347600 (74%)]	 BCE Loss: 8471.847522 KLD Loss: 613.341723  Time data load: 15070.772ms, Time training: 183.855ms
+Train Epoch: 28 [307200/347600 (88%)]	 BCE Loss: 7254.058976 KLD Loss: 557.173720  Time data load: 20232.222ms, Time training: 57.538ms
+====> Epoch: 28 Average loss: 8402.7807 -- nbatches: 679
+====> Epoch: 28 Average loss: 8279.3893 -- nbatches: 679
+Test Epoch: 28 [0/102400 (0%)]	 val loss: 19011.084833 Time val data load: 10619.439ms, Time testing: 13.119ms
+Test Epoch: 28 [51200/102400 (50%)]	 val loss: 17940.674646 Time val data load: 19695.977ms, Time testing: 12.627ms
+====> Test set loss: 17943.1127 -- nbatches 200
+Train Epoch: 29 [0/347600 (0%)]	 BCE Loss: 6919.056937 KLD Loss: 580.990846  Time data load: 10292.058ms, Time training: 24.820ms
+Train Epoch: 29 [51200/347600 (15%)]	 BCE Loss: 6161.233604 KLD Loss: 494.162447  Time data load: 20094.020ms, Time training: 58.105ms
+Train Epoch: 29 [102400/347600 (29%)]	 BCE Loss: 9882.633473 KLD Loss: 669.387054  Time data load: 16677.100ms, Time training: 52.577ms
+Train Epoch: 29 [153600/347600 (44%)]	 BCE Loss: 5689.965665 KLD Loss: 591.796041  Time data load: 20772.361ms, Time training: 430.099ms
+Train Epoch: 29 [204800/347600 (59%)]	 BCE Loss: 7981.908415 KLD Loss: 535.513561  Time data load: 17910.993ms, Time training: 52.150ms
+Train Epoch: 29 [256000/347600 (74%)]	 BCE Loss: 5864.249722 KLD Loss: 607.229086  Time data load: 19699.519ms, Time training: 500.521ms
+Train Epoch: 29 [307200/347600 (88%)]	 BCE Loss: 7442.897829 KLD Loss: 565.156752  Time data load: 17189.978ms, Time training: 60.393ms
+====> Epoch: 29 Average loss: 8316.0950 -- nbatches: 679
+====> Epoch: 29 Average loss: 8310.4777 -- nbatches: 679
+Test Epoch: 29 [0/102400 (0%)]	 val loss: 22026.856373 Time val data load: 13281.423ms, Time testing: 13.193ms
+Test Epoch: 29 [51200/102400 (50%)]	 val loss: 21070.112611 Time val data load: 16065.260ms, Time testing: 12.600ms
+====> Test set loss: 19925.2756 -- nbatches 200
+Train Epoch: 30 [0/347600 (0%)]	 BCE Loss: 6918.714766 KLD Loss: 571.459431  Time data load: 14842.182ms, Time training: 35.236ms
+Train Epoch: 30 [51200/347600 (15%)]	 BCE Loss: 6882.030977 KLD Loss: 541.993269  Time data load: 10877.625ms, Time training: 57.208ms
+Train Epoch: 30 [102400/347600 (29%)]	 BCE Loss: 5694.007848 KLD Loss: 496.993792  Time data load: 22472.733ms, Time training: 56.856ms
+Train Epoch: 30 [153600/347600 (44%)]	 BCE Loss: 7410.422744 KLD Loss: 580.056572  Time data load: 21095.714ms, Time training: 567.996ms
+Train Epoch: 30 [204800/347600 (59%)]	 BCE Loss: 10401.399633 KLD Loss: 656.195891  Time data load: 18531.410ms, Time training: 56.892ms
+Train Epoch: 30 [256000/347600 (74%)]	 BCE Loss: 6679.717402 KLD Loss: 604.913305  Time data load: 18872.496ms, Time training: 1611.452ms
+Train Epoch: 30 [307200/347600 (88%)]	 BCE Loss: 8950.021358 KLD Loss: 551.378718  Time data load: 18126.023ms, Time training: 146.695ms
+====> Epoch: 30 Average loss: 8317.8246 -- nbatches: 679
+====> Epoch: 30 Average loss: 8273.4224 -- nbatches: 679
+Test Epoch: 30 [0/102400 (0%)]	 val loss: 12523.090695 Time val data load: 11782.645ms, Time testing: 13.338ms
+Test Epoch: 30 [51200/102400 (50%)]	 val loss: 11371.922225 Time val data load: 18021.029ms, Time testing: 12.653ms
+====> Test set loss: 10779.2319 -- nbatches 200
+Train Epoch: 31 [0/347600 (0%)]	 BCE Loss: 8124.344350 KLD Loss: 602.905273  Time data load: 10549.021ms, Time training: 24.592ms
+Train Epoch: 31 [51200/347600 (15%)]	 BCE Loss: 7443.563603 KLD Loss: 641.018191  Time data load: 17724.920ms, Time training: 55.585ms
+Train Epoch: 31 [102400/347600 (29%)]	 BCE Loss: 7940.588871 KLD Loss: 582.280331  Time data load: 16781.365ms, Time training: 56.021ms
+Train Epoch: 31 [153600/347600 (44%)]	 BCE Loss: 6963.044320 KLD Loss: 652.325262  Time data load: 19426.806ms, Time training: 56.035ms
+Train Epoch: 31 [204800/347600 (59%)]	 BCE Loss: 6347.413557 KLD Loss: 489.099809  Time data load: 17600.816ms, Time training: 58.577ms
+Train Epoch: 31 [256000/347600 (74%)]	 BCE Loss: 4627.962331 KLD Loss: 556.006668  Time data load: 18087.409ms, Time training: 51.203ms
+Train Epoch: 31 [307200/347600 (88%)]	 BCE Loss: 8956.578635 KLD Loss: 607.401559  Time data load: 18876.459ms, Time training: 53.178ms
+====> Epoch: 31 Average loss: 8290.8454 -- nbatches: 679
+====> Epoch: 31 Average loss: 8296.6280 -- nbatches: 679
+Test Epoch: 31 [0/102400 (0%)]	 val loss: 13026.763907 Time val data load: 11282.671ms, Time testing: 13.075ms
+Test Epoch: 31 [51200/102400 (50%)]	 val loss: 11229.758357 Time val data load: 18845.615ms, Time testing: 12.599ms
+====> Test set loss: 10974.4207 -- nbatches 200
+Train Epoch: 32 [0/347600 (0%)]	 BCE Loss: 7414.045305 KLD Loss: 566.419192  Time data load: 12610.500ms, Time training: 25.736ms
+Train Epoch: 32 [51200/347600 (15%)]	 BCE Loss: 6022.226186 KLD Loss: 553.332810  Time data load: 12755.717ms, Time training: 21.950ms
+Train Epoch: 32 [102400/347600 (29%)]	 BCE Loss: 6036.330475 KLD Loss: 521.586774  Time data load: 19431.476ms, Time training: 52.601ms
+Train Epoch: 32 [153600/347600 (44%)]	 BCE Loss: 6174.580102 KLD Loss: 553.361394  Time data load: 21248.048ms, Time training: 57.550ms
+Train Epoch: 32 [204800/347600 (59%)]	 BCE Loss: 6364.503973 KLD Loss: 553.323636  Time data load: 18985.505ms, Time training: 144.094ms
+Train Epoch: 32 [256000/347600 (74%)]	 BCE Loss: 6908.451294 KLD Loss: 538.980699  Time data load: 19885.041ms, Time training: 57.024ms
+Train Epoch: 32 [307200/347600 (88%)]	 BCE Loss: 8745.405749 KLD Loss: 603.076773  Time data load: 18613.757ms, Time training: 57.470ms
+====> Epoch: 32 Average loss: 8287.2668 -- nbatches: 679
+====> Epoch: 32 Average loss: 8318.1948 -- nbatches: 679
+Test Epoch: 32 [0/102400 (0%)]	 val loss: 11148.594371 Time val data load: 10541.217ms, Time testing: 13.142ms
+Test Epoch: 32 [51200/102400 (50%)]	 val loss: 10124.629906 Time val data load: 19414.065ms, Time testing: 12.625ms
+====> Test set loss: 9377.0504 -- nbatches 200
++++ Saving best model because test_loss: 9377.050436552341 < miniloss: 9481.698711402973 +++
+Train Epoch: 33 [0/347600 (0%)]	 BCE Loss: 8104.239880 KLD Loss: 647.951764  Time data load: 9852.750ms, Time training: 23.731ms
+Train Epoch: 33 [51200/347600 (15%)]	 BCE Loss: 8355.079928 KLD Loss: 617.311599  Time data load: 19220.308ms, Time training: 55.992ms
+Train Epoch: 33 [102400/347600 (29%)]	 BCE Loss: 6434.430778 KLD Loss: 562.803854  Time data load: 18036.061ms, Time training: 52.096ms
+Train Epoch: 33 [153600/347600 (44%)]	 BCE Loss: 9018.684092 KLD Loss: 618.754911  Time data load: 20181.964ms, Time training: 662.576ms
+Train Epoch: 33 [204800/347600 (59%)]	 BCE Loss: 9262.175713 KLD Loss: 569.967753  Time data load: 17600.166ms, Time training: 81.990ms
+Train Epoch: 33 [256000/347600 (74%)]	 BCE Loss: 6036.091845 KLD Loss: 511.054164  Time data load: 18661.285ms, Time training: 121.446ms
+Train Epoch: 33 [307200/347600 (88%)]	 BCE Loss: 7866.967018 KLD Loss: 564.008475  Time data load: 19321.295ms, Time training: 52.781ms
+====> Epoch: 33 Average loss: 8242.3982 -- nbatches: 679
+====> Epoch: 33 Average loss: 8181.0573 -- nbatches: 679
+Test Epoch: 33 [0/102400 (0%)]	 val loss: 14003.596191 Time val data load: 9119.589ms, Time testing: 13.133ms
+Test Epoch: 33 [51200/102400 (50%)]	 val loss: 13010.326263 Time val data load: 20949.409ms, Time testing: 12.578ms
+====> Test set loss: 12361.6625 -- nbatches 200
+Train Epoch: 34 [0/347600 (0%)]	 BCE Loss: 8745.567512 KLD Loss: 594.368673  Time data load: 13635.452ms, Time training: 24.340ms
+Train Epoch: 34 [51200/347600 (15%)]	 BCE Loss: 7473.201375 KLD Loss: 537.758175  Time data load: 15211.395ms, Time training: 56.633ms
+Train Epoch: 34 [102400/347600 (29%)]	 BCE Loss: 8310.015514 KLD Loss: 573.216355  Time data load: 17647.037ms, Time training: 59.770ms
+Train Epoch: 34 [153600/347600 (44%)]	 BCE Loss: 9199.163972 KLD Loss: 633.394711  Time data load: 21869.548ms, Time training: 52.186ms
+Train Epoch: 34 [204800/347600 (59%)]	 BCE Loss: 8499.217511 KLD Loss: 592.486039  Time data load: 18149.562ms, Time training: 53.147ms
+Train Epoch: 34 [256000/347600 (74%)]	 BCE Loss: 5897.721152 KLD Loss: 540.586407  Time data load: 18557.030ms, Time training: 88.353ms
+Train Epoch: 34 [307200/347600 (88%)]	 BCE Loss: 6730.450465 KLD Loss: 606.961666  Time data load: 18520.951ms, Time training: 55.275ms
+====> Epoch: 34 Average loss: 8188.0166 -- nbatches: 679
+====> Epoch: 34 Average loss: 8308.4278 -- nbatches: 679
+Test Epoch: 34 [0/102400 (0%)]	 val loss: 13911.900323 Time val data load: 10717.890ms, Time testing: 13.113ms
+Test Epoch: 34 [51200/102400 (50%)]	 val loss: 12472.086226 Time val data load: 18857.610ms, Time testing: 12.574ms
+====> Test set loss: 11841.5167 -- nbatches 200
+Train Epoch: 35 [0/347600 (0%)]	 BCE Loss: 5983.593863 KLD Loss: 562.719359  Time data load: 9192.348ms, Time training: 24.842ms
+Train Epoch: 35 [51200/347600 (15%)]	 BCE Loss: 8471.741737 KLD Loss: 620.468229  Time data load: 14845.849ms, Time training: 56.550ms
+Train Epoch: 35 [102400/347600 (29%)]	 BCE Loss: 9079.911597 KLD Loss: 593.020785  Time data load: 21585.756ms, Time training: 52.714ms
+Train Epoch: 35 [153600/347600 (44%)]	 BCE Loss: 7495.545463 KLD Loss: 603.723743  Time data load: 18363.008ms, Time training: 52.240ms
+Train Epoch: 35 [204800/347600 (59%)]	 BCE Loss: 7282.862905 KLD Loss: 562.936860  Time data load: 19779.484ms, Time training: 52.024ms
+Train Epoch: 35 [256000/347600 (74%)]	 BCE Loss: 8511.050477 KLD Loss: 615.281478  Time data load: 18514.327ms, Time training: 196.004ms
+Train Epoch: 35 [307200/347600 (88%)]	 BCE Loss: 8258.648125 KLD Loss: 610.841457  Time data load: 18409.143ms, Time training: 91.071ms
+====> Epoch: 35 Average loss: 8234.4717 -- nbatches: 679
+====> Epoch: 35 Average loss: 8274.3066 -- nbatches: 679
+Test Epoch: 35 [0/102400 (0%)]	 val loss: 14083.885176 Time val data load: 14016.836ms, Time testing: 13.269ms
+Test Epoch: 35 [51200/102400 (50%)]	 val loss: 12915.425160 Time val data load: 16680.590ms, Time testing: 12.652ms
+====> Test set loss: 12372.7466 -- nbatches 200
+Train Epoch: 36 [0/347600 (0%)]	 BCE Loss: 8383.931567 KLD Loss: 531.649543  Time data load: 13816.685ms, Time training: 24.168ms
+Train Epoch: 36 [51200/347600 (15%)]	 BCE Loss: 6555.152271 KLD Loss: 548.775762  Time data load: 16349.843ms, Time training: 57.013ms
+Train Epoch: 36 [102400/347600 (29%)]	 BCE Loss: 8770.580377 KLD Loss: 644.854256  Time data load: 18515.307ms, Time training: 56.111ms
+Train Epoch: 36 [153600/347600 (44%)]	 BCE Loss: 7853.552860 KLD Loss: 533.701349  Time data load: 21878.715ms, Time training: 56.479ms
+Train Epoch: 36 [204800/347600 (59%)]	 BCE Loss: 7428.301600 KLD Loss: 571.622110  Time data load: 18919.306ms, Time training: 203.660ms
+Train Epoch: 36 [256000/347600 (74%)]	 BCE Loss: 9600.147363 KLD Loss: 606.789596  Time data load: 19841.170ms, Time training: 56.648ms
+Train Epoch: 36 [307200/347600 (88%)]	 BCE Loss: 5932.112082 KLD Loss: 578.129974  Time data load: 17704.647ms, Time training: 333.588ms
+====> Epoch: 36 Average loss: 8249.5677 -- nbatches: 679
+====> Epoch: 36 Average loss: 8251.1728 -- nbatches: 679
+Test Epoch: 36 [0/102400 (0%)]	 val loss: 17270.233417 Time val data load: 12397.287ms, Time testing: 13.250ms
+Test Epoch: 36 [51200/102400 (50%)]	 val loss: 16315.698589 Time val data load: 17361.681ms, Time testing: 12.563ms
+====> Test set loss: 15458.0639 -- nbatches 200
+Train Epoch: 37 [0/347600 (0%)]	 BCE Loss: 7652.903617 KLD Loss: 598.030520  Time data load: 13302.365ms, Time training: 24.522ms
+Train Epoch: 37 [51200/347600 (15%)]	 BCE Loss: 7348.177885 KLD Loss: 552.495628  Time data load: 14329.111ms, Time training: 56.040ms
+Train Epoch: 37 [102400/347600 (29%)]	 BCE Loss: 6808.613449 KLD Loss: 575.766570  Time data load: 18925.564ms, Time training: 52.512ms
+Train Epoch: 37 [153600/347600 (44%)]	 BCE Loss: 6272.847898 KLD Loss: 517.568358  Time data load: 21317.909ms, Time training: 438.880ms
+Train Epoch: 37 [204800/347600 (59%)]	 BCE Loss: 8351.466433 KLD Loss: 578.873099  Time data load: 19331.077ms, Time training: 57.302ms
+Train Epoch: 37 [256000/347600 (74%)]	 BCE Loss: 9037.384385 KLD Loss: 590.351757  Time data load: 19790.996ms, Time training: 56.822ms
+Train Epoch: 37 [307200/347600 (88%)]	 BCE Loss: 8703.894619 KLD Loss: 652.364643  Time data load: 17817.774ms, Time training: 52.574ms
+====> Epoch: 37 Average loss: 8240.2397 -- nbatches: 679
+====> Epoch: 37 Average loss: 8236.3468 -- nbatches: 679
+Test Epoch: 37 [0/102400 (0%)]	 val loss: 12934.555478 Time val data load: 10349.205ms, Time testing: 13.180ms
+Test Epoch: 37 [51200/102400 (50%)]	 val loss: 11761.891178 Time val data load: 19953.450ms, Time testing: 12.590ms
+====> Test set loss: 11176.7303 -- nbatches 200
+Train Epoch: 38 [0/347600 (0%)]	 BCE Loss: 7690.547368 KLD Loss: 571.953536  Time data load: 11402.588ms, Time training: 25.228ms
+Train Epoch: 38 [51200/347600 (15%)]	 BCE Loss: 8486.256515 KLD Loss: 622.689817  Time data load: 14770.097ms, Time training: 639.646ms
+Train Epoch: 38 [102400/347600 (29%)]	 BCE Loss: 10073.933334 KLD Loss: 644.476496  Time data load: 20408.060ms, Time training: 52.206ms
+Train Epoch: 38 [153600/347600 (44%)]	 BCE Loss: 10100.537221 KLD Loss: 624.740452  Time data load: 20834.124ms, Time training: 49.171ms
+Train Epoch: 38 [204800/347600 (59%)]	 BCE Loss: 7369.500975 KLD Loss: 579.802015  Time data load: 18879.037ms, Time training: 49.891ms
+Train Epoch: 38 [256000/347600 (74%)]	 BCE Loss: 8254.959974 KLD Loss: 585.930722  Time data load: 18063.814ms, Time training: 322.106ms
+Train Epoch: 38 [307200/347600 (88%)]	 BCE Loss: 8091.404672 KLD Loss: 655.357588  Time data load: 18117.069ms, Time training: 160.935ms
+====> Epoch: 38 Average loss: 8199.6936 -- nbatches: 679
+====> Epoch: 38 Average loss: 8187.7139 -- nbatches: 679
+Test Epoch: 38 [0/102400 (0%)]	 val loss: 13974.468772 Time val data load: 13856.108ms, Time testing: 13.136ms
+Test Epoch: 38 [51200/102400 (50%)]	 val loss: 13629.626180 Time val data load: 16418.600ms, Time testing: 17.155ms
+====> Test set loss: 12244.5407 -- nbatches 200
+Train Epoch: 39 [0/347600 (0%)]	 BCE Loss: 9540.545645 KLD Loss: 651.423727  Time data load: 9133.091ms, Time training: 25.034ms
+Train Epoch: 39 [51200/347600 (15%)]	 BCE Loss: 8301.216678 KLD Loss: 616.173576  Time data load: 22060.995ms, Time training: 63.688ms
+Train Epoch: 39 [102400/347600 (29%)]	 BCE Loss: 7819.876031 KLD Loss: 530.936552  Time data load: 17048.981ms, Time training: 51.461ms
+Train Epoch: 39 [153600/347600 (44%)]	 BCE Loss: 8845.371805 KLD Loss: 577.036081  Time data load: 19931.442ms, Time training: 57.117ms
+Train Epoch: 39 [204800/347600 (59%)]	 BCE Loss: 9882.862184 KLD Loss: 647.923374  Time data load: 17943.320ms, Time training: 60.863ms
+Train Epoch: 39 [256000/347600 (74%)]	 BCE Loss: 7552.304981 KLD Loss: 580.820223  Time data load: 19227.034ms, Time training: 262.836ms
+Train Epoch: 39 [307200/347600 (88%)]	 BCE Loss: 7880.914743 KLD Loss: 562.157850  Time data load: 18282.375ms, Time training: 89.250ms
+====> Epoch: 39 Average loss: 8184.3882 -- nbatches: 679
+====> Epoch: 39 Average loss: 8151.3883 -- nbatches: 679
+Test Epoch: 39 [0/102400 (0%)]	 val loss: 16504.005861 Time val data load: 9632.932ms, Time testing: 13.107ms
+Test Epoch: 39 [51200/102400 (50%)]	 val loss: 15074.758439 Time val data load: 21345.245ms, Time testing: 12.631ms
+====> Test set loss: 14881.3680 -- nbatches 200
++++ Saving checkpoint in ./outputs/model_DVAE_test/model_DVAE_test_347k102k_CHECK_EPOCH_40.pth +++
+Train Epoch: 40 [0/347600 (0%)]	 BCE Loss: 6051.236654 KLD Loss: 515.974272  Time data load: 13195.715ms, Time training: 23.551ms
+Train Epoch: 40 [51200/347600 (15%)]	 BCE Loss: 6382.571240 KLD Loss: 506.887574  Time data load: 14895.623ms, Time training: 55.361ms
+Train Epoch: 40 [102400/347600 (29%)]	 BCE Loss: 8516.724598 KLD Loss: 608.410559  Time data load: 17122.748ms, Time training: 51.691ms
+Train Epoch: 40 [153600/347600 (44%)]	 BCE Loss: 9516.478358 KLD Loss: 603.787771  Time data load: 22185.043ms, Time training: 935.025ms
+Train Epoch: 40 [204800/347600 (59%)]	 BCE Loss: 8992.057243 KLD Loss: 649.857148  Time data load: 17917.238ms, Time training: 56.175ms
+Train Epoch: 40 [256000/347600 (74%)]	 BCE Loss: 7891.614479 KLD Loss: 584.828738  Time data load: 19294.637ms, Time training: 110.967ms
+Train Epoch: 40 [307200/347600 (88%)]	 BCE Loss: 9186.554529 KLD Loss: 610.335724  Time data load: 18663.240ms, Time training: 56.284ms
+====> Epoch: 40 Average loss: 8174.5164 -- nbatches: 679
+====> Epoch: 40 Average loss: 8152.8242 -- nbatches: 679
+Test Epoch: 40 [0/102400 (0%)]	 val loss: 17566.630166 Time val data load: 13121.117ms, Time testing: 13.494ms
+Test Epoch: 40 [51200/102400 (50%)]	 val loss: 16443.378859 Time val data load: 17139.320ms, Time testing: 12.609ms
+====> Test set loss: 15886.5424 -- nbatches 200
+Train Epoch: 41 [0/347600 (0%)]	 BCE Loss: 6915.903175 KLD Loss: 570.762715  Time data load: 9462.996ms, Time training: 33.088ms
+Train Epoch: 41 [51200/347600 (15%)]	 BCE Loss: 7268.387447 KLD Loss: 538.757057  Time data load: 17378.723ms, Time training: 56.001ms
+Train Epoch: 41 [102400/347600 (29%)]	 BCE Loss: 6260.076779 KLD Loss: 559.950921  Time data load: 19599.048ms, Time training: 20.592ms
+Train Epoch: 41 [153600/347600 (44%)]	 BCE Loss: 6012.363336 KLD Loss: 551.809567  Time data load: 19397.159ms, Time training: 56.259ms
+Train Epoch: 41 [204800/347600 (59%)]	 BCE Loss: 7013.592988 KLD Loss: 560.095170  Time data load: 15759.295ms, Time training: 21.196ms
+Train Epoch: 41 [256000/347600 (74%)]	 BCE Loss: 7402.595022 KLD Loss: 536.779499  Time data load: 19501.889ms, Time training: 56.410ms
+Train Epoch: 41 [307200/347600 (88%)]	 BCE Loss: 6136.088845 KLD Loss: 512.282792  Time data load: 18493.430ms, Time training: 51.779ms
+====> Epoch: 41 Average loss: 8069.6964 -- nbatches: 679
+====> Epoch: 41 Average loss: 8165.9571 -- nbatches: 679
+Test Epoch: 41 [0/102400 (0%)]	 val loss: 20672.239216 Time val data load: 13235.779ms, Time testing: 13.237ms
+Test Epoch: 41 [51200/102400 (50%)]	 val loss: 19819.518958 Time val data load: 15769.482ms, Time testing: 12.580ms
+====> Test set loss: 19121.6941 -- nbatches 200
+Train Epoch: 42 [0/347600 (0%)]	 BCE Loss: 8624.220617 KLD Loss: 600.622848  Time data load: 10491.486ms, Time training: 25.033ms
+Train Epoch: 42 [51200/347600 (15%)]	 BCE Loss: 8505.216861 KLD Loss: 596.311900  Time data load: 19456.579ms, Time training: 60.139ms
+Train Epoch: 42 [102400/347600 (29%)]	 BCE Loss: 6972.583673 KLD Loss: 569.833488  Time data load: 16707.318ms, Time training: 59.086ms
+Train Epoch: 42 [153600/347600 (44%)]	 BCE Loss: 4910.484441 KLD Loss: 517.019255  Time data load: 18761.033ms, Time training: 52.543ms
+Train Epoch: 42 [204800/347600 (59%)]	 BCE Loss: 5984.607984 KLD Loss: 555.996253  Time data load: 19520.306ms, Time training: 56.149ms
+Train Epoch: 42 [256000/347600 (74%)]	 BCE Loss: 7244.815307 KLD Loss: 518.037837  Time data load: 19524.329ms, Time training: 52.292ms
+Train Epoch: 42 [307200/347600 (88%)]	 BCE Loss: 8303.058931 KLD Loss: 592.661407  Time data load: 18337.304ms, Time training: 63.811ms
+====> Epoch: 42 Average loss: 8197.3201 -- nbatches: 679
+====> Epoch: 42 Average loss: 8074.8832 -- nbatches: 679
+Test Epoch: 42 [0/102400 (0%)]	 val loss: 17760.873284 Time val data load: 10459.077ms, Time testing: 13.080ms
+Test Epoch: 42 [51200/102400 (50%)]	 val loss: 16992.084896 Time val data load: 19827.650ms, Time testing: 12.607ms
+====> Test set loss: 15875.1060 -- nbatches 200
+Train Epoch: 43 [0/347600 (0%)]	 BCE Loss: 7395.208734 KLD Loss: 606.344601  Time data load: 12222.041ms, Time training: 23.128ms
+Train Epoch: 43 [51200/347600 (15%)]	 BCE Loss: 6344.413082 KLD Loss: 539.081846  Time data load: 14484.647ms, Time training: 52.326ms
+Train Epoch: 43 [102400/347600 (29%)]	 BCE Loss: 9620.014562 KLD Loss: 619.068952  Time data load: 21403.556ms, Time training: 52.203ms
+Train Epoch: 43 [153600/347600 (44%)]	 BCE Loss: 8395.388848 KLD Loss: 605.316660  Time data load: 20134.198ms, Time training: 55.531ms
+Train Epoch: 43 [204800/347600 (59%)]	 BCE Loss: 6300.823312 KLD Loss: 512.625949  Time data load: 18971.292ms, Time training: 56.427ms
+Train Epoch: 43 [256000/347600 (74%)]	 BCE Loss: 7030.181102 KLD Loss: 567.027520  Time data load: 19035.786ms, Time training: 55.791ms
+Train Epoch: 43 [307200/347600 (88%)]	 BCE Loss: 6665.973324 KLD Loss: 585.730747  Time data load: 18939.109ms, Time training: 56.719ms
+====> Epoch: 43 Average loss: 8100.1696 -- nbatches: 679
+====> Epoch: 43 Average loss: 8192.1194 -- nbatches: 679
+Test Epoch: 43 [0/102400 (0%)]	 val loss: 28634.433955 Time val data load: 14435.020ms, Time testing: 13.206ms
+Test Epoch: 43 [51200/102400 (50%)]	 val loss: 27828.721492 Time val data load: 16015.346ms, Time testing: 12.946ms
+====> Test set loss: 25929.8791 -- nbatches 200
+Train Epoch: 44 [0/347600 (0%)]	 BCE Loss: 7241.238891 KLD Loss: 597.766203  Time data load: 12051.878ms, Time training: 27.823ms
+Train Epoch: 44 [51200/347600 (15%)]	 BCE Loss: 5282.831623 KLD Loss: 511.064626  Time data load: 13997.407ms, Time training: 27.470ms
+Train Epoch: 44 [102400/347600 (29%)]	 BCE Loss: 6863.618407 KLD Loss: 577.815292  Time data load: 22090.381ms, Time training: 56.316ms
+Train Epoch: 44 [153600/347600 (44%)]	 BCE Loss: 4239.460991 KLD Loss: 584.810986  Time data load: 21056.123ms, Time training: 57.165ms
+Train Epoch: 44 [204800/347600 (59%)]	 BCE Loss: 7716.562160 KLD Loss: 620.072743  Time data load: 18053.740ms, Time training: 51.726ms
+Train Epoch: 44 [256000/347600 (74%)]	 BCE Loss: 5928.617473 KLD Loss: 560.227864  Time data load: 18847.390ms, Time training: 623.304ms
+Train Epoch: 44 [307200/347600 (88%)]	 BCE Loss: 9303.673770 KLD Loss: 629.622091  Time data load: 18406.416ms, Time training: 51.788ms
+====> Epoch: 44 Average loss: 8082.6541 -- nbatches: 679
+====> Epoch: 44 Average loss: 8157.1123 -- nbatches: 679
+Test Epoch: 44 [0/102400 (0%)]	 val loss: 12780.000943 Time val data load: 13856.246ms, Time testing: 13.253ms
+Test Epoch: 44 [51200/102400 (50%)]	 val loss: 11365.751892 Time val data load: 15903.730ms, Time testing: 12.669ms
+====> Test set loss: 10694.2081 -- nbatches 200
+Train Epoch: 45 [0/347600 (0%)]	 BCE Loss: 7318.673328 KLD Loss: 551.970747  Time data load: 9689.313ms, Time training: 26.186ms
+Train Epoch: 45 [51200/347600 (15%)]	 BCE Loss: 6614.944754 KLD Loss: 584.060472  Time data load: 14507.368ms, Time training: 68.259ms
+Train Epoch: 45 [102400/347600 (29%)]	 BCE Loss: 5640.817459 KLD Loss: 509.855018  Time data load: 19891.215ms, Time training: 56.509ms
+Train Epoch: 45 [153600/347600 (44%)]	 BCE Loss: 7577.271097 KLD Loss: 587.743530  Time data load: 20091.226ms, Time training: 56.577ms
+Train Epoch: 45 [204800/347600 (59%)]	 BCE Loss: 8404.013349 KLD Loss: 607.940374  Time data load: 18947.416ms, Time training: 58.433ms
+Train Epoch: 45 [256000/347600 (74%)]	 BCE Loss: 8108.088774 KLD Loss: 635.453455  Time data load: 19911.481ms, Time training: 56.065ms
+Train Epoch: 45 [307200/347600 (88%)]	 BCE Loss: 6714.518464 KLD Loss: 555.574734  Time data load: 18499.759ms, Time training: 57.209ms
+====> Epoch: 45 Average loss: 8047.5901 -- nbatches: 679
+====> Epoch: 45 Average loss: 8160.5988 -- nbatches: 679
+Test Epoch: 45 [0/102400 (0%)]	 val loss: 10547.352513 Time val data load: 11651.441ms, Time testing: 13.169ms
+Test Epoch: 45 [51200/102400 (50%)]	 val loss: 9396.224979 Time val data load: 18804.340ms, Time testing: 12.578ms
+====> Test set loss: 8758.3012 -- nbatches 200
++++ Saving best model because test_loss: 8758.301207378505 < miniloss: 9377.050436552341 +++
+Train Epoch: 46 [0/347600 (0%)]	 BCE Loss: 7868.371320 KLD Loss: 573.120680  Time data load: 11465.096ms, Time training: 23.113ms
+Train Epoch: 46 [51200/347600 (15%)]	 BCE Loss: 8404.120955 KLD Loss: 624.608956  Time data load: 14973.179ms, Time training: 148.361ms
+Train Epoch: 46 [102400/347600 (29%)]	 BCE Loss: 7753.766414 KLD Loss: 582.437176  Time data load: 20638.261ms, Time training: 45.496ms
+Train Epoch: 46 [153600/347600 (44%)]	 BCE Loss: 9177.291646 KLD Loss: 656.704412  Time data load: 19570.801ms, Time training: 56.003ms
+Train Epoch: 46 [204800/347600 (59%)]	 BCE Loss: 7565.964995 KLD Loss: 591.698355  Time data load: 18867.687ms, Time training: 51.031ms
+Train Epoch: 46 [256000/347600 (74%)]	 BCE Loss: 9034.807247 KLD Loss: 609.922442  Time data load: 18906.801ms, Time training: 75.361ms
+Train Epoch: 46 [307200/347600 (88%)]	 BCE Loss: 7920.431330 KLD Loss: 584.370501  Time data load: 19239.929ms, Time training: 52.133ms
+====> Epoch: 46 Average loss: 8169.3693 -- nbatches: 679
+====> Epoch: 46 Average loss: 8058.6821 -- nbatches: 679
+Test Epoch: 46 [0/102400 (0%)]	 val loss: 18829.740120 Time val data load: 12078.817ms, Time testing: 13.160ms
+Test Epoch: 46 [51200/102400 (50%)]	 val loss: 18313.694969 Time val data load: 18571.694ms, Time testing: 12.618ms
+====> Test set loss: 16208.3574 -- nbatches 200
+Train Epoch: 47 [0/347600 (0%)]	 BCE Loss: 7235.103616 KLD Loss: 595.112856  Time data load: 9315.438ms, Time training: 24.086ms
+Train Epoch: 47 [51200/347600 (15%)]	 BCE Loss: 6245.093047 KLD Loss: 534.921213  Time data load: 15836.128ms, Time training: 55.134ms
+Train Epoch: 47 [102400/347600 (29%)]	 BCE Loss: 7155.172816 KLD Loss: 620.461418  Time data load: 19934.250ms, Time training: 57.287ms
+Train Epoch: 47 [153600/347600 (44%)]	 BCE Loss: 7517.802517 KLD Loss: 556.380729  Time data load: 19663.726ms, Time training: 286.018ms
+Train Epoch: 47 [204800/347600 (59%)]	 BCE Loss: 8579.515694 KLD Loss: 575.327867  Time data load: 18311.836ms, Time training: 51.948ms
+Train Epoch: 47 [256000/347600 (74%)]	 BCE Loss: 8532.016854 KLD Loss: 606.391534  Time data load: 17812.051ms, Time training: 55.947ms
+Train Epoch: 47 [307200/347600 (88%)]	 BCE Loss: 7079.105559 KLD Loss: 560.410252  Time data load: 18145.309ms, Time training: 52.187ms
+====> Epoch: 47 Average loss: 8076.5853 -- nbatches: 679
+====> Epoch: 47 Average loss: 8040.0369 -- nbatches: 679
+Test Epoch: 47 [0/102400 (0%)]	 val loss: 11007.234155 Time val data load: 14832.524ms, Time testing: 13.246ms
+Test Epoch: 47 [51200/102400 (50%)]	 val loss: 10413.329427 Time val data load: 15164.677ms, Time testing: 12.577ms
+====> Test set loss: 9344.4410 -- nbatches 200
+Train Epoch: 48 [0/347600 (0%)]	 BCE Loss: 8043.694664 KLD Loss: 579.506473  Time data load: 11670.543ms, Time training: 24.617ms
+Train Epoch: 48 [51200/347600 (15%)]	 BCE Loss: 7041.596509 KLD Loss: 548.154654  Time data load: 19617.431ms, Time training: 56.417ms
+Train Epoch: 48 [102400/347600 (29%)]	 BCE Loss: 7770.434360 KLD Loss: 622.403955  Time data load: 16117.086ms, Time training: 20.657ms
+Train Epoch: 48 [153600/347600 (44%)]	 BCE Loss: 8140.407606 KLD Loss: 633.018255  Time data load: 22826.166ms, Time training: 56.149ms
+Train Epoch: 48 [204800/347600 (59%)]	 BCE Loss: 6558.725616 KLD Loss: 580.074419  Time data load: 13699.469ms, Time training: 170.297ms
+Train Epoch: 48 [256000/347600 (74%)]	 BCE Loss: 7989.038024 KLD Loss: 550.178969  Time data load: 20013.844ms, Time training: 56.252ms
+Train Epoch: 48 [307200/347600 (88%)]	 BCE Loss: 7835.482977 KLD Loss: 602.566332  Time data load: 20425.322ms, Time training: 246.430ms
+====> Epoch: 48 Average loss: 8112.1666 -- nbatches: 679
+====> Epoch: 48 Average loss: 8068.5478 -- nbatches: 679
+Test Epoch: 48 [0/102400 (0%)]	 val loss: 19433.824067 Time val data load: 13631.297ms, Time testing: 13.232ms
+Test Epoch: 48 [51200/102400 (50%)]	 val loss: 17755.698106 Time val data load: 16249.059ms, Time testing: 18.184ms
+====> Test set loss: 17051.0321 -- nbatches 200
+Train Epoch: 49 [0/347600 (0%)]	 BCE Loss: 8233.230048 KLD Loss: 592.833090  Time data load: 9678.449ms, Time training: 24.277ms
+Train Epoch: 49 [51200/347600 (15%)]	 BCE Loss: 8379.219362 KLD Loss: 607.566212  Time data load: 16330.463ms, Time training: 60.004ms
+Train Epoch: 49 [102400/347600 (29%)]	 BCE Loss: 12231.709641 KLD Loss: 653.411430  Time data load: 18249.261ms, Time training: 58.572ms
+Train Epoch: 49 [153600/347600 (44%)]	 BCE Loss: 8596.615778 KLD Loss: 608.428073  Time data load: 16380.560ms, Time training: 814.668ms
+Train Epoch: 49 [204800/347600 (59%)]	 BCE Loss: 7323.736775 KLD Loss: 546.476087  Time data load: 19535.011ms, Time training: 63.251ms
+Train Epoch: 49 [256000/347600 (74%)]	 BCE Loss: 9761.642721 KLD Loss: 584.328607  Time data load: 20178.687ms, Time training: 51.856ms
+Train Epoch: 49 [307200/347600 (88%)]	 BCE Loss: 6035.598541 KLD Loss: 549.636342  Time data load: 17761.909ms, Time training: 59.447ms
+====> Epoch: 49 Average loss: 8111.1531 -- nbatches: 679
+====> Epoch: 49 Average loss: 8063.1421 -- nbatches: 679
+Test Epoch: 49 [0/102400 (0%)]	 val loss: 11771.629188 Time val data load: 14375.707ms, Time testing: 15.625ms
+Test Epoch: 49 [51200/102400 (50%)]	 val loss: 10319.337136 Time val data load: 15772.863ms, Time testing: 12.562ms
+====> Test set loss: 10037.3192 -- nbatches 200
+Train Epoch: 50 [0/347600 (0%)]	 BCE Loss: 7895.959765 KLD Loss: 649.569202  Time data load: 10592.899ms, Time training: 24.040ms
+Train Epoch: 50 [51200/347600 (15%)]	 BCE Loss: 9868.023131 KLD Loss: 597.945294  Time data load: 16812.661ms, Time training: 57.130ms
+Train Epoch: 50 [102400/347600 (29%)]	 BCE Loss: 8333.048221 KLD Loss: 617.688976  Time data load: 17858.581ms, Time training: 20.768ms
+Train Epoch: 50 [153600/347600 (44%)]	 BCE Loss: 6092.021197 KLD Loss: 500.645548  Time data load: 23572.833ms, Time training: 60.470ms
+Train Epoch: 50 [204800/347600 (59%)]	 BCE Loss: 5340.894069 KLD Loss: 590.474162  Time data load: 18533.424ms, Time training: 61.865ms
+Train Epoch: 50 [256000/347600 (74%)]	 BCE Loss: 5382.178425 KLD Loss: 547.570788  Time data load: 18854.832ms, Time training: 56.739ms
+Train Epoch: 50 [307200/347600 (88%)]	 BCE Loss: 7937.531545 KLD Loss: 594.488773  Time data load: 19137.822ms, Time training: 257.004ms
+====> Epoch: 50 Average loss: 8128.3288 -- nbatches: 679
+====> Epoch: 50 Average loss: 8025.4789 -- nbatches: 679
+Test Epoch: 50 [0/102400 (0%)]	 val loss: 12769.304724 Time val data load: 13769.332ms, Time testing: 13.237ms
+Test Epoch: 50 [51200/102400 (50%)]	 val loss: 11607.037772 Time val data load: 16806.886ms, Time testing: 12.636ms
+====> Test set loss: 10787.4482 -- nbatches 200
+Train Epoch: 51 [0/347600 (0%)]	 BCE Loss: 5117.227543 KLD Loss: 544.094212  Time data load: 12298.632ms, Time training: 24.188ms
+Train Epoch: 51 [51200/347600 (15%)]	 BCE Loss: 7369.893204 KLD Loss: 582.921971  Time data load: 13894.083ms, Time training: 56.042ms
+Train Epoch: 51 [102400/347600 (29%)]	 BCE Loss: 7197.358907 KLD Loss: 574.392083  Time data load: 17388.383ms, Time training: 276.637ms
+Train Epoch: 51 [153600/347600 (44%)]	 BCE Loss: 6397.148688 KLD Loss: 565.824200  Time data load: 19851.407ms, Time training: 410.341ms
+Train Epoch: 51 [204800/347600 (59%)]	 BCE Loss: 6737.288731 KLD Loss: 553.850046  Time data load: 21989.979ms, Time training: 55.639ms
+Train Epoch: 51 [256000/347600 (74%)]	 BCE Loss: 5774.560440 KLD Loss: 559.699746  Time data load: 19180.929ms, Time training: 55.732ms
+Train Epoch: 51 [307200/347600 (88%)]	 BCE Loss: 6550.591191 KLD Loss: 534.454698  Time data load: 19093.755ms, Time training: 187.444ms
+====> Epoch: 51 Average loss: 8060.3887 -- nbatches: 679
+====> Epoch: 51 Average loss: 8100.6143 -- nbatches: 679
+Test Epoch: 51 [0/102400 (0%)]	 val loss: 12167.589726 Time val data load: 14395.936ms, Time testing: 13.206ms
+Test Epoch: 51 [51200/102400 (50%)]	 val loss: 11517.838921 Time val data load: 15427.613ms, Time testing: 12.584ms
+====> Test set loss: 10388.0703 -- nbatches 200
+Train Epoch: 52 [0/347600 (0%)]	 BCE Loss: 8136.186559 KLD Loss: 596.311393  Time data load: 13607.821ms, Time training: 24.770ms
+Train Epoch: 52 [51200/347600 (15%)]	 BCE Loss: 7770.026112 KLD Loss: 597.631637  Time data load: 15611.861ms, Time training: 55.582ms
+Train Epoch: 52 [102400/347600 (29%)]	 BCE Loss: 9535.549031 KLD Loss: 616.941142  Time data load: 19076.137ms, Time training: 63.460ms
+Train Epoch: 52 [153600/347600 (44%)]	 BCE Loss: 7786.494940 KLD Loss: 579.462641  Time data load: 19337.981ms, Time training: 103.617ms
+Train Epoch: 52 [204800/347600 (59%)]	 BCE Loss: 7166.357651 KLD Loss: 578.574166  Time data load: 19018.110ms, Time training: 51.759ms
+Train Epoch: 52 [256000/347600 (74%)]	 BCE Loss: 5887.739229 KLD Loss: 555.235222  Time data load: 18814.281ms, Time training: 56.099ms
+Train Epoch: 52 [307200/347600 (88%)]	 BCE Loss: 6104.793178 KLD Loss: 523.825144  Time data load: 18551.358ms, Time training: 52.128ms
+====> Epoch: 52 Average loss: 8101.0712 -- nbatches: 679
+====> Epoch: 52 Average loss: 8020.0687 -- nbatches: 679
+Test Epoch: 52 [0/102400 (0%)]	 val loss: 14753.577066 Time val data load: 12137.302ms, Time testing: 13.249ms
+Test Epoch: 52 [51200/102400 (50%)]	 val loss: 14125.064162 Time val data load: 17584.937ms, Time testing: 12.610ms
+====> Test set loss: 12701.8207 -- nbatches 200
+Train Epoch: 53 [0/347600 (0%)]	 BCE Loss: 5622.683353 KLD Loss: 541.838920  Time data load: 10186.655ms, Time training: 29.273ms
+Train Epoch: 53 [51200/347600 (15%)]	 BCE Loss: 6784.407022 KLD Loss: 572.822528  Time data load: 17704.368ms, Time training: 55.835ms
+Train Epoch: 53 [102400/347600 (29%)]	 BCE Loss: 8535.013631 KLD Loss: 609.259189  Time data load: 16434.588ms, Time training: 64.481ms
+Train Epoch: 53 [153600/347600 (44%)]	 BCE Loss: 7767.063688 KLD Loss: 553.553685  Time data load: 18512.941ms, Time training: 56.193ms
+Train Epoch: 53 [204800/347600 (59%)]	 BCE Loss: 9591.275615 KLD Loss: 596.686196  Time data load: 19962.256ms, Time training: 20.854ms
+Train Epoch: 53 [256000/347600 (74%)]	 BCE Loss: 6579.873705 KLD Loss: 560.319308  Time data load: 19114.496ms, Time training: 108.818ms
+Train Epoch: 53 [307200/347600 (88%)]	 BCE Loss: 7945.348709 KLD Loss: 544.134032  Time data load: 18261.831ms, Time training: 52.272ms
+====> Epoch: 53 Average loss: 8120.1151 -- nbatches: 679
+====> Epoch: 53 Average loss: 7995.5582 -- nbatches: 679
+Test Epoch: 53 [0/102400 (0%)]	 val loss: 10613.819860 Time val data load: 9046.958ms, Time testing: 13.041ms
+Test Epoch: 53 [51200/102400 (50%)]	 val loss: 10044.385251 Time val data load: 20768.136ms, Time testing: 15.962ms
+====> Test set loss: 8785.9350 -- nbatches 200
+Train Epoch: 54 [0/347600 (0%)]	 BCE Loss: 7139.739949 KLD Loss: 567.367853  Time data load: 10238.873ms, Time training: 24.319ms
+Train Epoch: 54 [51200/347600 (15%)]	 BCE Loss: 6847.250261 KLD Loss: 569.507230  Time data load: 16241.720ms, Time training: 515.752ms
+Train Epoch: 54 [102400/347600 (29%)]	 BCE Loss: 7401.742212 KLD Loss: 593.251477  Time data load: 18041.192ms, Time training: 21.034ms
+Train Epoch: 54 [153600/347600 (44%)]	 BCE Loss: 5853.467744 KLD Loss: 605.622246  Time data load: 19026.848ms, Time training: 453.171ms
+Train Epoch: 54 [204800/347600 (59%)]	 BCE Loss: 6814.228050 KLD Loss: 595.618959  Time data load: 17474.838ms, Time training: 56.066ms
+Train Epoch: 54 [256000/347600 (74%)]	 BCE Loss: 8431.973208 KLD Loss: 556.696023  Time data load: 20540.288ms, Time training: 178.257ms
+Train Epoch: 54 [307200/347600 (88%)]	 BCE Loss: 8191.440215 KLD Loss: 566.653431  Time data load: 18071.805ms, Time training: 51.849ms
+====> Epoch: 54 Average loss: 8089.2399 -- nbatches: 679
+====> Epoch: 54 Average loss: 8053.0314 -- nbatches: 679
+Test Epoch: 54 [0/102400 (0%)]	 val loss: 11158.892719 Time val data load: 14180.523ms, Time testing: 13.039ms
+Test Epoch: 54 [51200/102400 (50%)]	 val loss: 10096.033752 Time val data load: 16029.222ms, Time testing: 12.638ms
+====> Test set loss: 9428.2244 -- nbatches 200
+Train Epoch: 55 [0/347600 (0%)]	 BCE Loss: 7456.215904 KLD Loss: 587.049338  Time data load: 14069.327ms, Time training: 25.724ms
+Train Epoch: 55 [51200/347600 (15%)]	 BCE Loss: 7940.288184 KLD Loss: 646.440026  Time data load: 13092.483ms, Time training: 56.039ms
+Train Epoch: 55 [102400/347600 (29%)]	 BCE Loss: 7658.254095 KLD Loss: 608.913366  Time data load: 18191.069ms, Time training: 20.614ms
+Train Epoch: 55 [153600/347600 (44%)]	 BCE Loss: 8474.596631 KLD Loss: 558.271510  Time data load: 22691.835ms, Time training: 539.362ms
+Train Epoch: 55 [204800/347600 (59%)]	 BCE Loss: 7007.885691 KLD Loss: 560.817385  Time data load: 19060.077ms, Time training: 70.834ms
+Train Epoch: 55 [256000/347600 (74%)]	 BCE Loss: 7337.496901 KLD Loss: 622.659704  Time data load: 19571.481ms, Time training: 698.201ms
+Train Epoch: 55 [307200/347600 (88%)]	 BCE Loss: 7862.757631 KLD Loss: 567.533329  Time data load: 17873.296ms, Time training: 138.962ms
+====> Epoch: 55 Average loss: 8004.4188 -- nbatches: 679
+====> Epoch: 55 Average loss: 8018.5654 -- nbatches: 679
+Test Epoch: 55 [0/102400 (0%)]	 val loss: 10074.058044 Time val data load: 13003.529ms, Time testing: 18.152ms
+Test Epoch: 55 [51200/102400 (50%)]	 val loss: 9078.541199 Time val data load: 16640.415ms, Time testing: 12.701ms
+====> Test set loss: 8360.1112 -- nbatches 200
++++ Saving best model because test_loss: 8360.111208938666 < miniloss: 8758.301207378505 +++
+Train Epoch: 56 [0/347600 (0%)]	 BCE Loss: 6903.919950 KLD Loss: 577.154195  Time data load: 11403.838ms, Time training: 23.780ms
+Train Epoch: 56 [51200/347600 (15%)]	 BCE Loss: 7870.158629 KLD Loss: 571.740078  Time data load: 15303.238ms, Time training: 61.404ms
+Train Epoch: 56 [102400/347600 (29%)]	 BCE Loss: 8235.939686 KLD Loss: 599.010707  Time data load: 21253.202ms, Time training: 55.856ms
+Train Epoch: 56 [153600/347600 (44%)]	 BCE Loss: 7878.088627 KLD Loss: 610.986243  Time data load: 19572.771ms, Time training: 66.115ms
+Train Epoch: 56 [204800/347600 (59%)]	 BCE Loss: 6459.914885 KLD Loss: 518.454251  Time data load: 18758.177ms, Time training: 55.424ms
+Train Epoch: 56 [256000/347600 (74%)]	 BCE Loss: 6647.441000 KLD Loss: 481.562490  Time data load: 20930.609ms, Time training: 62.385ms
+Train Epoch: 56 [307200/347600 (88%)]	 BCE Loss: 9354.428047 KLD Loss: 638.541128  Time data load: 18093.783ms, Time training: 56.219ms
+====> Epoch: 56 Average loss: 8047.1667 -- nbatches: 679
+====> Epoch: 56 Average loss: 8089.6392 -- nbatches: 679
+Test Epoch: 56 [0/102400 (0%)]	 val loss: 12205.198972 Time val data load: 11343.399ms, Time testing: 13.041ms
+Test Epoch: 56 [51200/102400 (50%)]	 val loss: 11618.597314 Time val data load: 19260.692ms, Time testing: 12.619ms
+====> Test set loss: 10547.5217 -- nbatches 200
+Train Epoch: 57 [0/347600 (0%)]	 BCE Loss: 5771.878543 KLD Loss: 531.985997  Time data load: 11914.351ms, Time training: 23.498ms
+Train Epoch: 57 [51200/347600 (15%)]	 BCE Loss: 7534.550660 KLD Loss: 596.823980  Time data load: 19237.113ms, Time training: 55.689ms
+Train Epoch: 57 [102400/347600 (29%)]	 BCE Loss: 6834.627485 KLD Loss: 556.532732  Time data load: 14931.044ms, Time training: 59.702ms
+Train Epoch: 57 [153600/347600 (44%)]	 BCE Loss: 6401.353998 KLD Loss: 549.912512  Time data load: 21309.094ms, Time training: 503.097ms
+Train Epoch: 57 [204800/347600 (59%)]	 BCE Loss: 6775.110485 KLD Loss: 553.413720  Time data load: 17672.129ms, Time training: 58.791ms
+Train Epoch: 57 [256000/347600 (74%)]	 BCE Loss: 8243.256509 KLD Loss: 593.106208  Time data load: 18384.734ms, Time training: 1182.008ms
+Train Epoch: 57 [307200/347600 (88%)]	 BCE Loss: 6259.792780 KLD Loss: 528.682283  Time data load: 18555.175ms, Time training: 52.032ms
+====> Epoch: 57 Average loss: 8061.4053 -- nbatches: 679
+====> Epoch: 57 Average loss: 7985.5444 -- nbatches: 679
+Test Epoch: 57 [0/102400 (0%)]	 val loss: 11063.287421 Time val data load: 9143.813ms, Time testing: 13.187ms
+Test Epoch: 57 [51200/102400 (50%)]	 val loss: 9529.761676 Time val data load: 21429.307ms, Time testing: 12.613ms
+====> Test set loss: 9142.9443 -- nbatches 200
+Train Epoch: 58 [0/347600 (0%)]	 BCE Loss: 7903.138027 KLD Loss: 572.314476  Time data load: 13215.220ms, Time training: 24.364ms
+Train Epoch: 58 [51200/347600 (15%)]	 BCE Loss: 5910.521770 KLD Loss: 544.626074  Time data load: 16737.806ms, Time training: 55.579ms
+Train Epoch: 58 [102400/347600 (29%)]	 BCE Loss: 9220.765614 KLD Loss: 554.658298  Time data load: 19434.806ms, Time training: 20.802ms
+Train Epoch: 58 [153600/347600 (44%)]	 BCE Loss: 5665.587738 KLD Loss: 561.777042  Time data load: 15670.272ms, Time training: 65.926ms
+Train Epoch: 58 [204800/347600 (59%)]	 BCE Loss: 9014.501621 KLD Loss: 608.507655  Time data load: 20507.573ms, Time training: 52.532ms
+Train Epoch: 58 [256000/347600 (74%)]	 BCE Loss: 9853.526880 KLD Loss: 644.615493  Time data load: 19155.234ms, Time training: 263.153ms
+Train Epoch: 58 [307200/347600 (88%)]	 BCE Loss: 7624.044918 KLD Loss: 573.371801  Time data load: 17834.011ms, Time training: 53.815ms
+====> Epoch: 58 Average loss: 8047.5344 -- nbatches: 679
+====> Epoch: 58 Average loss: 8019.1548 -- nbatches: 679
+Test Epoch: 58 [0/102400 (0%)]	 val loss: 14240.804007 Time val data load: 12395.707ms, Time testing: 16.675ms
+Test Epoch: 58 [51200/102400 (50%)]	 val loss: 13791.619853 Time val data load: 18203.207ms, Time testing: 12.733ms
+====> Test set loss: 12247.1248 -- nbatches 200
+Train Epoch: 59 [0/347600 (0%)]	 BCE Loss: 9667.531874 KLD Loss: 575.156990  Time data load: 10872.794ms, Time training: 27.976ms
+Train Epoch: 59 [51200/347600 (15%)]	 BCE Loss: 10816.791868 KLD Loss: 634.020043  Time data load: 14234.244ms, Time training: 426.962ms
+Train Epoch: 59 [102400/347600 (29%)]	 BCE Loss: 7884.561509 KLD Loss: 627.051225  Time data load: 22570.188ms, Time training: 20.849ms
+Train Epoch: 59 [153600/347600 (44%)]	 BCE Loss: 7559.187422 KLD Loss: 603.402458  Time data load: 17238.840ms, Time training: 57.009ms
+Train Epoch: 59 [204800/347600 (59%)]	 BCE Loss: 7168.891393 KLD Loss: 588.499026  Time data load: 20845.347ms, Time training: 21.069ms
+Train Epoch: 59 [256000/347600 (74%)]	 BCE Loss: 6952.468115 KLD Loss: 563.438592  Time data load: 18073.978ms, Time training: 56.116ms
+Train Epoch: 59 [307200/347600 (88%)]	 BCE Loss: 7225.620290 KLD Loss: 588.641776  Time data load: 17570.293ms, Time training: 20.931ms
+====> Epoch: 59 Average loss: 8086.9185 -- nbatches: 679
+====> Epoch: 59 Average loss: 8049.3305 -- nbatches: 679
+Test Epoch: 59 [0/102400 (0%)]	 val loss: 11149.488815 Time val data load: 10308.167ms, Time testing: 12.724ms
+Test Epoch: 59 [51200/102400 (50%)]	 val loss: 10223.309723 Time val data load: 20101.810ms, Time testing: 12.609ms
+====> Test set loss: 9287.8084 -- nbatches 200
++++ Saving checkpoint in ./outputs/model_DVAE_test/model_DVAE_test_347k102k_CHECK_EPOCH_60.pth +++
+Train Epoch: 60 [0/347600 (0%)]	 BCE Loss: 4548.557354 KLD Loss: 525.426563  Time data load: 11754.047ms, Time training: 22.883ms
+Train Epoch: 60 [51200/347600 (15%)]	 BCE Loss: 8959.907613 KLD Loss: 564.259671  Time data load: 19684.471ms, Time training: 57.273ms
+Train Epoch: 60 [102400/347600 (29%)]	 BCE Loss: 9481.722293 KLD Loss: 653.998640  Time data load: 12674.310ms, Time training: 121.864ms
+Train Epoch: 60 [153600/347600 (44%)]	 BCE Loss: 5692.243419 KLD Loss: 486.399247  Time data load: 23086.763ms, Time training: 52.163ms
+Train Epoch: 60 [204800/347600 (59%)]	 BCE Loss: 6644.321252 KLD Loss: 522.032230  Time data load: 18695.377ms, Time training: 148.907ms
+Train Epoch: 60 [256000/347600 (74%)]	 BCE Loss: 6384.997700 KLD Loss: 539.814967  Time data load: 19881.444ms, Time training: 155.890ms
+Train Epoch: 60 [307200/347600 (88%)]	 BCE Loss: 6800.997449 KLD Loss: 587.192433  Time data load: 18050.505ms, Time training: 57.708ms
+====> Epoch: 60 Average loss: 8002.5642 -- nbatches: 679
+====> Epoch: 60 Average loss: 8089.7318 -- nbatches: 679
+Test Epoch: 60 [0/102400 (0%)]	 val loss: 15469.640516 Time val data load: 12647.894ms, Time testing: 13.198ms
+Test Epoch: 60 [51200/102400 (50%)]	 val loss: 14634.245951 Time val data load: 17009.481ms, Time testing: 12.674ms
+====> Test set loss: 14299.4192 -- nbatches 200
+Train Epoch: 61 [0/347600 (0%)]	 BCE Loss: 6116.860852 KLD Loss: 556.222619  Time data load: 10046.130ms, Time training: 23.795ms
+Train Epoch: 61 [51200/347600 (15%)]	 BCE Loss: 7365.353774 KLD Loss: 563.451653  Time data load: 14798.774ms, Time training: 192.761ms
+Train Epoch: 61 [102400/347600 (29%)]	 BCE Loss: 7022.331996 KLD Loss: 534.338100  Time data load: 21070.924ms, Time training: 53.171ms
+Train Epoch: 61 [153600/347600 (44%)]	 BCE Loss: 6848.998596 KLD Loss: 544.934934  Time data load: 21039.138ms, Time training: 52.367ms
+Train Epoch: 61 [204800/347600 (59%)]	 BCE Loss: 7711.030865 KLD Loss: 589.515843  Time data load: 17354.074ms, Time training: 52.569ms
+Train Epoch: 61 [256000/347600 (74%)]	 BCE Loss: 9589.741275 KLD Loss: 613.833048  Time data load: 18865.351ms, Time training: 47.769ms
+Train Epoch: 61 [307200/347600 (88%)]	 BCE Loss: 6308.371246 KLD Loss: 572.273617  Time data load: 19464.157ms, Time training: 52.768ms
+====> Epoch: 61 Average loss: 8014.7082 -- nbatches: 679
+====> Epoch: 61 Average loss: 8058.5356 -- nbatches: 679
+Test Epoch: 61 [0/102400 (0%)]	 val loss: 11414.089669 Time val data load: 11262.356ms, Time testing: 13.162ms
+Test Epoch: 61 [51200/102400 (50%)]	 val loss: 10293.677853 Time val data load: 18283.815ms, Time testing: 12.619ms
+====> Test set loss: 9389.0097 -- nbatches 200
+Train Epoch: 62 [0/347600 (0%)]	 BCE Loss: 6236.440682 KLD Loss: 574.848761  Time data load: 9416.885ms, Time training: 28.750ms
+Train Epoch: 62 [51200/347600 (15%)]	 BCE Loss: 7517.737603 KLD Loss: 601.249437  Time data load: 15877.365ms, Time training: 393.538ms
+Train Epoch: 62 [102400/347600 (29%)]	 BCE Loss: 6258.403601 KLD Loss: 608.182659  Time data load: 19822.357ms, Time training: 56.754ms
+Train Epoch: 62 [153600/347600 (44%)]	 BCE Loss: 5868.961303 KLD Loss: 606.801241  Time data load: 18432.936ms, Time training: 270.459ms
+Train Epoch: 62 [204800/347600 (59%)]	 BCE Loss: 8160.760665 KLD Loss: 573.649671  Time data load: 18644.578ms, Time training: 55.655ms
+Train Epoch: 62 [256000/347600 (74%)]	 BCE Loss: 7978.967575 KLD Loss: 566.842669  Time data load: 18259.917ms, Time training: 532.053ms
+Train Epoch: 62 [307200/347600 (88%)]	 BCE Loss: 6393.040989 KLD Loss: 557.529592  Time data load: 18350.789ms, Time training: 169.179ms
+====> Epoch: 62 Average loss: 7949.7192 -- nbatches: 679
+====> Epoch: 62 Average loss: 8109.8169 -- nbatches: 679
+Test Epoch: 62 [0/102400 (0%)]	 val loss: 12834.222493 Time val data load: 10272.352ms, Time testing: 13.134ms
+Test Epoch: 62 [51200/102400 (50%)]	 val loss: 11446.613816 Time val data load: 19506.269ms, Time testing: 12.619ms
+====> Test set loss: 10879.9583 -- nbatches 200
+Train Epoch: 63 [0/347600 (0%)]	 BCE Loss: 7666.488451 KLD Loss: 587.165246  Time data load: 13742.703ms, Time training: 25.534ms
+Train Epoch: 63 [51200/347600 (15%)]	 BCE Loss: 6628.756830 KLD Loss: 555.791408  Time data load: 14293.826ms, Time training: 53.216ms
+Train Epoch: 63 [102400/347600 (29%)]	 BCE Loss: 5750.101864 KLD Loss: 548.321559  Time data load: 19165.553ms, Time training: 52.087ms
+Train Epoch: 63 [153600/347600 (44%)]	 BCE Loss: 7258.143266 KLD Loss: 539.078202  Time data load: 21512.360ms, Time training: 57.924ms
+Train Epoch: 63 [204800/347600 (59%)]	 BCE Loss: 7482.633524 KLD Loss: 564.490152  Time data load: 18654.028ms, Time training: 56.841ms
+Train Epoch: 63 [256000/347600 (74%)]	 BCE Loss: 7611.254912 KLD Loss: 584.205597  Time data load: 18760.625ms, Time training: 211.642ms
+Train Epoch: 63 [307200/347600 (88%)]	 BCE Loss: 9518.132048 KLD Loss: 591.740323  Time data load: 19021.627ms, Time training: 57.803ms
+====> Epoch: 63 Average loss: 7971.4112 -- nbatches: 679
+====> Epoch: 63 Average loss: 7996.5359 -- nbatches: 679
+Test Epoch: 63 [0/102400 (0%)]	 val loss: 10750.965245 Time val data load: 13026.772ms, Time testing: 13.249ms
+Test Epoch: 63 [51200/102400 (50%)]	 val loss: 9782.743552 Time val data load: 16937.234ms, Time testing: 12.612ms
+====> Test set loss: 8978.0084 -- nbatches 200
+Train Epoch: 64 [0/347600 (0%)]	 BCE Loss: 5855.821740 KLD Loss: 587.968052  Time data load: 13180.826ms, Time training: 27.933ms
+Train Epoch: 64 [51200/347600 (15%)]	 BCE Loss: 6630.193070 KLD Loss: 554.127592  Time data load: 15131.629ms, Time training: 159.140ms
+Train Epoch: 64 [102400/347600 (29%)]	 BCE Loss: 5594.009867 KLD Loss: 537.494010  Time data load: 19553.773ms, Time training: 60.913ms
+Train Epoch: 64 [153600/347600 (44%)]	 BCE Loss: 8940.194081 KLD Loss: 554.756326  Time data load: 16830.274ms, Time training: 57.428ms
+Train Epoch: 64 [204800/347600 (59%)]	 BCE Loss: 7951.984647 KLD Loss: 579.006509  Time data load: 20185.138ms, Time training: 57.348ms
+Train Epoch: 64 [256000/347600 (74%)]	 BCE Loss: 6024.459566 KLD Loss: 528.207753  Time data load: 20173.081ms, Time training: 226.207ms
+Train Epoch: 64 [307200/347600 (88%)]	 BCE Loss: 8748.867078 KLD Loss: 625.677069  Time data load: 18684.561ms, Time training: 57.334ms
+====> Epoch: 64 Average loss: 8066.8461 -- nbatches: 679
+Test Epoch: 64 [0/102400 (0%)]	 val loss: 13422.555787 Time val data load: 11697.866ms, Time testing: 13.202ms
+====> Epoch: 64 Average loss: 8049.7947 -- nbatches: 679
+Test Epoch: 64 [51200/102400 (50%)]	 val loss: 11369.301676 Time val data load: 18123.287ms, Time testing: 15.584ms
+====> Test set loss: 11046.7421 -- nbatches 200
+Train Epoch: 65 [0/347600 (0%)]	 BCE Loss: 8770.131791 KLD Loss: 656.449882  Time data load: 11134.236ms, Time training: 24.497ms
+Train Epoch: 65 [51200/347600 (15%)]	 BCE Loss: 5882.884074 KLD Loss: 504.094062  Time data load: 15844.990ms, Time training: 57.872ms
+Train Epoch: 65 [102400/347600 (29%)]	 BCE Loss: 9082.239322 KLD Loss: 630.250369  Time data load: 23081.784ms, Time training: 51.342ms
+Train Epoch: 65 [153600/347600 (44%)]	 BCE Loss: 5939.401145 KLD Loss: 558.854199  Time data load: 19124.673ms, Time training: 161.780ms
+Train Epoch: 65 [204800/347600 (59%)]	 BCE Loss: 7077.390254 KLD Loss: 555.749643  Time data load: 18495.944ms, Time training: 75.744ms
+Train Epoch: 65 [256000/347600 (74%)]	 BCE Loss: 8794.818082 KLD Loss: 603.462178  Time data load: 19798.089ms, Time training: 180.233ms
+Train Epoch: 65 [307200/347600 (88%)]	 BCE Loss: 8879.443219 KLD Loss: 593.779267  Time data load: 18159.149ms, Time training: 60.368ms
+====> Epoch: 65 Average loss: 8016.1570 -- nbatches: 679
+====> Epoch: 65 Average loss: 7949.8156 -- nbatches: 679
+Test Epoch: 65 [0/102400 (0%)]	 val loss: 11943.288041 Time val data load: 12954.948ms, Time testing: 13.137ms
+Test Epoch: 65 [51200/102400 (50%)]	 val loss: 10678.829178 Time val data load: 17477.084ms, Time testing: 12.545ms
+====> Test set loss: 9974.9956 -- nbatches 200
+Train Epoch: 66 [0/347600 (0%)]	 BCE Loss: 6123.575391 KLD Loss: 512.042739  Time data load: 9595.818ms, Time training: 24.172ms
+Train Epoch: 66 [51200/347600 (15%)]	 BCE Loss: 7911.853901 KLD Loss: 576.090836  Time data load: 21851.490ms, Time training: 70.937ms
+Train Epoch: 66 [102400/347600 (29%)]	 BCE Loss: 8400.735471 KLD Loss: 595.045269  Time data load: 13069.780ms, Time training: 107.807ms
+Train Epoch: 66 [153600/347600 (44%)]	 BCE Loss: 7838.462700 KLD Loss: 571.841712  Time data load: 19377.450ms, Time training: 574.441ms
+Train Epoch: 66 [204800/347600 (59%)]	 BCE Loss: 8834.083028 KLD Loss: 637.479498  Time data load: 22922.716ms, Time training: 56.967ms
+Train Epoch: 66 [256000/347600 (74%)]	 BCE Loss: 9683.670341 KLD Loss: 675.825170  Time data load: 20234.504ms, Time training: 257.251ms
+Train Epoch: 66 [307200/347600 (88%)]	 BCE Loss: 6040.871053 KLD Loss: 550.409345  Time data load: 19402.029ms, Time training: 91.466ms
+====> Epoch: 66 Average loss: 7997.4073 -- nbatches: 679
+====> Epoch: 66 Average loss: 7942.2347 -- nbatches: 679
+Test Epoch: 66 [0/102400 (0%)]	 val loss: 13703.381559 Time val data load: 13959.654ms, Time testing: 13.196ms
+Test Epoch: 66 [51200/102400 (50%)]	 val loss: 12364.465968 Time val data load: 16330.475ms, Time testing: 12.654ms
+====> Test set loss: 11831.6106 -- nbatches 200
+Train Epoch: 67 [0/347600 (0%)]	 BCE Loss: 6669.546262 KLD Loss: 597.563464  Time data load: 12837.323ms, Time training: 24.350ms
+Train Epoch: 67 [51200/347600 (15%)]	 BCE Loss: 10362.084470 KLD Loss: 616.976765  Time data load: 17671.393ms, Time training: 56.930ms
+Train Epoch: 67 [102400/347600 (29%)]	 BCE Loss: 5688.487820 KLD Loss: 564.721001  Time data load: 16873.303ms, Time training: 58.470ms
+Train Epoch: 67 [153600/347600 (44%)]	 BCE Loss: 6594.614264 KLD Loss: 525.392858  Time data load: 19429.841ms, Time training: 57.554ms
+Train Epoch: 67 [204800/347600 (59%)]	 BCE Loss: 8566.382048 KLD Loss: 613.879161  Time data load: 18404.320ms, Time training: 52.882ms
+Train Epoch: 67 [256000/347600 (74%)]	 BCE Loss: 6058.538585 KLD Loss: 465.644334  Time data load: 19105.235ms, Time training: 56.832ms
+Train Epoch: 67 [307200/347600 (88%)]	 BCE Loss: 8016.100272 KLD Loss: 610.645270  Time data load: 18235.428ms, Time training: 57.489ms
+====> Epoch: 67 Average loss: 8040.4024 -- nbatches: 679
+====> Epoch: 67 Average loss: 8050.3551 -- nbatches: 679
+Test Epoch: 67 [0/102400 (0%)]	 val loss: 12424.491083 Time val data load: 12905.165ms, Time testing: 13.264ms
+Test Epoch: 67 [51200/102400 (50%)]	 val loss: 10814.004275 Time val data load: 17129.837ms, Time testing: 12.643ms
+====> Test set loss: 10433.6361 -- nbatches 200
+Train Epoch: 68 [0/347600 (0%)]	 BCE Loss: 7346.357747 KLD Loss: 639.643648  Time data load: 14122.345ms, Time training: 24.578ms
+Train Epoch: 68 [51200/347600 (15%)]	 BCE Loss: 7466.793698 KLD Loss: 582.495071  Time data load: 12069.118ms, Time training: 54.677ms
+Train Epoch: 68 [102400/347600 (29%)]	 BCE Loss: 7866.670868 KLD Loss: 573.544750  Time data load: 21883.675ms, Time training: 58.100ms
+Train Epoch: 68 [153600/347600 (44%)]	 BCE Loss: 7440.092438 KLD Loss: 564.960793  Time data load: 20677.166ms, Time training: 65.468ms
+Train Epoch: 68 [204800/347600 (59%)]	 BCE Loss: 9389.771308 KLD Loss: 575.782093  Time data load: 16252.470ms, Time training: 55.992ms
+Train Epoch: 68 [256000/347600 (74%)]	 BCE Loss: 7531.464823 KLD Loss: 535.932484  Time data load: 19183.322ms, Time training: 1181.116ms
+Train Epoch: 68 [307200/347600 (88%)]	 BCE Loss: 7249.737606 KLD Loss: 541.151953  Time data load: 19197.320ms, Time training: 63.562ms
+====> Epoch: 68 Average loss: 7990.2751 -- nbatches: 679
+====> Epoch: 68 Average loss: 8047.7807 -- nbatches: 679
+Test Epoch: 68 [0/102400 (0%)]	 val loss: 11898.752460 Time val data load: 10005.498ms, Time testing: 13.213ms
+Test Epoch: 68 [51200/102400 (50%)]	 val loss: 10818.300622 Time val data load: 18811.120ms, Time testing: 12.634ms
+====> Test set loss: 9960.7060 -- nbatches 200
+Train Epoch: 69 [0/347600 (0%)]	 BCE Loss: 8927.147277 KLD Loss: 601.535314  Time data load: 9622.027ms, Time training: 24.108ms
+Train Epoch: 69 [51200/347600 (15%)]	 BCE Loss: 8387.851178 KLD Loss: 605.790056  Time data load: 12106.558ms, Time training: 64.460ms
+Train Epoch: 69 [102400/347600 (29%)]	 BCE Loss: 8289.910647 KLD Loss: 572.386536  Time data load: 21478.621ms, Time training: 52.659ms
+Train Epoch: 69 [153600/347600 (44%)]	 BCE Loss: 7194.174275 KLD Loss: 565.057157  Time data load: 20843.431ms, Time training: 56.492ms
+Train Epoch: 69 [204800/347600 (59%)]	 BCE Loss: 8905.793551 KLD Loss: 595.939033  Time data load: 18269.756ms, Time training: 52.681ms
+Train Epoch: 69 [256000/347600 (74%)]	 BCE Loss: 6087.753969 KLD Loss: 499.201547  Time data load: 17752.968ms, Time training: 56.591ms
+Train Epoch: 69 [307200/347600 (88%)]	 BCE Loss: 6470.754469 KLD Loss: 562.110688  Time data load: 19011.555ms, Time training: 53.547ms
+====> Epoch: 69 Average loss: 8016.1247 -- nbatches: 679
+====> Epoch: 69 Average loss: 7977.9451 -- nbatches: 679
+Test Epoch: 69 [0/102400 (0%)]	 val loss: 14820.476242 Time val data load: 10289.992ms, Time testing: 12.716ms
+Test Epoch: 69 [51200/102400 (50%)]	 val loss: 13779.432290 Time val data load: 19146.279ms, Time testing: 12.527ms
+====> Test set loss: 12973.2967 -- nbatches 200
+Train Epoch: 70 [0/347600 (0%)]	 BCE Loss: 8415.884411 KLD Loss: 600.512419  Time data load: 9172.189ms, Time training: 24.451ms
+Train Epoch: 70 [51200/347600 (15%)]	 BCE Loss: 6340.168855 KLD Loss: 539.985553  Time data load: 15883.565ms, Time training: 286.324ms
+Train Epoch: 70 [102400/347600 (29%)]	 BCE Loss: 8205.082028 KLD Loss: 580.504329  Time data load: 19279.925ms, Time training: 53.165ms
+Train Epoch: 70 [153600/347600 (44%)]	 BCE Loss: 5332.246539 KLD Loss: 522.196317  Time data load: 20308.981ms, Time training: 57.782ms
+Train Epoch: 70 [204800/347600 (59%)]	 BCE Loss: 6872.103727 KLD Loss: 583.287716  Time data load: 17719.345ms, Time training: 53.115ms
+Train Epoch: 70 [256000/347600 (74%)]	 BCE Loss: 7223.327608 KLD Loss: 582.418087  Time data load: 19151.888ms, Time training: 597.205ms
+Train Epoch: 70 [307200/347600 (88%)]	 BCE Loss: 8677.060752 KLD Loss: 637.494334  Time data load: 18432.297ms, Time training: 53.709ms
+====> Epoch: 70 Average loss: 8037.5902 -- nbatches: 679
+====> Epoch: 70 Average loss: 7933.1557 -- nbatches: 679
+Test Epoch: 70 [0/102400 (0%)]	 val loss: 11454.877967 Time val data load: 14645.840ms, Time testing: 13.339ms
+Test Epoch: 70 [51200/102400 (50%)]	 val loss: 9803.029852 Time val data load: 15437.103ms, Time testing: 15.956ms
+====> Test set loss: 9601.8134 -- nbatches 200
+Train Epoch: 71 [0/347600 (0%)]	 BCE Loss: 5471.104895 KLD Loss: 535.766185  Time data load: 10845.474ms, Time training: 24.256ms
+Train Epoch: 71 [51200/347600 (15%)]	 BCE Loss: 7238.141603 KLD Loss: 569.901436  Time data load: 15407.362ms, Time training: 23.246ms
+Train Epoch: 71 [102400/347600 (29%)]	 BCE Loss: 10690.715651 KLD Loss: 641.093768  Time data load: 22188.983ms, Time training: 51.023ms
+Train Epoch: 71 [153600/347600 (44%)]	 BCE Loss: 7048.216651 KLD Loss: 556.329264  Time data load: 20301.544ms, Time training: 270.858ms
+Train Epoch: 71 [204800/347600 (59%)]	 BCE Loss: 7013.316292 KLD Loss: 520.102350  Time data load: 18309.616ms, Time training: 201.406ms
+Train Epoch: 71 [256000/347600 (74%)]	 BCE Loss: 6498.807558 KLD Loss: 542.406920  Time data load: 20220.976ms, Time training: 366.091ms
+Train Epoch: 71 [307200/347600 (88%)]	 BCE Loss: 7689.556257 KLD Loss: 578.490240  Time data load: 17928.418ms, Time training: 63.764ms
+====> Epoch: 71 Average loss: 7992.7801 -- nbatches: 679
+====> Epoch: 71 Average loss: 7986.0364 -- nbatches: 679
+Test Epoch: 71 [0/102400 (0%)]	 val loss: 10885.641442 Time val data load: 13503.404ms, Time testing: 13.201ms
+Test Epoch: 71 [51200/102400 (50%)]	 val loss: 9607.767055 Time val data load: 16009.652ms, Time testing: 15.034ms
+====> Test set loss: 8884.7480 -- nbatches 200
+Train Epoch: 72 [0/347600 (0%)]	 BCE Loss: 5346.517771 KLD Loss: 533.674363  Time data load: 14194.707ms, Time training: 24.561ms
+Train Epoch: 72 [51200/347600 (15%)]	 BCE Loss: 6149.999401 KLD Loss: 563.606129  Time data load: 13926.156ms, Time training: 57.296ms
+Train Epoch: 72 [102400/347600 (29%)]	 BCE Loss: 6286.883250 KLD Loss: 590.800998  Time data load: 18481.118ms, Time training: 21.067ms
+Train Epoch: 72 [153600/347600 (44%)]	 BCE Loss: 8527.182686 KLD Loss: 598.604517  Time data load: 22790.595ms, Time training: 56.827ms
+Train Epoch: 72 [204800/347600 (59%)]	 BCE Loss: 7674.180974 KLD Loss: 587.988547  Time data load: 17900.682ms, Time training: 60.020ms
+Train Epoch: 72 [256000/347600 (74%)]	 BCE Loss: 9020.105822 KLD Loss: 608.277475  Time data load: 18521.040ms, Time training: 132.756ms
+Train Epoch: 72 [307200/347600 (88%)]	 BCE Loss: 6912.572904 KLD Loss: 596.152225  Time data load: 19157.260ms, Time training: 59.309ms
+====> Epoch: 72 Average loss: 7961.8535 -- nbatches: 679
+====> Epoch: 72 Average loss: 7965.1632 -- nbatches: 679
+Test Epoch: 72 [0/102400 (0%)]	 val loss: 12363.330685 Time val data load: 9623.098ms, Time testing: 13.146ms
+Test Epoch: 72 [51200/102400 (50%)]	 val loss: 11236.336216 Time val data load: 20777.373ms, Time testing: 12.595ms
+====> Test set loss: 11079.5258 -- nbatches 200
+Train Epoch: 73 [0/347600 (0%)]	 BCE Loss: 7905.969967 KLD Loss: 599.711171  Time data load: 12086.892ms, Time training: 28.334ms
+Train Epoch: 73 [51200/347600 (15%)]	 BCE Loss: 6831.972561 KLD Loss: 557.846640  Time data load: 16008.803ms, Time training: 56.395ms
+Train Epoch: 73 [102400/347600 (29%)]	 BCE Loss: 6474.315899 KLD Loss: 593.271312  Time data load: 18431.806ms, Time training: 65.299ms
+Train Epoch: 73 [153600/347600 (44%)]	 BCE Loss: 7218.940388 KLD Loss: 566.251598  Time data load: 22048.018ms, Time training: 60.591ms
+Train Epoch: 73 [204800/347600 (59%)]	 BCE Loss: 7036.084204 KLD Loss: 536.574134  Time data load: 18035.401ms, Time training: 53.612ms
+Train Epoch: 73 [256000/347600 (74%)]	 BCE Loss: 7687.175140 KLD Loss: 556.405207  Time data load: 18319.751ms, Time training: 819.838ms
+Train Epoch: 73 [307200/347600 (88%)]	 BCE Loss: 7683.271046 KLD Loss: 567.221861  Time data load: 18438.361ms, Time training: 57.806ms
+====> Epoch: 73 Average loss: 7989.5063 -- nbatches: 679
+====> Epoch: 73 Average loss: 7945.6783 -- nbatches: 679
+Test Epoch: 73 [0/102400 (0%)]	 val loss: 10825.121403 Time val data load: 11633.218ms, Time testing: 13.079ms
+Test Epoch: 73 [51200/102400 (50%)]	 val loss: 9399.130099 Time val data load: 18806.797ms, Time testing: 12.635ms
+====> Test set loss: 9081.5688 -- nbatches 200
+Train Epoch: 74 [0/347600 (0%)]	 BCE Loss: 7868.207783 KLD Loss: 593.259035  Time data load: 11468.772ms, Time training: 26.262ms
+Train Epoch: 74 [51200/347600 (15%)]	 BCE Loss: 4898.676500 KLD Loss: 557.178046  Time data load: 18061.501ms, Time training: 57.592ms
+Train Epoch: 74 [102400/347600 (29%)]	 BCE Loss: 8971.004290 KLD Loss: 575.409857  Time data load: 18711.247ms, Time training: 21.915ms
+Train Epoch: 74 [153600/347600 (44%)]	 BCE Loss: 7082.311807 KLD Loss: 542.463455  Time data load: 16279.756ms, Time training: 57.152ms
+Train Epoch: 74 [204800/347600 (59%)]	 BCE Loss: 8688.914450 KLD Loss: 649.134591  Time data load: 19738.476ms, Time training: 52.413ms
+Train Epoch: 74 [256000/347600 (74%)]	 BCE Loss: 6180.315984 KLD Loss: 519.491790  Time data load: 20384.823ms, Time training: 56.236ms
+Train Epoch: 74 [307200/347600 (88%)]	 BCE Loss: 6730.303127 KLD Loss: 586.675177  Time data load: 17520.651ms, Time training: 52.729ms
+====> Epoch: 74 Average loss: 7992.9439 -- nbatches: 679
+====> Epoch: 74 Average loss: 7856.3423 -- nbatches: 679
+Test Epoch: 74 [0/102400 (0%)]	 val loss: 12824.332905 Time val data load: 12489.216ms, Time testing: 13.141ms
+Test Epoch: 74 [51200/102400 (50%)]	 val loss: 12603.905984 Time val data load: 17776.383ms, Time testing: 12.598ms
+====> Test set loss: 10957.9409 -- nbatches 200
+Train Epoch: 75 [0/347600 (0%)]	 BCE Loss: 5852.074608 KLD Loss: 610.047411  Time data load: 10590.351ms, Time training: 24.087ms
+Train Epoch: 75 [51200/347600 (15%)]	 BCE Loss: 6658.461545 KLD Loss: 600.916715  Time data load: 25267.901ms, Time training: 63.807ms
+Train Epoch: 75 [102400/347600 (29%)]	 BCE Loss: 6982.745082 KLD Loss: 593.818055  Time data load: 14095.955ms, Time training: 52.354ms
+Train Epoch: 75 [153600/347600 (44%)]	 BCE Loss: 6288.870890 KLD Loss: 523.563196  Time data load: 21376.486ms, Time training: 52.942ms
+Train Epoch: 75 [204800/347600 (59%)]	 BCE Loss: 7889.925716 KLD Loss: 564.087264  Time data load: 18693.708ms, Time training: 57.253ms
+Train Epoch: 75 [256000/347600 (74%)]	 BCE Loss: 7932.281075 KLD Loss: 600.725145  Time data load: 19381.523ms, Time training: 489.655ms
+Train Epoch: 75 [307200/347600 (88%)]	 BCE Loss: 6974.012908 KLD Loss: 578.639830  Time data load: 18169.106ms, Time training: 52.915ms
+====> Epoch: 75 Average loss: 7999.1637 -- nbatches: 679
+====> Epoch: 75 Average loss: 7986.4154 -- nbatches: 679
+Test Epoch: 75 [0/102400 (0%)]	 val loss: 10790.053615 Time val data load: 13334.192ms, Time testing: 13.161ms
+Test Epoch: 75 [51200/102400 (50%)]	 val loss: 9708.784320 Time val data load: 16382.876ms, Time testing: 12.538ms
+====> Test set loss: 9068.3658 -- nbatches 200
+Train Epoch: 76 [0/347600 (0%)]	 BCE Loss: 7210.404545 KLD Loss: 578.988728  Time data load: 9052.743ms, Time training: 29.250ms
+Train Epoch: 76 [51200/347600 (15%)]	 BCE Loss: 7255.045318 KLD Loss: 537.435772  Time data load: 12237.717ms, Time training: 56.790ms
+Train Epoch: 76 [102400/347600 (29%)]	 BCE Loss: 7228.727258 KLD Loss: 589.732291  Time data load: 21962.072ms, Time training: 57.944ms
+Train Epoch: 76 [153600/347600 (44%)]	 BCE Loss: 7906.223114 KLD Loss: 576.289253  Time data load: 20111.049ms, Time training: 484.876ms
+Train Epoch: 76 [204800/347600 (59%)]	 BCE Loss: 7485.078748 KLD Loss: 581.939659  Time data load: 18077.974ms, Time training: 52.995ms
+Train Epoch: 76 [256000/347600 (74%)]	 BCE Loss: 7040.870603 KLD Loss: 555.659220  Time data load: 18697.243ms, Time training: 57.929ms
+Train Epoch: 76 [307200/347600 (88%)]	 BCE Loss: 5655.074437 KLD Loss: 560.582321  Time data load: 18387.120ms, Time training: 52.330ms
+====> Epoch: 76 Average loss: 8003.0657 -- nbatches: 679
+====> Epoch: 76 Average loss: 7965.0188 -- nbatches: 679
+Test Epoch: 76 [0/102400 (0%)]	 val loss: 10518.577087 Time val data load: 13085.256ms, Time testing: 13.253ms
+Test Epoch: 76 [51200/102400 (50%)]	 val loss: 9737.057660 Time val data load: 17585.737ms, Time testing: 12.640ms
+====> Test set loss: 8722.1952 -- nbatches 200
+Train Epoch: 77 [0/347600 (0%)]	 BCE Loss: 8504.464506 KLD Loss: 564.705864  Time data load: 14792.996ms, Time training: 23.144ms
+Train Epoch: 77 [51200/347600 (15%)]	 BCE Loss: 7547.943287 KLD Loss: 604.569202  Time data load: 12215.945ms, Time training: 52.375ms
+Train Epoch: 77 [102400/347600 (29%)]	 BCE Loss: 5642.814255 KLD Loss: 506.707768  Time data load: 21564.555ms, Time training: 48.362ms
+Train Epoch: 77 [153600/347600 (44%)]	 BCE Loss: 9291.053794 KLD Loss: 584.931332  Time data load: 22004.547ms, Time training: 56.710ms
+Train Epoch: 77 [204800/347600 (59%)]	 BCE Loss: 7449.647386 KLD Loss: 607.910915  Time data load: 17674.148ms, Time training: 52.425ms
+Train Epoch: 77 [256000/347600 (74%)]	 BCE Loss: 6659.164176 KLD Loss: 515.790689  Time data load: 17664.768ms, Time training: 175.597ms
+Train Epoch: 77 [307200/347600 (88%)]	 BCE Loss: 8111.921841 KLD Loss: 548.091123  Time data load: 18485.233ms, Time training: 47.764ms
+====> Epoch: 77 Average loss: 7966.0846 -- nbatches: 679
+====> Epoch: 77 Average loss: 7900.1424 -- nbatches: 679
+Test Epoch: 77 [0/102400 (0%)]	 val loss: 12519.887997 Time val data load: 12620.697ms, Time testing: 13.209ms
+Test Epoch: 77 [51200/102400 (50%)]	 val loss: 11948.686693 Time val data load: 17745.493ms, Time testing: 12.646ms
+====> Test set loss: 10591.7835 -- nbatches 200
+Train Epoch: 78 [0/347600 (0%)]	 BCE Loss: 6190.345133 KLD Loss: 518.949613  Time data load: 12012.581ms, Time training: 24.428ms
+Train Epoch: 78 [51200/347600 (15%)]	 BCE Loss: 6833.666396 KLD Loss: 531.561173  Time data load: 13626.207ms, Time training: 266.360ms
+Train Epoch: 78 [102400/347600 (29%)]	 BCE Loss: 7135.546948 KLD Loss: 530.375347  Time data load: 27426.820ms, Time training: 56.610ms
+Train Epoch: 78 [153600/347600 (44%)]	 BCE Loss: 8358.589349 KLD Loss: 589.484248  Time data load: 19562.736ms, Time training: 56.043ms
+Train Epoch: 78 [204800/347600 (59%)]	 BCE Loss: 6731.950119 KLD Loss: 574.795282  Time data load: 18988.153ms, Time training: 158.840ms
+Train Epoch: 78 [256000/347600 (74%)]	 BCE Loss: 8084.517564 KLD Loss: 554.799051  Time data load: 17598.630ms, Time training: 440.876ms
+Train Epoch: 78 [307200/347600 (88%)]	 BCE Loss: 8295.590493 KLD Loss: 580.038999  Time data load: 19256.613ms, Time training: 57.043ms
+====> Epoch: 78 Average loss: 7959.3785 -- nbatches: 679
+====> Epoch: 78 Average loss: 8013.2400 -- nbatches: 679
+Test Epoch: 78 [0/102400 (0%)]	 val loss: 11231.987966 Time val data load: 14052.236ms, Time testing: 12.958ms
+Test Epoch: 78 [51200/102400 (50%)]	 val loss: 10143.048559 Time val data load: 16186.153ms, Time testing: 12.591ms
+====> Test set loss: 9360.7353 -- nbatches 200
+Train Epoch: 79 [0/347600 (0%)]	 BCE Loss: 7966.508339 KLD Loss: 618.251316  Time data load: 11846.856ms, Time training: 24.068ms
+Train Epoch: 79 [51200/347600 (15%)]	 BCE Loss: 8203.042325 KLD Loss: 569.929347  Time data load: 18248.478ms, Time training: 488.666ms
+Train Epoch: 79 [102400/347600 (29%)]	 BCE Loss: 11776.288881 KLD Loss: 661.492887  Time data load: 19585.292ms, Time training: 21.427ms
+Train Epoch: 79 [153600/347600 (44%)]	 BCE Loss: 7591.424139 KLD Loss: 559.020544  Time data load: 19895.275ms, Time training: 56.741ms
+Train Epoch: 79 [204800/347600 (59%)]	 BCE Loss: 7292.136756 KLD Loss: 542.135035  Time data load: 18359.080ms, Time training: 20.917ms
+Train Epoch: 79 [256000/347600 (74%)]	 BCE Loss: 11641.972017 KLD Loss: 663.422374  Time data load: 20476.026ms, Time training: 56.980ms
+Train Epoch: 79 [307200/347600 (88%)]	 BCE Loss: 7697.703229 KLD Loss: 592.238695  Time data load: 17038.675ms, Time training: 20.490ms
+====> Epoch: 79 Average loss: 8003.3192 -- nbatches: 679
+====> Epoch: 79 Average loss: 7873.7254 -- nbatches: 679
+Test Epoch: 79 [0/102400 (0%)]	 val loss: 15445.944727 Time val data load: 12870.829ms, Time testing: 13.133ms
+Test Epoch: 79 [51200/102400 (50%)]	 val loss: 14335.776988 Time val data load: 17259.496ms, Time testing: 12.564ms
+====> Test set loss: 13969.1925 -- nbatches 200
++++ Saving checkpoint in ./outputs/model_DVAE_test/model_DVAE_test_347k102k_CHECK_EPOCH_80.pth +++
+Train Epoch: 80 [0/347600 (0%)]	 BCE Loss: 6798.743633 KLD Loss: 542.468879  Time data load: 13818.977ms, Time training: 24.644ms
+Train Epoch: 80 [51200/347600 (15%)]	 BCE Loss: 5990.357192 KLD Loss: 582.291740  Time data load: 18806.171ms, Time training: 73.503ms
+Train Epoch: 80 [102400/347600 (29%)]	 BCE Loss: 7562.685000 KLD Loss: 562.771101  Time data load: 15174.659ms, Time training: 51.701ms
+Train Epoch: 80 [153600/347600 (44%)]	 BCE Loss: 7032.579806 KLD Loss: 601.388191  Time data load: 19519.108ms, Time training: 57.301ms
+Train Epoch: 80 [204800/347600 (59%)]	 BCE Loss: 6954.394318 KLD Loss: 552.178298  Time data load: 18094.408ms, Time training: 52.871ms
+Train Epoch: 80 [256000/347600 (74%)]	 BCE Loss: 6581.837270 KLD Loss: 584.519296  Time data load: 17559.344ms, Time training: 56.985ms
+Train Epoch: 80 [307200/347600 (88%)]	 BCE Loss: 7012.069240 KLD Loss: 551.074835  Time data load: 17651.157ms, Time training: 51.836ms
+====> Epoch: 80 Average loss: 8007.7699 -- nbatches: 679
+====> Epoch: 80 Average loss: 7937.5368 -- nbatches: 679
+Test Epoch: 80 [0/102400 (0%)]	 val loss: 10559.608116 Time val data load: 11719.542ms, Time testing: 13.130ms
+Test Epoch: 80 [51200/102400 (50%)]	 val loss: 9045.972455 Time val data load: 18094.939ms, Time testing: 13.585ms
+====> Test set loss: 8569.7452 -- nbatches 200
+Train Epoch: 81 [0/347600 (0%)]	 BCE Loss: 5852.062022 KLD Loss: 526.084458  Time data load: 14675.619ms, Time training: 25.399ms
+Train Epoch: 81 [51200/347600 (15%)]	 BCE Loss: 8468.176660 KLD Loss: 585.629206  Time data load: 14713.438ms, Time training: 226.259ms
+Train Epoch: 81 [102400/347600 (29%)]	 BCE Loss: 8487.525982 KLD Loss: 603.348202  Time data load: 18801.082ms, Time training: 53.383ms
+Train Epoch: 81 [153600/347600 (44%)]	 BCE Loss: 7712.049453 KLD Loss: 626.649705  Time data load: 17911.125ms, Time training: 189.526ms
+Train Epoch: 81 [204800/347600 (59%)]	 BCE Loss: 8633.953478 KLD Loss: 583.488092  Time data load: 18860.310ms, Time training: 61.275ms
+Train Epoch: 81 [256000/347600 (74%)]	 BCE Loss: 7802.894997 KLD Loss: 553.317142  Time data load: 20119.107ms, Time training: 61.614ms
+Train Epoch: 81 [307200/347600 (88%)]	 BCE Loss: 6752.326905 KLD Loss: 557.184441  Time data load: 17681.128ms, Time training: 52.599ms
+====> Epoch: 81 Average loss: 8017.7902 -- nbatches: 679
+====> Epoch: 81 Average loss: 7904.3966 -- nbatches: 679
+Test Epoch: 81 [0/102400 (0%)]	 val loss: 11488.023653 Time val data load: 13843.029ms, Time testing: 13.144ms
+Test Epoch: 81 [51200/102400 (50%)]	 val loss: 10338.517063 Time val data load: 15937.526ms, Time testing: 12.514ms
+====> Test set loss: 9678.7555 -- nbatches 200
+Train Epoch: 82 [0/347600 (0%)]	 BCE Loss: 7096.864318 KLD Loss: 580.744105  Time data load: 14165.894ms, Time training: 23.561ms
+Train Epoch: 82 [51200/347600 (15%)]	 BCE Loss: 8009.051578 KLD Loss: 575.676590  Time data load: 15247.025ms, Time training: 56.741ms
+Train Epoch: 82 [102400/347600 (29%)]	 BCE Loss: 7175.835655 KLD Loss: 596.385276  Time data load: 21918.141ms, Time training: 20.534ms
+Train Epoch: 82 [153600/347600 (44%)]	 BCE Loss: 6389.793822 KLD Loss: 505.111463  Time data load: 17307.094ms, Time training: 50.631ms
+Train Epoch: 82 [204800/347600 (59%)]	 BCE Loss: 9040.866689 KLD Loss: 639.719624  Time data load: 18846.636ms, Time training: 20.635ms
+Train Epoch: 82 [256000/347600 (74%)]	 BCE Loss: 7347.842838 KLD Loss: 547.518270  Time data load: 18463.008ms, Time training: 70.319ms
+Train Epoch: 82 [307200/347600 (88%)]	 BCE Loss: 5597.828227 KLD Loss: 495.507217  Time data load: 19163.898ms, Time training: 54.741ms
+====> Epoch: 82 Average loss: 7900.3704 -- nbatches: 679
+====> Epoch: 82 Average loss: 7919.7203 -- nbatches: 679
+Test Epoch: 82 [0/102400 (0%)]	 val loss: 14452.376757 Time val data load: 11720.845ms, Time testing: 13.262ms
+Test Epoch: 82 [51200/102400 (50%)]	 val loss: 12749.399349 Time val data load: 18155.395ms, Time testing: 12.591ms
+====> Test set loss: 12523.5056 -- nbatches 200
+Train Epoch: 83 [0/347600 (0%)]	 BCE Loss: 7607.454312 KLD Loss: 552.028953  Time data load: 14475.259ms, Time training: 23.922ms
+Train Epoch: 83 [51200/347600 (15%)]	 BCE Loss: 5849.971489 KLD Loss: 553.685259  Time data load: 13230.955ms, Time training: 57.519ms
+Train Epoch: 83 [102400/347600 (29%)]	 BCE Loss: 7883.519163 KLD Loss: 594.173227  Time data load: 19435.562ms, Time training: 21.261ms
+Train Epoch: 83 [153600/347600 (44%)]	 BCE Loss: 5386.724970 KLD Loss: 522.284531  Time data load: 22404.364ms, Time training: 52.662ms
+Train Epoch: 83 [204800/347600 (59%)]	 BCE Loss: 9436.175619 KLD Loss: 590.592474  Time data load: 16696.821ms, Time training: 53.024ms
+Train Epoch: 83 [256000/347600 (74%)]	 BCE Loss: 4782.600357 KLD Loss: 527.529179  Time data load: 18655.027ms, Time training: 142.321ms
+Train Epoch: 83 [307200/347600 (88%)]	 BCE Loss: 6481.231670 KLD Loss: 571.746845  Time data load: 18551.173ms, Time training: 45.468ms
+====> Epoch: 83 Average loss: 7870.0969 -- nbatches: 679
+====> Epoch: 83 Average loss: 7974.9037 -- nbatches: 679
+Test Epoch: 83 [0/102400 (0%)]	 val loss: 10662.193078 Time val data load: 12137.173ms, Time testing: 13.196ms
+Test Epoch: 83 [51200/102400 (50%)]	 val loss: 9501.959909 Time val data load: 18420.690ms, Time testing: 12.582ms
+====> Test set loss: 8851.3947 -- nbatches 200
+Train Epoch: 84 [0/347600 (0%)]	 BCE Loss: 6407.705207 KLD Loss: 560.259300  Time data load: 9530.915ms, Time training: 26.738ms
+Train Epoch: 84 [51200/347600 (15%)]	 BCE Loss: 6034.386049 KLD Loss: 514.279371  Time data load: 14022.203ms, Time training: 20.760ms
+Train Epoch: 84 [102400/347600 (29%)]	 BCE Loss: 7604.653325 KLD Loss: 577.196281  Time data load: 20707.063ms, Time training: 56.969ms
+Train Epoch: 84 [153600/347600 (44%)]	 BCE Loss: 6312.176798 KLD Loss: 546.995399  Time data load: 22237.810ms, Time training: 62.455ms
+Train Epoch: 84 [204800/347600 (59%)]	 BCE Loss: 7051.740916 KLD Loss: 518.063195  Time data load: 18858.138ms, Time training: 51.914ms
+Train Epoch: 84 [256000/347600 (74%)]	 BCE Loss: 6516.516231 KLD Loss: 617.013758  Time data load: 19813.501ms, Time training: 56.289ms
+Train Epoch: 84 [307200/347600 (88%)]	 BCE Loss: 5785.933575 KLD Loss: 528.734414  Time data load: 18081.223ms, Time training: 156.282ms
+====> Epoch: 84 Average loss: 7976.0565 -- nbatches: 679
+====> Epoch: 84 Average loss: 7905.9096 -- nbatches: 679
+Test Epoch: 84 [0/102400 (0%)]	 val loss: 13927.664097 Time val data load: 13564.591ms, Time testing: 13.189ms
+Test Epoch: 84 [51200/102400 (50%)]	 val loss: 12394.511013 Time val data load: 16516.863ms, Time testing: 12.639ms
+====> Test set loss: 11589.9654 -- nbatches 200
+Train Epoch: 85 [0/347600 (0%)]	 BCE Loss: 8494.575059 KLD Loss: 627.766528  Time data load: 8914.347ms, Time training: 32.541ms
+Train Epoch: 85 [51200/347600 (15%)]	 BCE Loss: 6842.681446 KLD Loss: 544.611231  Time data load: 12651.125ms, Time training: 639.955ms
+Train Epoch: 85 [102400/347600 (29%)]	 BCE Loss: 7517.141296 KLD Loss: 564.202840  Time data load: 23058.542ms, Time training: 56.583ms
+Train Epoch: 85 [153600/347600 (44%)]	 BCE Loss: 6548.494208 KLD Loss: 554.942686  Time data load: 20376.328ms, Time training: 47.781ms
+Train Epoch: 85 [204800/347600 (59%)]	 BCE Loss: 9262.472088 KLD Loss: 568.913709  Time data load: 18001.136ms, Time training: 59.505ms
+Train Epoch: 85 [256000/347600 (74%)]	 BCE Loss: 7292.119193 KLD Loss: 569.718645  Time data load: 20380.450ms, Time training: 58.394ms
+Train Epoch: 85 [307200/347600 (88%)]	 BCE Loss: 6149.605046 KLD Loss: 552.429491  Time data load: 17809.818ms, Time training: 58.227ms
+====> Epoch: 85 Average loss: 7978.5408 -- nbatches: 679
+====> Epoch: 85 Average loss: 7887.1936 -- nbatches: 679
+Test Epoch: 85 [0/102400 (0%)]	 val loss: 14495.412598 Time val data load: 14355.006ms, Time testing: 13.176ms
+Test Epoch: 85 [51200/102400 (50%)]	 val loss: 13007.698114 Time val data load: 15703.404ms, Time testing: 12.648ms
+====> Test set loss: 11972.8105 -- nbatches 200
+Train Epoch: 86 [0/347600 (0%)]	 BCE Loss: 9376.482265 KLD Loss: 596.920185  Time data load: 9621.995ms, Time training: 28.939ms
+Train Epoch: 86 [51200/347600 (15%)]	 BCE Loss: 9377.498468 KLD Loss: 640.064477  Time data load: 15526.141ms, Time training: 20.541ms
+Train Epoch: 86 [102400/347600 (29%)]	 BCE Loss: 7231.100861 KLD Loss: 506.145934  Time data load: 21580.496ms, Time training: 112.944ms
+Train Epoch: 86 [153600/347600 (44%)]	 BCE Loss: 7484.031901 KLD Loss: 581.346654  Time data load: 21402.485ms, Time training: 55.953ms
+Train Epoch: 86 [204800/347600 (59%)]	 BCE Loss: 9569.692504 KLD Loss: 580.419560  Time data load: 17205.155ms, Time training: 66.289ms
+Train Epoch: 86 [256000/347600 (74%)]	 BCE Loss: 7927.451684 KLD Loss: 620.453076  Time data load: 18988.871ms, Time training: 49.137ms
+Train Epoch: 86 [307200/347600 (88%)]	 BCE Loss: 10093.474064 KLD Loss: 650.755900  Time data load: 18484.803ms, Time training: 90.264ms
+====> Epoch: 86 Average loss: 7925.2554 -- nbatches: 679
+====> Epoch: 86 Average loss: 7945.4049 -- nbatches: 679
+Test Epoch: 86 [0/102400 (0%)]	 val loss: 13442.970722 Time val data load: 12158.612ms, Time testing: 13.383ms
+Test Epoch: 86 [51200/102400 (50%)]	 val loss: 12451.584880 Time val data load: 17277.966ms, Time testing: 17.325ms
+====> Test set loss: 11190.4908 -- nbatches 200
+Train Epoch: 87 [0/347600 (0%)]	 BCE Loss: 5871.053608 KLD Loss: 577.309774  Time data load: 10923.468ms, Time training: 24.402ms
+Train Epoch: 87 [51200/347600 (15%)]	 BCE Loss: 7156.071771 KLD Loss: 566.742862  Time data load: 13791.277ms, Time training: 21.389ms
+Train Epoch: 87 [102400/347600 (29%)]	 BCE Loss: 6195.526022 KLD Loss: 559.969657  Time data load: 21091.592ms, Time training: 53.018ms
+Train Epoch: 87 [153600/347600 (44%)]	 BCE Loss: 6824.690805 KLD Loss: 567.899352  Time data load: 23007.321ms, Time training: 57.227ms
+Train Epoch: 87 [204800/347600 (59%)]	 BCE Loss: 6001.096742 KLD Loss: 532.099329  Time data load: 18209.406ms, Time training: 58.085ms
+Train Epoch: 87 [256000/347600 (74%)]	 BCE Loss: 7275.775214 KLD Loss: 519.773842  Time data load: 19398.878ms, Time training: 72.137ms
+Train Epoch: 87 [307200/347600 (88%)]	 BCE Loss: 5938.860437 KLD Loss: 550.460416  Time data load: 18761.352ms, Time training: 97.111ms
+====> Epoch: 87 Average loss: 7935.5400 -- nbatches: 679
+====> Epoch: 87 Average loss: 7942.5053 -- nbatches: 679
+Test Epoch: 87 [0/102400 (0%)]	 val loss: 11141.902082 Time val data load: 13325.198ms, Time testing: 13.191ms
+Test Epoch: 87 [51200/102400 (50%)]	 val loss: 9963.030360 Time val data load: 17657.052ms, Time testing: 12.589ms
+====> Test set loss: 9129.8760 -- nbatches 200
+Train Epoch: 88 [0/347600 (0%)]	 BCE Loss: 6218.158543 KLD Loss: 529.165428  Time data load: 13244.981ms, Time training: 24.292ms
+Train Epoch: 88 [51200/347600 (15%)]	 BCE Loss: 7257.698831 KLD Loss: 598.519892  Time data load: 19059.152ms, Time training: 57.373ms
+Train Epoch: 88 [102400/347600 (29%)]	 BCE Loss: 7538.871948 KLD Loss: 564.040280  Time data load: 14859.313ms, Time training: 21.089ms
+Train Epoch: 88 [153600/347600 (44%)]	 BCE Loss: 7975.891157 KLD Loss: 581.023136  Time data load: 21768.791ms, Time training: 52.388ms
+Train Epoch: 88 [204800/347600 (59%)]	 BCE Loss: 5779.036764 KLD Loss: 597.561691  Time data load: 17437.422ms, Time training: 51.928ms
+Train Epoch: 88 [256000/347600 (74%)]	 BCE Loss: 9594.028164 KLD Loss: 629.405193  Time data load: 20255.322ms, Time training: 57.214ms
+Train Epoch: 88 [307200/347600 (88%)]	 BCE Loss: 5996.027322 KLD Loss: 524.352101  Time data load: 17694.231ms, Time training: 56.708ms
+====> Epoch: 88 Average loss: 7920.4137 -- nbatches: 679
+====> Epoch: 88 Average loss: 7892.3722 -- nbatches: 679
+Test Epoch: 88 [0/102400 (0%)]	 val loss: 12608.674169 Time val data load: 13305.732ms, Time testing: 13.206ms
+Test Epoch: 88 [51200/102400 (50%)]	 val loss: 11055.353253 Time val data load: 17351.238ms, Time testing: 12.000ms
+====> Test set loss: 10740.0277 -- nbatches 200
+Train Epoch: 89 [0/347600 (0%)]	 BCE Loss: 6952.323063 KLD Loss: 557.679617  Time data load: 14708.122ms, Time training: 25.826ms
+Train Epoch: 89 [51200/347600 (15%)]	 BCE Loss: 8430.612287 KLD Loss: 561.353424  Time data load: 11116.749ms, Time training: 44.305ms
+Train Epoch: 89 [102400/347600 (29%)]	 BCE Loss: 10119.815605 KLD Loss: 611.575686  Time data load: 20942.790ms, Time training: 49.054ms
+Train Epoch: 89 [153600/347600 (44%)]	 BCE Loss: 6485.645946 KLD Loss: 521.580820  Time data load: 21533.737ms, Time training: 476.340ms
+Train Epoch: 89 [204800/347600 (59%)]	 BCE Loss: 7055.937857 KLD Loss: 595.192550  Time data load: 18501.012ms, Time training: 52.811ms
+Train Epoch: 89 [256000/347600 (74%)]	 BCE Loss: 8761.230738 KLD Loss: 603.317472  Time data load: 18122.283ms, Time training: 56.442ms
+Train Epoch: 89 [307200/347600 (88%)]	 BCE Loss: 7157.213793 KLD Loss: 567.647659  Time data load: 18435.340ms, Time training: 57.219ms
+====> Epoch: 89 Average loss: 7913.4958 -- nbatches: 679
+====> Epoch: 89 Average loss: 7957.6853 -- nbatches: 679
+Test Epoch: 89 [0/102400 (0%)]	 val loss: 11741.586543 Time val data load: 9072.145ms, Time testing: 13.174ms
+Test Epoch: 89 [51200/102400 (50%)]	 val loss: 10414.249580 Time val data load: 21156.046ms, Time testing: 12.579ms
+====> Test set loss: 9964.6864 -- nbatches 200
+Train Epoch: 90 [0/347600 (0%)]	 BCE Loss: 7180.563981 KLD Loss: 544.536327  Time data load: 12540.046ms, Time training: 24.358ms
+Train Epoch: 90 [51200/347600 (15%)]	 BCE Loss: 6299.936752 KLD Loss: 556.908150  Time data load: 13998.583ms, Time training: 250.932ms
+Train Epoch: 90 [102400/347600 (29%)]	 BCE Loss: 8062.143348 KLD Loss: 587.429566  Time data load: 20821.744ms, Time training: 52.262ms
+Train Epoch: 90 [153600/347600 (44%)]	 BCE Loss: 7392.202059 KLD Loss: 544.434917  Time data load: 20368.372ms, Time training: 237.197ms
+Train Epoch: 90 [204800/347600 (59%)]	 BCE Loss: 7015.642559 KLD Loss: 543.350499  Time data load: 18681.820ms, Time training: 55.411ms
+Train Epoch: 90 [256000/347600 (74%)]	 BCE Loss: 6588.069273 KLD Loss: 576.154873  Time data load: 18371.728ms, Time training: 549.755ms
+Train Epoch: 90 [307200/347600 (88%)]	 BCE Loss: 7588.362801 KLD Loss: 587.637325  Time data load: 18124.820ms, Time training: 51.564ms
+====> Epoch: 90 Average loss: 8000.2971 -- nbatches: 679
+====> Epoch: 90 Average loss: 7905.5334 -- nbatches: 679
+Test Epoch: 90 [0/102400 (0%)]	 val loss: 11825.512358 Time val data load: 11966.638ms, Time testing: 13.158ms
+Test Epoch: 90 [51200/102400 (50%)]	 val loss: 10649.947343 Time val data load: 18040.611ms, Time testing: 12.636ms
+====> Test set loss: 10241.1646 -- nbatches 200
+Train Epoch: 91 [0/347600 (0%)]	 BCE Loss: 8213.189347 KLD Loss: 585.931281  Time data load: 9502.398ms, Time training: 24.258ms
+Train Epoch: 91 [51200/347600 (15%)]	 BCE Loss: 7302.461750 KLD Loss: 580.660499  Time data load: 15749.479ms, Time training: 57.175ms
+Train Epoch: 91 [102400/347600 (29%)]	 BCE Loss: 7728.228862 KLD Loss: 563.726180  Time data load: 17387.221ms, Time training: 52.814ms
+Train Epoch: 91 [153600/347600 (44%)]	 BCE Loss: 6551.473048 KLD Loss: 560.742518  Time data load: 24024.304ms, Time training: 57.315ms
+Train Epoch: 91 [204800/347600 (59%)]	 BCE Loss: 8283.528599 KLD Loss: 572.771707  Time data load: 17521.508ms, Time training: 52.186ms
+Train Epoch: 91 [256000/347600 (74%)]	 BCE Loss: 6589.308488 KLD Loss: 566.983360  Time data load: 18855.931ms, Time training: 53.252ms
+Train Epoch: 91 [307200/347600 (88%)]	 BCE Loss: 8184.670905 KLD Loss: 569.821519  Time data load: 19572.110ms, Time training: 57.534ms
+====> Epoch: 91 Average loss: 7861.1934 -- nbatches: 679
+====> Epoch: 91 Average loss: 7882.1111 -- nbatches: 679
+Test Epoch: 91 [0/102400 (0%)]	 val loss: 12631.481752 Time val data load: 11590.230ms, Time testing: 13.168ms
+Test Epoch: 91 [51200/102400 (50%)]	 val loss: 11240.431090 Time val data load: 17629.467ms, Time testing: 12.861ms
+====> Test set loss: 10755.3517 -- nbatches 200
+Train Epoch: 92 [0/347600 (0%)]	 BCE Loss: 6945.735144 KLD Loss: 558.535542  Time data load: 10992.548ms, Time training: 25.113ms
+Train Epoch: 92 [51200/347600 (15%)]	 BCE Loss: 9084.155273 KLD Loss: 625.277037  Time data load: 15725.112ms, Time training: 56.825ms
+Train Epoch: 92 [102400/347600 (29%)]	 BCE Loss: 4576.842844 KLD Loss: 578.799595  Time data load: 17506.904ms, Time training: 51.015ms
+Train Epoch: 92 [153600/347600 (44%)]	 BCE Loss: 5622.780819 KLD Loss: 580.046517  Time data load: 21082.398ms, Time training: 55.990ms
+Train Epoch: 92 [204800/347600 (59%)]	 BCE Loss: 5233.288612 KLD Loss: 560.367688  Time data load: 20166.765ms, Time training: 56.499ms
+Train Epoch: 92 [256000/347600 (74%)]	 BCE Loss: 7111.717331 KLD Loss: 568.808198  Time data load: 20349.146ms, Time training: 305.362ms
+Train Epoch: 92 [307200/347600 (88%)]	 BCE Loss: 4928.756372 KLD Loss: 577.066702  Time data load: 18021.541ms, Time training: 55.537ms
+====> Epoch: 92 Average loss: 7862.6490 -- nbatches: 679
+====> Epoch: 92 Average loss: 7915.9540 -- nbatches: 679
+Test Epoch: 92 [0/102400 (0%)]	 val loss: 14788.051841 Time val data load: 13227.632ms, Time testing: 17.610ms
+Test Epoch: 92 [51200/102400 (50%)]	 val loss: 12849.010821 Time val data load: 16638.426ms, Time testing: 12.604ms
+====> Test set loss: 12432.9919 -- nbatches 200
+Train Epoch: 93 [0/347600 (0%)]	 BCE Loss: 7320.645275 KLD Loss: 582.861511  Time data load: 10114.961ms, Time training: 24.155ms
+Train Epoch: 93 [51200/347600 (15%)]	 BCE Loss: 4963.681779 KLD Loss: 525.146395  Time data load: 15134.089ms, Time training: 61.492ms
+Train Epoch: 93 [102400/347600 (29%)]	 BCE Loss: 6340.403557 KLD Loss: 611.729455  Time data load: 18913.247ms, Time training: 57.666ms
+Train Epoch: 93 [153600/347600 (44%)]	 BCE Loss: 6721.928312 KLD Loss: 552.578320  Time data load: 22533.537ms, Time training: 225.190ms
+Train Epoch: 93 [204800/347600 (59%)]	 BCE Loss: 6960.254000 KLD Loss: 555.657565  Time data load: 19025.992ms, Time training: 44.192ms
+Train Epoch: 93 [256000/347600 (74%)]	 BCE Loss: 7507.991372 KLD Loss: 567.887492  Time data load: 19008.858ms, Time training: 52.342ms
+Train Epoch: 93 [307200/347600 (88%)]	 BCE Loss: 7213.147395 KLD Loss: 590.751893  Time data load: 18373.614ms, Time training: 56.425ms
+====> Epoch: 93 Average loss: 7930.7058 -- nbatches: 679
+====> Epoch: 93 Average loss: 7893.4659 -- nbatches: 679
+Test Epoch: 93 [0/102400 (0%)]	 val loss: 12978.077646 Time val data load: 12808.327ms, Time testing: 13.080ms
+Test Epoch: 93 [51200/102400 (50%)]	 val loss: 12316.738272 Time val data load: 17198.611ms, Time testing: 12.642ms
+====> Test set loss: 10732.2514 -- nbatches 200
+Train Epoch: 94 [0/347600 (0%)]	 BCE Loss: 6852.789082 KLD Loss: 559.814281  Time data load: 11205.933ms, Time training: 24.073ms
+Train Epoch: 94 [51200/347600 (15%)]	 BCE Loss: 8119.705839 KLD Loss: 602.151841  Time data load: 13572.971ms, Time training: 55.986ms
+Train Epoch: 94 [102400/347600 (29%)]	 BCE Loss: 7326.657104 KLD Loss: 600.646713  Time data load: 18423.768ms, Time training: 75.438ms
+Train Epoch: 94 [153600/347600 (44%)]	 BCE Loss: 8347.053546 KLD Loss: 606.011479  Time data load: 21206.427ms, Time training: 51.735ms
+Train Epoch: 94 [204800/347600 (59%)]	 BCE Loss: 5353.476667 KLD Loss: 518.650251  Time data load: 20083.584ms, Time training: 56.777ms
+Train Epoch: 94 [256000/347600 (74%)]	 BCE Loss: 7565.423310 KLD Loss: 587.191552  Time data load: 19972.854ms, Time training: 51.867ms
+Train Epoch: 94 [307200/347600 (88%)]	 BCE Loss: 8052.129519 KLD Loss: 590.024015  Time data load: 18174.014ms, Time training: 55.985ms
+====> Epoch: 94 Average loss: 7895.2433 -- nbatches: 679
+====> Epoch: 94 Average loss: 7937.0487 -- nbatches: 679
+Test Epoch: 94 [0/102400 (0%)]	 val loss: 11170.721485 Time val data load: 11324.929ms, Time testing: 17.496ms
+Test Epoch: 94 [51200/102400 (50%)]	 val loss: 9816.874884 Time val data load: 18780.360ms, Time testing: 12.676ms
+====> Test set loss: 9435.0215 -- nbatches 200
+Train Epoch: 95 [0/347600 (0%)]	 BCE Loss: 8958.053568 KLD Loss: 568.052436  Time data load: 14668.018ms, Time training: 25.481ms
+Train Epoch: 95 [51200/347600 (15%)]	 BCE Loss: 8037.855627 KLD Loss: 596.296222  Time data load: 17523.678ms, Time training: 56.089ms
+Train Epoch: 95 [102400/347600 (29%)]	 BCE Loss: 7824.057948 KLD Loss: 583.178542  Time data load: 15554.290ms, Time training: 51.281ms
+Train Epoch: 95 [153600/347600 (44%)]	 BCE Loss: 7319.493232 KLD Loss: 561.799658  Time data load: 21072.347ms, Time training: 139.961ms
+Train Epoch: 95 [204800/347600 (59%)]	 BCE Loss: 9118.868015 KLD Loss: 653.579561  Time data load: 18761.894ms, Time training: 41.099ms
+Train Epoch: 95 [256000/347600 (74%)]	 BCE Loss: 7178.051062 KLD Loss: 567.944137  Time data load: 18404.506ms, Time training: 237.407ms
+Train Epoch: 95 [307200/347600 (88%)]	 BCE Loss: 8374.433312 KLD Loss: 654.963845  Time data load: 18722.396ms, Time training: 56.386ms
+====> Epoch: 95 Average loss: 8019.8007 -- nbatches: 679
+====> Epoch: 95 Average loss: 7953.4745 -- nbatches: 679
+Test Epoch: 95 [0/102400 (0%)]	 val loss: 10265.290728 Time val data load: 11317.405ms, Time testing: 13.233ms
+Test Epoch: 95 [51200/102400 (50%)]	 val loss: 8900.839587 Time val data load: 19136.248ms, Time testing: 12.632ms
+====> Test set loss: 8460.3565 -- nbatches 200
+Train Epoch: 96 [0/347600 (0%)]	 BCE Loss: 8020.899255 KLD Loss: 603.875180  Time data load: 13850.216ms, Time training: 24.242ms
+Train Epoch: 96 [51200/347600 (15%)]	 BCE Loss: 4706.729427 KLD Loss: 597.559716  Time data load: 14247.767ms, Time training: 56.129ms
+Train Epoch: 96 [102400/347600 (29%)]	 BCE Loss: 6966.681483 KLD Loss: 617.872472  Time data load: 17575.761ms, Time training: 21.281ms
+Train Epoch: 96 [153600/347600 (44%)]	 BCE Loss: 6129.463136 KLD Loss: 530.602672  Time data load: 21375.395ms, Time training: 792.514ms
+Train Epoch: 96 [204800/347600 (59%)]	 BCE Loss: 7168.596814 KLD Loss: 559.237301  Time data load: 20349.886ms, Time training: 56.075ms
+Train Epoch: 96 [256000/347600 (74%)]	 BCE Loss: 9006.409479 KLD Loss: 599.134434  Time data load: 19103.117ms, Time training: 175.427ms
+Train Epoch: 96 [307200/347600 (88%)]	 BCE Loss: 6091.633365 KLD Loss: 563.240568  Time data load: 20159.303ms, Time training: 55.662ms
+====> Epoch: 96 Average loss: 7896.3430 -- nbatches: 679
+====> Epoch: 96 Average loss: 7944.3031 -- nbatches: 679
+Test Epoch: 96 [0/102400 (0%)]	 val loss: 13285.403068 Time val data load: 10988.823ms, Time testing: 13.261ms
+Test Epoch: 96 [51200/102400 (50%)]	 val loss: 12017.910115 Time val data load: 19432.988ms, Time testing: 12.599ms
+====> Test set loss: 11394.8453 -- nbatches 200
+Train Epoch: 97 [0/347600 (0%)]	 BCE Loss: 7941.300673 KLD Loss: 524.916897  Time data load: 10635.136ms, Time training: 24.515ms
+Train Epoch: 97 [51200/347600 (15%)]	 BCE Loss: 6821.618852 KLD Loss: 550.686528  Time data load: 12875.074ms, Time training: 55.578ms
+Train Epoch: 97 [102400/347600 (29%)]	 BCE Loss: 6639.126929 KLD Loss: 573.813001  Time data load: 20846.950ms, Time training: 56.711ms
+Train Epoch: 97 [153600/347600 (44%)]	 BCE Loss: 7478.276864 KLD Loss: 551.205834  Time data load: 19016.687ms, Time training: 55.955ms
+Train Epoch: 97 [204800/347600 (59%)]	 BCE Loss: 6780.758924 KLD Loss: 545.232473  Time data load: 17795.680ms, Time training: 56.951ms
+Train Epoch: 97 [256000/347600 (74%)]	 BCE Loss: 7304.977720 KLD Loss: 675.303219  Time data load: 20187.582ms, Time training: 63.139ms
+Train Epoch: 97 [307200/347600 (88%)]	 BCE Loss: 8054.254953 KLD Loss: 594.571054  Time data load: 17621.069ms, Time training: 52.076ms
+====> Epoch: 97 Average loss: 7912.8674 -- nbatches: 679
+====> Epoch: 97 Average loss: 7933.8423 -- nbatches: 679
+Test Epoch: 97 [0/102400 (0%)]	 val loss: 10345.118396 Time val data load: 10220.625ms, Time testing: 13.111ms
+Test Epoch: 97 [51200/102400 (50%)]	 val loss: 9327.355736 Time val data load: 19635.082ms, Time testing: 12.669ms
+====> Test set loss: 8446.7069 -- nbatches 200
+Train Epoch: 98 [0/347600 (0%)]	 BCE Loss: 6432.814951 KLD Loss: 548.564178  Time data load: 9518.071ms, Time training: 24.444ms
+Train Epoch: 98 [51200/347600 (15%)]	 BCE Loss: 5799.266865 KLD Loss: 583.300963  Time data load: 12939.643ms, Time training: 333.292ms
+Train Epoch: 98 [102400/347600 (29%)]	 BCE Loss: 4437.701835 KLD Loss: 503.240047  Time data load: 21143.572ms, Time training: 52.271ms
+Train Epoch: 98 [153600/347600 (44%)]	 BCE Loss: 11854.778095 KLD Loss: 643.957339  Time data load: 21533.656ms, Time training: 1027.622ms
+Train Epoch: 98 [204800/347600 (59%)]	 BCE Loss: 7955.222560 KLD Loss: 578.885676  Time data load: 18183.277ms, Time training: 61.724ms
+Train Epoch: 98 [256000/347600 (74%)]	 BCE Loss: 7920.294277 KLD Loss: 553.287741  Time data load: 19263.716ms, Time training: 205.349ms
+Train Epoch: 98 [307200/347600 (88%)]	 BCE Loss: 7923.787229 KLD Loss: 619.508742  Time data load: 18468.766ms, Time training: 52.473ms
+====> Epoch: 98 Average loss: 7936.2529 -- nbatches: 679
+====> Epoch: 98 Average loss: 7946.2513 -- nbatches: 679
+Test Epoch: 98 [0/102400 (0%)]	 val loss: 10257.402033 Time val data load: 12863.194ms, Time testing: 13.273ms
+Test Epoch: 98 [51200/102400 (50%)]	 val loss: 9149.790013 Time val data load: 17101.007ms, Time testing: 17.112ms
+====> Test set loss: 8599.8853 -- nbatches 200
+Train Epoch: 99 [0/347600 (0%)]	 BCE Loss: 7961.353015 KLD Loss: 589.120692  Time data load: 12151.751ms, Time training: 23.939ms
+Train Epoch: 99 [51200/347600 (15%)]	 BCE Loss: 6984.142152 KLD Loss: 556.206410  Time data load: 14250.183ms, Time training: 237.581ms
+Train Epoch: 99 [102400/347600 (29%)]	 BCE Loss: 5888.027075 KLD Loss: 560.187244  Time data load: 22467.395ms, Time training: 52.269ms
+Train Epoch: 99 [153600/347600 (44%)]	 BCE Loss: 6226.327681 KLD Loss: 538.800661  Time data load: 20074.285ms, Time training: 56.227ms
+Train Epoch: 99 [204800/347600 (59%)]	 BCE Loss: 6691.630027 KLD Loss: 561.729573  Time data load: 18300.640ms, Time training: 185.690ms
+Train Epoch: 99 [256000/347600 (74%)]	 BCE Loss: 9166.030936 KLD Loss: 634.728049  Time data load: 18608.896ms, Time training: 56.700ms
+Train Epoch: 99 [307200/347600 (88%)]	 BCE Loss: 6573.647220 KLD Loss: 609.869737  Time data load: 19742.936ms, Time training: 55.114ms
+====> Epoch: 99 Average loss: 7893.4051 -- nbatches: 679
+====> Epoch: 99 Average loss: 7878.4685 -- nbatches: 679
+Test Epoch: 99 [0/102400 (0%)]	 val loss: 10386.084573 Time val data load: 13402.422ms, Time testing: 13.171ms
+Test Epoch: 99 [51200/102400 (50%)]	 val loss: 10086.106498 Time val data load: 16465.108ms, Time testing: 12.601ms
+====> Test set loss: 8501.7347 -- nbatches 200
++++ Saving checkpoint in ./outputs/model_DVAE_test/model_DVAE_test_347k102k_CHECK_EPOCH_100.pth +++
+Train Epoch: 100 [0/347600 (0%)]	 BCE Loss: 5754.374477 KLD Loss: 522.386251  Time data load: 11197.223ms, Time training: 24.958ms
+Train Epoch: 100 [51200/347600 (15%)]	 BCE Loss: 6611.577912 KLD Loss: 566.597137  Time data load: 19553.556ms, Time training: 56.601ms
+Train Epoch: 100 [102400/347600 (29%)]	 BCE Loss: 9194.659829 KLD Loss: 570.105505  Time data load: 18590.590ms, Time training: 107.133ms
+Train Epoch: 100 [153600/347600 (44%)]	 BCE Loss: 7038.670906 KLD Loss: 555.609199  Time data load: 24304.845ms, Time training: 262.360ms
+Train Epoch: 100 [204800/347600 (59%)]	 BCE Loss: 8737.510029 KLD Loss: 574.045508  Time data load: 16938.097ms, Time training: 52.769ms
+Train Epoch: 100 [256000/347600 (74%)]	 BCE Loss: 6419.247802 KLD Loss: 572.059460  Time data load: 19909.308ms, Time training: 484.041ms
+Train Epoch: 100 [307200/347600 (88%)]	 BCE Loss: 5373.719339 KLD Loss: 514.923964  Time data load: 18575.414ms, Time training: 56.643ms
+====> Epoch: 100 Average loss: 7920.7626 -- nbatches: 679
+====> Epoch: 100 Average loss: 7869.1541 -- nbatches: 679
+Test Epoch: 100 [0/102400 (0%)]	 val loss: 10524.554466 Time val data load: 10956.115ms, Time testing: 13.118ms
+Test Epoch: 100 [51200/102400 (50%)]	 val loss: 9726.777316 Time val data load: 18870.325ms, Time testing: 12.924ms
+====> Test set loss: 8782.5196 -- nbatches 200
+>>> Training complete in: 4:52:43.511491
+./outputs/model_DVAE_test/model_DVAE_test_347k102k_test_idx.txt has been saved in folder ./outputs/model_DVAE_test
+./outputs/model_DVAE_test/model_DVAE_test_347k102k_val_idx.txt has been saved in folder ./outputs/model_DVAE_test
