@@ -23,6 +23,7 @@ import subprocess
 import torch.distributed as dist
 from torch.nn.parallel import DistributedDataParallel as DDP
 import idr_torch
+import torch.multiprocessing as mp
 
 # Use the same seed for testing
 #torch.manual_seed(42)
@@ -31,12 +32,9 @@ import idr_torch
 #np.random.seed(42)
 
 
-def setup():
-    #os.environ['MASTER_ADDR'] = 'localhost'
-    #os.environ['MASTER_PORT'] = '12355'
-
+def setup(PROCESS_RANK,WORLD_SIZE):
     # initialize the process group
-    dist.init_process_group("nccl", init_method='env://',rank=idr_torch.rank, world_size=idr_torch.size)
+    dist.init_process_group("nccl", init_method='env://',rank=PROCESS_RANK, world_size=WORLD_SIZE)
 
 def cleanup():
     dist.destroy_process_group()
@@ -140,12 +138,12 @@ def loss_function(recon_x, x, mu, logvar):
     return BCE, KLD
 
 
-def main(args):
+def main(PROCESS_RANK, WORLD_SIZE, args):
     
-    print("Running PEGSNET_DVAE (DDP) on rank {}.".format(idr_torch.rank))
+    print("Running PEGSNET_DVAE (DDP) on rank {}.".format(PROCESS_RANK))
 
-    if idr_torch.rank==0:
-        print("ME, PROCESS {}, I am MASTER".format(idr_torch.rank))
+    if PROCESS_RANK==0:
+        print("ME, PROCESS {}, I am MASTER".format(PROCESS_RANK))
 
     # Check which is the platform
     platform = args.platform
@@ -155,12 +153,13 @@ def main(args):
     
     elif platform == 'hotshot':
         distributed = True
-        setup()
+        setup(PROCESS_RANK,WORLD_SIZE)
+        LOCAL_RANK = PROCESS_RANK
         
     elif platform == 'JZ':
         distributed = True
-        setup()
-        
+        setup(PROCESS_RANK,WORLD_SIZE)
+        LOCAL_RANK = idr_torch.local_rank
 
     # Setting up the parameters
     # Dabatabse name with data
@@ -177,7 +176,7 @@ def main(args):
     tot_samp = train_nsamp + val_nsamp + test_nsamp
     # Total batch size. This is divided by the number of GPUs
     batch_size = args.batch_size
-    batch_size_per_gpu = batch_size // idr_torch.size
+    batch_size_per_gpu = batch_size // WORLD_SIZE
     # Learning rate
     lr = args.lr
     # Number of components to use
@@ -203,7 +202,7 @@ def main(args):
     list_val = np.load(working_db +"_val_idx.npy")[:val_nsamp]
     list_test = np.load(working_db +"_test_idx.npy")[:test_nsamp]
 
-    if idr_torch.rank ==  0:
+    if PROCESS_RANK ==  0:
         # Do some checks on dimensions and number of samples as specified in input parameters
         if (train_nsamp > len(list_train)):
             print (" train_nsamp is bigger than the maximum number of training samples for this database which is {}".format(len(list_train)))
@@ -224,7 +223,7 @@ def main(args):
 
     modelname = modeldir + "/model_" + modelprefix + '_' + str(int(train_nsamp/1000)) + "k" + str(int(val_nsamp/1000)) + "k"
 
-    if idr_torch.rank ==0:
+    if PROCESS_RANK ==0:
         if not os.path.exists(modeldir):
             os.makedirs(modeldir)
 
@@ -259,13 +258,13 @@ def main(args):
     
     if distributed:
         # Set the device
-        torch.cuda.set_device(idr_torch.local_rank)
+        torch.cuda.set_device(LOCAL_RANK)
         gpu = torch.device("cuda")
         # Create the model
         model0 = DVAE(n_comp, latent_dim).to(gpu)
         model0 = model0.double()
         # Wrap the model in a DDP object
-        Dmodel = DDP(model0,device_ids=[idr_torch.local_rank])
+        Dmodel = DDP(model0,device_ids=[LOCAL_RANK])
     else:
         gpu = torch.device("cuda")
         # Create the model
@@ -286,7 +285,7 @@ def main(args):
         #Synchronize on all gpus
         dist.barrier()
         # By default the model is load to CPU. We need to remap to each GPU
-        map_location = {'cuda:%d' % 0: 'cuda:%d' % idr_torch.local_rank} # remap storage from GPU 0 to local GPU 
+        map_location = {'cuda:%d' % 0: 'cuda:%d' % LOCAL_RANK} # remap storage from GPU 0 to local GPU 
         # Now load it
         checkpoint = torch.load(CPATH, map_location=map_location)
         Dmodel.load_state_dict(checkpoint['model_state_dict']) # load checkpoint
@@ -341,15 +340,15 @@ def main(args):
 
     # Sampler is needed by DistributedDataParallel
         train_sampler = torch.utils.data.distributed.DistributedSampler(training_set,
-                                                                        num_replicas=idr_torch.size,
-                                                                        rank=idr_torch.rank)
+                                                                        num_replicas=WORLD_SIZE,
+                                                                        rank=PROCESS_RANK)
     
     # The loader will load the data using generator and sampler
         train_loader = torch.utils.data.DataLoader(training_set, **params, sampler=train_sampler)
     
 
-        val_sampler = DistributedEvalSampler(validation_set, num_replicas=idr_torch.size,
-                                                                        rank=idr_torch.rank)
+        val_sampler = DistributedEvalSampler(validation_set, num_replicas=WORLD_SIZE,
+                                                                        rank=PROCESS_RANK)
     
     
     
@@ -364,10 +363,10 @@ def main(args):
 ########   START TRAINING LOOP 
     train_losses = []
     val_losses = []
-    if idr_torch.rank == 0: start = datetime.now()
+    if PROCESS_RANK == 0: start = datetime.now()
 # This is looping over all epochs
     for epoch in range(epoch_start, max_epochs + 1):
-        if idr_torch.rank == 0:
+        if PROCESS_RANK == 0:
             start_dataload = time()
             
 
@@ -378,7 +377,7 @@ def main(args):
             CPATH = modelname + "_CHECK_EPOCH_{}.pth".format(epoch)
 
             # ONLY MASTER SAVES THE CHECKPOINT
-            if idr_torch.rank == 0:
+            if PROCESS_RANK == 0:
                 print ("+++ Saving checkpoint in {} +++".format(CPATH))
                 #torch.save(Pmodel.state_dict(),CPATH)
                 torch.save({
@@ -392,7 +391,7 @@ def main(args):
 ################### NOW LOAD IT EVERYWHERE
             #Synchronize on all gpus
             dist.barrier()
-            map_location = {'cuda:%d' % 0: 'cuda:%d' % idr_torch.local_rank} # remap storage from GPU 0 to local GPU 
+            map_location = {'cuda:%d' % 0: 'cuda:%d' % LOCAL_RANK} # remap storage from GPU 0 to local GPU 
             #Pmodel.load_state_dict(torch.load(CPATH, map_location=map_location))
             checkpoint = torch.load(CPATH, map_location=map_location)
             Dmodel.load_state_dict(checkpoint['model_state_dict']) # load checkpoint
@@ -410,13 +409,13 @@ def main(args):
         # Start looping over batches for the training dataset
         for batch_idx, (data_n, data , _, _ ) in enumerate(train_loader):
 
-            if idr_torch.rank == 0: stop_dataload = time()
+            if PROCESS_RANK == 0: stop_dataload = time()
 
             # Load data and labels on GPU
             data = data.to(gpu, non_blocking=True)
             data_n = data_n.to(gpu, non_blocking=True)
 
-            if idr_torch.rank == 0: start_training = time()
+            if PROCESS_RANK == 0: start_training = time()
 
             # if PROCESS_RANK == 0 or PROCESS_RANK == 1:
             #     print (f"RANK {PROCESS_RANK} -- EPOCH{epoch} -- BATCH {batch_idx}")
@@ -448,27 +447,27 @@ def main(args):
     # len(index), loss.item(), train_loss))
 
 
-            if idr_torch.rank == 0: stop_training = time()
+            if PROCESS_RANK == 0: stop_training = time()
 
             # Print some infos after log_interval steps for this epoch
-            if batch_idx % log_interval == 0 and idr_torch.rank ==  0:
+            if batch_idx % log_interval == 0 and PROCESS_RANK ==  0:
                 print('Train Epoch: {} [{}/{} ({:.0f}%)]\t BCE Loss: {:.6f} KLD Loss: {:.6f}  Time data load: {:.3f}ms, Time training: {:.3f}ms'.format(
-                    epoch, batch_idx * len(data)*idr_torch.size, len(train_loader.dataset),
+                    epoch, batch_idx * len(data)*WORLD_SIZE, len(train_loader.dataset),
                     100. * batch_idx / len(train_loader),
                     BCE, KLD, (stop_dataload - start_dataload)*1000, (stop_training - start_training)*1000 ))
                 # print(len(data))
-                if idr_torch.rank == 0: start_dataload = time()
+                if PROCESS_RANK == 0: start_dataload = time()
 
         nbatches = batch_idx+1
         # Save train loss for this epoch
         train_losses.append(train_loss/nbatches)
 
         # CHeckpoint interval is not implemented yet.
-        #if  idr_torch.rank==0 and epoch % check_interval:
+        #if  PROCESS_RANK==0 and epoch % check_interval:
 
         #    torch.save(Pmodel.module.state_dict(), modelname +"_CHECK_{}.pth".format(epoch))
 
-        if idr_torch.rank ==  0 or idr_torch.rank==1:
+        if PROCESS_RANK ==  0 or PROCESS_RANK==1:
             print('====> Epoch: {} Average loss: {:.4f} -- nbatches: {}'.format(
                   epoch, train_loss / nbatches, nbatches))
 
@@ -485,34 +484,34 @@ def main(args):
         test_loss = 0
         # No gradients are computed here.
         with torch.no_grad():
-            if idr_torch.rank ==0: val_start_dataload = time()
+            if PROCESS_RANK ==0: val_start_dataload = time()
 
             # Start looping over batches of the validation set
             for i, (data_n, data, _,_) in enumerate(val_loader):
-                if idr_torch.rank == 0: val_stop_dataload = time()
+                if PROCESS_RANK == 0: val_stop_dataload = time()
 
                 # Load data and labels on GPU
                 data = data.to(gpu, non_blocking=True)
                 data_n = data_n.to(gpu, non_blocking=True)
 
-                if idr_torch.rank == 0: start_testing = time()
+                if PROCESS_RANK == 0: start_testing = time()
                 recon_batch, mu, logvar = Dmodel(data_n.double())
                 tBCE, tKLD = loss_function(recon_batch, data.view(-1,n_comp,t_max, n_stations), mu, logvar)
                 tloss = tBCE + tKLD
                 test_loss += tloss.item()
 
-                if idr_torch.rank == 0: stop_testing = time()
+                if PROCESS_RANK == 0: stop_testing = time()
 
                 # Print some infos on the validation set 
-                if i % log_interval == 0 and idr_torch.rank ==  0:
+                if i % log_interval == 0 and PROCESS_RANK ==  0:
                     print('Test Epoch: {} [{}/{} ({:.0f}%)]\t val loss: {:.6f} Time val data load: {:.3f}ms, Time testing: {:.3f}ms'.format(
-                    epoch, i * len(data)*idr_torch.size, len(val_loader.dataset),
+                    epoch, i * len(data)*WORLD_SIZE, len(val_loader.dataset),
                     100. * i / len(val_loader),
                     tloss.item(), (val_stop_dataload - val_start_dataload)*1000, (stop_testing - start_testing)*1000 ))
 
-                    if idr_torch.rank == 0: val_start_dataload = time()
+                    if PROCESS_RANK == 0: val_start_dataload = time()
 
-                if i == 0 and idr_torch.rank==0:
+                if i == 0 and PROCESS_RANK==0:
                     n = min(data.size(0), 8)
                     comparison = torch.cat([data[:n,0].view(n,1,t_max,n_stations),
                                         data_n[:n,0].view(n,1,t_max,n_stations),
@@ -531,7 +530,7 @@ def main(args):
 
         if epoch == epoch_start:
             miniloss = test_loss
-        if idr_torch.rank ==  0 and epoch >  epoch_start:
+        if PROCESS_RANK ==  0 and epoch >  epoch_start:
             print('====> Test set loss: {:.4f} -- nbatches {}'.format(test_loss, nbatches))
 
             if test_loss < miniloss:
@@ -560,11 +559,11 @@ def main(args):
     # https://discuss.pytorch.org/t/plotting-loss-curve/42632/3
 
     # For the moment save lossess for each rank. These will be averaged later
-    np.savetxt(modelname +  "RANK_{}_train_losses.txt".format(idr_torch.rank), np.array(train_losses))
-    np.savetxt(modelname +  "RANK_{}_val_losses.txt".format(idr_torch.rank), np.array(val_losses))
+    np.savetxt(modelname +  "RANK_{}_train_losses.txt".format(PROCESS_RANK), np.array(train_losses))
+    np.savetxt(modelname +  "RANK_{}_val_losses.txt".format(PROCESS_RANK), np.array(val_losses))
 
     # MASTER NODE will save some stuff and copy some files in output folder
-    if idr_torch.rank==0:
+    if PROCESS_RANK==0:
         print(">>> Training complete in: " + str(datetime.now() - start))
         if distributed:
             torch.save(Dmodel.module.state_dict(), modelname +".pth")
@@ -598,8 +597,19 @@ if __name__ == "__main__":
         exit()
  
     
-    
-    main(args)
+    if args.platform == 'hotshot':
+        WORLD_SIZE = 8
+        # Spawn mutliprocessing
+        mp.spawn(main,
+                  args=(WORLD_SIZE, args,),
+                  nprocs=WORLD_SIZE,
+                  join=True)
+    else:
+        # Define variables
+        WORLD_SIZE = WORLD_SIZE
+        RANK = idr_torch.rank
+       
+        main(RANK, WORLD_SIZE, args)
            
 
 
