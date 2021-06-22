@@ -91,7 +91,11 @@ def parse_args():
     parser.add_argument('--resume_chkp', type=str, default=None,
                         help='Resume training from the specified checkpoint path.')
 
-
+    parser.add_argument('--platform', type=str, default='hotshot', 
+                        choices=['laptop', 'hotshot', 'JZ'],
+                        help='Choose where to run training. Mostly controls how to dela with gpus')
+    
+    
     return check_args(parser.parse_args())
 
 
@@ -143,7 +147,20 @@ def main(args):
     if idr_torch.rank==0:
         print("ME, PROCESS {}, I am MASTER".format(idr_torch.rank))
 
-    setup()
+    # Check which is the platform
+    platform = args.platform
+    # Set up distributed flag
+    if platform == 'laptop':
+        distributed = False
+    
+    elif platform == 'hotshot':
+        distributed = True
+        setup()
+        
+    elif platform == 'JZ':
+        distributed = True
+        setup()
+        
 
     # Setting up the parameters
     # Dabatabse name with data
@@ -177,6 +194,7 @@ def main(args):
     resume_chkp = args.resume_chkp
     # Dimension of the bottleneck
     latent_dim = args.latent_dim
+
 
 
     #Load index for train/val/test
@@ -238,14 +256,22 @@ def main(args):
 
 
     #################  CREATE MODEL ################
-    # Set the device
-    torch.cuda.set_device(idr_torch.local_rank)
-    gpu = torch.device("cuda")
-    # Create the model
-    model0 = DVAE(n_comp, latent_dim).to(gpu)
-    model0 = model0.double()
-    # Wrap the model in a DDP object
-    Dmodel = DDP(model0,device_ids=[idr_torch.local_rank])
+    
+    if distributed:
+        # Set the device
+        torch.cuda.set_device(idr_torch.local_rank)
+        gpu = torch.device("cuda")
+        # Create the model
+        model0 = DVAE(n_comp, latent_dim).to(gpu)
+        model0 = model0.double()
+        # Wrap the model in a DDP object
+        Dmodel = DDP(model0,device_ids=[idr_torch.local_rank])
+    else:
+        gpu = torch.device("cuda")
+        # Create the model
+        model0 = DVAE(n_comp, latent_dim).to(gpu)
+        Dmodel = model0.double().to(gpu)
+        
     # Define the optimizer
     optimizer = optim.Adam(Dmodel.parameters(), lr=lr)
 
@@ -274,10 +300,16 @@ def main(args):
 #########################################################################
 #############  SPECIFY training parameters and data loaders #############
     # Parameters
-    params = {'batch_size': batch_size_per_gpu,
-              'shuffle': False,
-              'num_workers': 40,
-              'pin_memory':True}
+    if distributed:
+        params = {'batch_size': batch_size_per_gpu,
+                  'shuffle': False,
+                  'num_workers': 40,
+                  'pin_memory':True}
+    else:
+        params = {'batch_size': batch_size_per_gpu,
+          'shuffle': True,
+          'num_workers': 16,
+          'pin_memory':True}
 
 
     # Datasets
@@ -288,7 +320,7 @@ def main(args):
         "test" : list_test
         }# IDs
 
-#  The generator will load the data     
+
     # Generators
     training_set = HDF5Dataset(partition['train'],
                                n_stations,
@@ -296,35 +328,37 @@ def main(args):
                                n_comp,
                                database_path=working_db+".hdf5"
                                )
-
-# Sampler is needed by DistributedDataParallel
-    train_sampler = torch.utils.data.distributed.DistributedSampler(training_set,
-                                                                    num_replicas=idr_torch.size,
-                                                                    rank=idr_torch.rank)
-
-# The loader will load the data using generator and sampler
-    train_loader = torch.utils.data.DataLoader(training_set, **params, sampler=train_sampler)
-
-
-
-
-# Same for validation set. The only thing that changes is the sampler that takes care of uneven batches. 
+    
+    # Same for validation set. The only thing that changes is the sampler that takes care of uneven batches. 
     validation_set = HDF5Dataset(partition['validation'],
                                  n_stations,
                                  t_max,
                                  n_comp,
                                  database_path=working_db+".hdf5"
                                  )
+    if distributed:
+        #  The generator will load the data     
 
+    # Sampler is needed by DistributedDataParallel
+        train_sampler = torch.utils.data.distributed.DistributedSampler(training_set,
+                                                                        num_replicas=idr_torch.size,
+                                                                        rank=idr_torch.rank)
+    
+    # The loader will load the data using generator and sampler
+        train_loader = torch.utils.data.DataLoader(training_set, **params, sampler=train_sampler)
+    
 
-    val_sampler = DistributedEvalSampler(validation_set, num_replicas=idr_torch.size,
-                                                                    rank=idr_torch.rank)
-
-
-
-    val_loader = torch.utils.data.DataLoader(validation_set, **params, sampler=val_sampler)
-
-
+        val_sampler = DistributedEvalSampler(validation_set, num_replicas=idr_torch.size,
+                                                                        rank=idr_torch.rank)
+    
+    
+    
+        val_loader = torch.utils.data.DataLoader(validation_set, **params, sampler=val_sampler)
+    
+    else:
+        
+        train_loader = torch.utils.data.DataLoader(training_set, **params)
+        val_loader = torch.utils.data.DataLoader(validation_set, **params)
 
 
 ########   START TRAINING LOOP 
@@ -335,8 +369,8 @@ def main(args):
     for epoch in range(epoch_start, max_epochs + 1):
         if idr_torch.rank == 0:
             start_dataload = time()
-        # Set epoch is needed to avoid deterministic sampling 
-        train_sampler.set_epoch(epoch)
+            
+
 
 ##############   SAVE/LOAD CHECKPOINT 
         if epoch % check_interval == 0:
@@ -352,7 +386,9 @@ def main(args):
                             'model_state_dict': Dmodel.state_dict(),
                             'optimizer_state_dict': optimizer.state_dict(),
                              }, CPATH)
-
+        if distributed:
+            # Set epoch is needed to avoid deterministic sampling 
+            train_sampler.set_epoch(epoch)
 ################### NOW LOAD IT EVERYWHERE
             #Synchronize on all gpus
             dist.barrier()
@@ -362,7 +398,10 @@ def main(args):
             Dmodel.load_state_dict(checkpoint['model_state_dict']) # load checkpoint
             #optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
             #epoch = checkpoint['epoch']
-
+        else:
+            checkpoint = torch.load(CPATH)
+            Dmodel.load_state_dict(checkpoint['model_state_dict']) # load checkpoint            
+            
          # Set the model in train mode
         Dmodel.train()
 
@@ -433,9 +472,9 @@ def main(args):
             print('====> Epoch: {} Average loss: {:.4f} -- nbatches: {}'.format(
                   epoch, train_loss / nbatches, nbatches))
 
-
-        # Once the epoch is over check on the validation set   
-        val_sampler.set_epoch(epoch)
+        if distributed:
+            # Once the epoch is over check on the validation set   
+            val_sampler.set_epoch(epoch)
         # Set model in eval mode but leave dropout active
         Dmodel.eval()
         # Activate dropout layers
@@ -500,11 +539,14 @@ def main(args):
                 miniloss = test_loss
 ##############   SAVE/LOAD CHECKPOINT 
                 PATH_BEST = modelname + "_BEST.pth".format(epoch)
-            # ONLY MASTER SAVES THE CHECKPOINT
-                torch.save(Dmodel.module.state_dict(), PATH_BEST)
-
-    # BArrier at the end of each epoch. A waste but I want to be sure the procs are syncrhonized 
-    dist.barrier()
+                if distributed:
+                    # ONLY MASTER SAVES THE CHECKPOINT
+                    torch.save(Dmodel.module.state_dict(), PATH_BEST)
+                else:
+                    torch.save(Dmodel.state_dict(), PATH_BEST)
+    if distributed:
+        # BArrier at the end of each epoch. A waste but I want to be sure the procs are syncrhonized 
+        dist.barrier()
 
 
 
@@ -524,8 +566,10 @@ def main(args):
     # MASTER NODE will save some stuff and copy some files in output folder
     if idr_torch.rank==0:
         print(">>> Training complete in: " + str(datetime.now() - start))
-        torch.save(Dmodel.module.state_dict(), modelname +".pth")
-
+        if distributed:
+            torch.save(Dmodel.module.state_dict(), modelname +".pth")
+        else:
+            torch.save(Dmodel.state_dict(), modelname +".pth")
         #Save list of index for test set (any of these have been used in train+val)
         np.savetxt(modelname + "_test_idx.txt", list_test)
         print (modelname  + "_test_idx.txt has been saved in folder " + modeldir)
@@ -539,7 +583,8 @@ def main(args):
         shutil.copy2("./run_script.sh", modelname +"_run_script.sh")
 
 
-    cleanup()
+    if distributed:
+        cleanup()
     
     
 
