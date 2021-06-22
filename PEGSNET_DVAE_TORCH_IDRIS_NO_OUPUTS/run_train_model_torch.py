@@ -385,22 +385,22 @@ def main(PROCESS_RANK, WORLD_SIZE, args):
                             'model_state_dict': Dmodel.state_dict(),
                             'optimizer_state_dict': optimizer.state_dict(),
                              }, CPATH)
-        if distributed:
-            # Set epoch is needed to avoid deterministic sampling 
-            train_sampler.set_epoch(epoch)
-################### NOW LOAD IT EVERYWHERE
-            #Synchronize on all gpus
-            dist.barrier()
-            map_location = {'cuda:%d' % 0: 'cuda:%d' % LOCAL_RANK} # remap storage from GPU 0 to local GPU 
-            #Pmodel.load_state_dict(torch.load(CPATH, map_location=map_location))
-            checkpoint = torch.load(CPATH, map_location=map_location)
-            Dmodel.load_state_dict(checkpoint['model_state_dict']) # load checkpoint
-            #optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
-            #epoch = checkpoint['epoch']
-        else:
-            checkpoint = torch.load(CPATH)
-            Dmodel.load_state_dict(checkpoint['model_state_dict']) # load checkpoint            
-            
+            if distributed:
+                # Set epoch is needed to avoid deterministic sampling 
+                train_sampler.set_epoch(epoch)
+    ################### NOW LOAD IT EVERYWHERE
+                #Synchronize on all gpus
+                dist.barrier()
+                map_location = {'cuda:%d' % 0: 'cuda:%d' % LOCAL_RANK} # remap storage from GPU 0 to local GPU 
+                #Pmodel.load_state_dict(torch.load(CPATH, map_location=map_location))
+                checkpoint = torch.load(CPATH, map_location=map_location)
+                Dmodel.load_state_dict(checkpoint['model_state_dict']) # load checkpoint
+                #optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
+                #epoch = checkpoint['epoch']
+            else:
+                checkpoint = torch.load(CPATH)
+                Dmodel.load_state_dict(checkpoint['model_state_dict']) # load checkpoint            
+                
          # Set the model in train mode
         Dmodel.train()
 
@@ -606,7 +606,7 @@ if __name__ == "__main__":
                   join=True)
     else:
         # Define variables
-        WORLD_SIZE = WORLD_SIZE
+        WORLD_SIZE = idr_torch.size
         RANK = idr_torch.rank
        
         main(RANK, WORLD_SIZE, args)
