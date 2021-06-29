@@ -164,7 +164,8 @@ class DVAE(nn.Module):
 
 class DVAE_WSC(nn.Module):
     # DVAE model with skip connections between Conv and ConvTranspose layer 1,2,3
-    def __init__(self, n_chan,latent_dim,skips=[True,True,True]): # [skip conv1/convT1, skip conv2/convT2, skip conv3/convT3]
+    def __init__(self, n_chan,latent_dim,skips='111'): # [skip conv1/convT3, skip conv2/convT2, skip conv3/convT1]
+                                                       # format is '111', 1 for true 0 for false
         super(DVAE_WSC, self).__init__()
         
         
@@ -257,11 +258,11 @@ class DVAE_WSC(nn.Module):
         out = self.prep_deconv(out)
         
         #decoder
-        if self.skips[2] : out += for_skip1     # output of conv3 is added to input of deconv1
+        if bool(self.skips[2]) : out += for_skip1     # output of conv3 is added to input of deconv1
         out = self.deconv1(out)
-        if self.skips[1] : out += for_skip2     # output of conv2 is added to input of deconv2
+        if bool(self.skips[1]) : out += for_skip2     # output of conv2 is added to input of deconv2
         out = self.deconv2(out)
-        if self.skips[0] : out += for_skip3     # output of conv1 is added to input of deconv3
+        if bool(self.skips[0]) : out += for_skip3     # output of conv1 is added to input of deconv3
         out = self.deconv3(out)
         
         

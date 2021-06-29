@@ -74,7 +74,7 @@ def parse_args():
     parser.add_argument('--ncomp', type=int, default=3,
                         help='Number of seismic components to use.')
 
-    parser.add_argument('--skip_co', type=list, default=[True,True,True],   # change if model structure changes
+    parser.add_argument('--skip_co', type=str, default='111',   # change if model structure changes
                         help='Which skip connections to use.')
     
     parser.add_argument('--n_epochs', type=int, default=100, 
@@ -103,7 +103,7 @@ def check_args(args):
         print(args.db_name + '.hdf5 does not exist')
         exit()
     if len(args.skip_co)>3: # change if model structure changes
-        print("{} skip connections specified, only 3 possible.".format(args.skip_co))
+        print("{} skip connections specified, only 3 possible.".format(len(args.skip_co)))
         exit()
     return args
 
