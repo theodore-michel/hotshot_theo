@@ -130,16 +130,51 @@ def initialize_weights(m):
 
 # Reconstruction + KL divergence losses summed over all elements and batch
 # maybe improve this loss function to be more specific to our case? 
+
+def smoothness(images, h_coeff, v_coeff):       # supposes (N,C,H,W) format for output
+    # if more smoothness wanted between stations then increase v_coeff
+    # if more smoothness wanted through time for each station then increase h_coeff
+    
+    # batch_n = images.shape[0]
+    # channel = images.shape[1]
+    height  = images.shape[2]
+    width   = images.shape[3]
+    
+    horizontal_normal = torch.narrow(images, dim=2, start=0, length=height-1)    # take first H-1 rows of tensor
+    horizontal_shift  = torch.narrow(images, dim=2, start=1, length=height-1)    # take last H-1 rows of tensor
+    
+    vertical_normal = torch.narrow(images, dim=3, start=0, length=width-1)       # take first W-1 columns of tensor
+    vertical_shift  = torch.narrow(images, dim=3, start=1, length=width-1)       # take last W-1 columns of tensor
+    
+    horizontal = torch.pow(horizontal_normal-horizontal_shift, 2)
+    vertical   = torch.pow(vertical_normal-vertical_shift, 2)
+    
+    h_loss = torch.mean(horizontal)
+    v_loss = torch.mean(vertical)
+    
+    return h_loss*h_coeff + v_loss*v_coeff
+
 def loss_function(recon_x, x, mu, logvar):
-    BCE = F.binary_cross_entropy(recon_x, x, reduction='sum')#/(128*72*320)
+    # BCE = F.binary_cross_entropy(recon_x, x, reduction='sum')#/(128*72*320)
 
-    # see Appendix B from VAE paper:
-    # Kingma and Welling. Auto-Encoding Variational Bayes. ICLR, 2014
-    # https://arxiv.org/abs/1312.6114
-    # 0.5 * sum(1 + log(sigma^2) - mu^2 - sigma^2)
-    KLD = -0.5 * torch.sum(1 + logvar - mu.pow(2) - logvar.exp())
+    # # see Appendix B from VAE paper:
+    # # Kingma and Welling. Auto-Encoding Variational Bayes. ICLR, 2014
+    # # https://arxiv.org/abs/1312.6114
+    # # 0.5 * sum(1 + log(sigma^2) - mu^2 - sigma^2)
+    # KLD = -0.5 * torch.sum(1 + logvar - mu.pow(2) - logvar.exp())
+    
+    
+    # reconstruction loss:
+    recon_loss = F.binary_cross_entropy(recon_x, x, reduction='sum') #/(128*72*320)     # try 'mean'?
+    
+    # smoothness loss:
+    smooth_loss = smoothness(recon_x, h_coeff=2, v_coeff=1) # more important that signal be smooth through time (not space)
+    
+    # latent loss :
+    latent_loss = -0.5 * torch.sum(1 + logvar - mu.pow(2) - logvar.exp())
 
-    return BCE, KLD
+    # return BCE, KLD, SL
+    return recon_loss, latent_loss, smooth_loss
 
 
 def main(args):
@@ -257,7 +292,7 @@ def main(args):
     Dmodel = DDP(model0,device_ids=[idr_torch.local_rank])
     # Define the optimizer
     optimizer = optim.Adam(Dmodel.parameters(), lr=lr)
-    # optimizer = optim.SGD(Dmodel.parameters(), lr=lr, momentum=0.9, nesterov=True) # would need to add args in parser
+    # optimizer = optim.SGD(Dmodel.parameters(), lr=lr, momentum=0.9, nesterov=True)
 
 
 # IF RESUME load stuff and update epochs
@@ -377,6 +412,11 @@ def main(args):
         Dmodel.train()
 
         train_loss = 0.0
+        
+        # coefficients for loss terms
+        alpha = 1       # BCE reconstruction
+        beta  = 0.1     # KLD latent
+        gamma = 0.1     # SL smoothness
 
         # Start looping over batches for the training dataset
         for batch_idx, (data_n, data , _, _ ) in enumerate(train_loader):
@@ -397,9 +437,15 @@ def main(args):
 
             # Predict labels using current batch
             recon_batch, mu, logvar = Dmodel(data_n.double())
+            
             # Evaluate the loss for this batch
-            BCE, KLD = loss_function(recon_batch,data.view(-1,n_comp,t_max, n_stations),mu,logvar)
-            loss = BCE + KLD
+            # BCE, KLD = loss_function(recon_batch,data.view(-1,n_comp,t_max, n_stations),mu,logvar)
+            BCE, KLD, SL = loss_function(recon_batch,data.view(-1,n_comp,t_max, n_stations),mu,logvar)
+            
+            # loss with coeffs
+            loss = alpha*BCE + beta*KLD + gamma*SL
+            # loss = BCE + KLD + SL
+            
             #Loss is the mean over all examples in this batch. Default behaviour of criterion.
             train_loss += loss.item()
 
@@ -423,10 +469,10 @@ def main(args):
 
             # Print some infos after log_interval steps for this epoch
             if batch_idx % log_interval == 0 and idr_torch.rank ==  0:
-                print('Train Epoch: {} [{}/{} ({:.0f}%)]\t BCE Loss: {:.6f} KLD Loss: {:.6f}  Time data load: {:.3f}ms, Time training: {:.3f}ms'.format(
+                print('Train Epoch: {} [{}/{} ({:.0f}%)]\t BCE Loss: {:.6f}  KLD Loss: {:.6f}  SL Loss: {:.6f}  Time data load: {:.3f}ms, Time training: {:.3f}ms'.format(
                     epoch, batch_idx * len(data)*idr_torch.size, len(train_loader.dataset),
                     100. * batch_idx / len(train_loader),
-                    BCE, KLD, (stop_dataload - start_dataload)*1000, (stop_training - start_training)*1000 ))
+                    alpha*BCE, beta*KLD, gamma*SL, (stop_dataload - start_dataload)*1000, (stop_training - start_training)*1000 ))
                 # print(len(data))
                 if idr_torch.rank == 0: start_dataload = time()
 
@@ -468,8 +514,10 @@ def main(args):
 
                 if idr_torch.rank == 0: start_testing = time()
                 recon_batch, mu, logvar = Dmodel(data_n.double())
-                tBCE, tKLD = loss_function(recon_batch, data.view(-1,n_comp,t_max, n_stations), mu, logvar)
-                tloss = tBCE + tKLD
+                # tBCE, tKLD = loss_function(recon_batch, data.view(-1,n_comp,t_max, n_stations), mu, logvar)
+                tBCE, tKLD, tSL = loss_function(recon_batch, data.view(-1,n_comp,t_max, n_stations), mu, logvar)
+                # tloss = tBCE + tKLD
+                tloss = alpha*tBCE + beta*tKLD + gamma*tSL
                 test_loss += tloss.item()
 
                 if idr_torch.rank == 0: stop_testing = time()
@@ -488,9 +536,22 @@ def main(args):
                     comparison = torch.cat([data[:n,0].view(n,1,t_max,n_stations),
                                         data_n[:n,0].view(n,1,t_max,n_stations),
                                       recon_batch[:n,0].view(n,1,t_max,n_stations)])
-                    save_image(comparison.cpu(),
-                         modelname + "_epoch" + str(epoch) + '_recon.png',
-                         nrow=n, normalize=True, scale_each=True, padding=10)
+                    if (epoch%10 == 0 or epoch==1):   # output image every 10 epochs only (and epoch 1)
+                        save_image(comparison.cpu(), 
+                                   modelname + "_epoch" + str(epoch) + '_recon.png', 
+                                   nrow=n, normalize=True, scale_each=True, padding=10)
+                    
+                    ####### Plot comparison/acc using matplotlib+numpy:
+                    n = min(data.size(0),5)
+                    # n_selec = np.arange(0,n+1,1) # select first 5 images in dataset
+                    n_selec = np.random.randint(0,data.size(0),size=n) # select randomly 5 images in dataset
+                    input_images  = data_n[n_selec,0].view(n,1,t_max,n_stations) #(N,C,H,W) 
+                    target_images = data[n_selec,0].view(n,1,t_max,n_stations)
+                    output_images = recon_batch[n_selec,0].view(n,1,t_max,n_stations)
+                    ####### SEE VISUALS.PY FOR PLOTS #######
+                    
+                        
+                ############## INSERT COMAPRISON OF OUTPUT INPUT, ACCURACY, ETC and save as png ###################
 
 
 
@@ -513,7 +574,7 @@ def main(args):
             # ONLY MASTER SAVES THE CHECKPOINT
                 torch.save(Dmodel.module.state_dict(), PATH_BEST)
 
-    # BArrier at the end of each epoch. A waste but I want to be sure the procs are syncrhonized 
+    # Barrier at the end of each epoch. A waste but I want to be sure the procs are syncrhonized 
     dist.barrier()
 
 

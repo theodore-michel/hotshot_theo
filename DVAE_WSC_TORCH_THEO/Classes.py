@@ -172,25 +172,25 @@ class DVAE_WSC(nn.Module):
         self.n_chan = n_chan
         self.height = 320
         self.width =  72
-        self.h_dim  = 8 
+        self.h_dim  = 4 
         self.latent_dim = latent_dim
         self.skips = skips # do we do the skips?
         
         
         self.conv1 = nn.Sequential(
                                     nn.Conv2d(self.n_chan, self.h_dim*2, 3,2,1),
-                                    nn.BatchNorm2d(self.hdim*2), # added batchnorm so output is similar to deconv3 input
-                                    nn.LeakyReLU(0.2)
+                                    nn.BatchNorm2d(self.h_dim*2), # added batchnorm so output is similar to deconv3 input
+                                    nn.ELU()
                                     )
         self.conv2 = nn.Sequential(
                                     nn.Conv2d(self.h_dim*2,self.h_dim*4, 3,2,1),
                                     nn.BatchNorm2d(self.h_dim*4),
-                                    nn.LeakyReLU(0.2)
+                                    nn.ELU()
                                     )
         self.conv3 = nn.Sequential(
                                     nn.Conv2d(self.h_dim*4,self.h_dim*8,3,2,1),
                                     nn.BatchNorm2d(self.h_dim*8),
-                                    nn.LeakyReLU(0.2)
+                                    nn.ELU()
                                     )
         
         
@@ -201,21 +201,21 @@ class DVAE_WSC(nn.Module):
         
         self.dec1 = nn.Sequential(nn.Linear(self.latent_dim, indim),
                                   nn.BatchNorm1d(indim),
-                                  nn.ReLU()
+                                  nn.ELU()
                                   )
         
         
         self.deconv1 = nn.Sequential(   # will be receiving skip connection of conv3
                                      nn.ConvTranspose2d(self.h_dim*8, self.h_dim*4, 2, 2),
                                      nn.BatchNorm2d(self.h_dim*4),
-                                     nn.ReLU()
+                                     nn.ELU()
                                      )
         self.deconv2 = nn.Sequential( # will be receiving skip connection of conv2
                                      nn.ConvTranspose2d(self.h_dim*4, self.h_dim*2 ,2, 2),
                                      nn.BatchNorm2d(self.h_dim*2),
-                                     nn.ReLU()
+                                     nn.ELU()
                                      )
-        self.deconv3 = nn.Sequetial(
+        self.deconv3 = nn.Sequential(
                                     nn.ConvTranspose2d(self.h_dim*2, self.n_chan, 2,2),
                                     nn.Sigmoid()
                                     )
@@ -270,6 +270,61 @@ class DVAE_WSC(nn.Module):
         return out.view(-1,self.n_chan, self.height,self.width), mu, logvar
 
 
+class Adv_net(nn.Module):
+    "Simple critique network for GAN architecture usage: (Denoising_GAN = DVAE + Adv_net)"
+    ### add function to make sure output is continuous value between 0-1? (label should be between -1 and 1 to help)
+    def __init__(self, n_chan): 
+        super(Adv_net, self).__init__()
+              
+        self.n_chan = n_chan
+        self.height = 320
+        self.width =  72
+        self.h_dim  = 4 
+        
+        self.conv1 = nn.Sequential( # 2 conv2d layers
+                                    nn.Conv2d(self.n_chan, self.h_dim*2, 3,2,1),
+                                    nn.BatchNorm2d(self.h_dim*2), 
+                                    nn.ELU(),
+                                    
+                                    nn.Conv2d(self.h_dim*2,self.h_dim*4, 3,2,1),
+                                    nn.BatchNorm2d(self.h_dim*4),
+                                    nn.ELU()
+                                    )
+        
+        self.conv2 = nn.Sequential( # 2 conv2d layers
+                                    nn.Conv2d(self.h_dim*4,self.h_dim*8,3,2,1),
+                                    nn.BatchNorm2d(self.h_dim*8),
+                                    nn.ELU(),
+                                    
+                                    nn.Conv2d(self.h_dim*8, self.h_dim*16,3,2,1),
+                                    nn.BatchNorm2d(self.h_dim*16),
+                                    nn.Sigmoid()
+                                    )
+        
+        in_dim   = (self.h_dim*16) * (self.height//16)*(self.width//16)
+        out_dim  = 1
+        self.lin = nn.Linear(in_dim, out_dim)
+        self.sig = nn.Sigmoid()
+        
+        # self.conv2bis = nn.Sequential( # 2 conv2d layers + flattening w/ sigmoid
+        #                             nn.Conv2d(self.h_dim*4,self.h_dim*8,3,2,1),
+        #                             nn.BatchNorm2d(self.h_dim*8),
+        #                             nn.ELU(),
+                                    
+        #                             nn.Conv2d(self.h_dim*8, 1 ,3,2,1), # single output
+        #                             nn.Sigmoid()
+        #                             )
+    
+    
+    def forward(self, x):
+    
+        out = self.conv1(x)
+        out = self.conv2(out)
+        out = self.lin(out)
+        out = self.sig(out)
+
+        return out
+
 class HDF5Dataset(torch.utils.data.Dataset):
 
   'Characterizes a dataset for PyTorch'
@@ -301,7 +356,7 @@ class HDF5Dataset(torch.utils.data.Dataset):
         
         # Get a time shift at random between 0 and tmax
         shift = np.random.randint(0,self.t_max+1)
-        shift = 0   
+        shift = 0   # if 0: centered on earthquake origin time
      
         # starting sample
         t1 = 350-shift
@@ -343,20 +398,23 @@ class HDF5Dataset(torch.utils.data.Dataset):
         #     # Set amplitudes to zero after P-wave arrival
         #     X[i, indP[i]:,:] = 0.0 
         #     label[i, indP[i]:,:] = 0.0
-              
-        X = np.nan_to_num(X)
-        label = np.nan_to_num(label)  
+             
+        
+        # Clip and Scale inputs
         scale = 1e-8
-        X = np.clip(X,-1.0*scale, scale)
-        X /= scale
-        X+=1.0
-        label /= scale
-        label+=1.0
-
+        X = np.nan_to_num(X)
+        X = np.clip(X,-1.0*scale,scale)
+        X /= 2*scale
+        X += 0.5 # now X is between 0 and 1
+        
+        # Clip and Scale labels
+        label = np.nan_to_num(label)
+        label = np.clip(label,-1.0*scale,scale) #not necessary but we never know...
+        label /= 2*scale
+        label += 0.5 # now label is between 0 and 1
 
         # Got to swap axes because pytorch has channel first
         X = np.swapaxes(X,-1,0)
-        
         label = np.swapaxes(label,-1,0)
             
             
