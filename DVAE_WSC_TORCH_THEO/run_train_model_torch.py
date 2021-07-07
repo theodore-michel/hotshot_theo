@@ -11,6 +11,7 @@ from time import time
 import torch
 from torch import  optim
 from Classes import HDF5Dataset, DVAE, DistributedEvalSampler, DVAE_WSC
+from visuals import *
 import random
 import numpy as np
 #from torchsummary import summary
@@ -375,6 +376,16 @@ def main(args):
 ########   START TRAINING LOOP 
     train_losses = []
     val_losses = []
+    
+    # coefficients for loss terms
+    alpha = 1       # BCE reconstruction
+    beta  = 0.1     # KLD latent
+    gamma = 0.1     # SL smoothness
+        
+    BCE_train_losses, BCE_val_losses = [],[]
+    KLD_train_losses, KLD_val_losses = [],[]
+    SL_train_losses,  SL_val_losses  = [],[]
+    
     if idr_torch.rank == 0: start = datetime.now()
 # This is looping over all epochs
     for epoch in range(epoch_start, max_epochs + 1):
@@ -412,12 +423,10 @@ def main(args):
         Dmodel.train()
 
         train_loss = 0.0
+        BCE_train_loss = 0.0
+        KLD_train_loss = 0.0
+        SL_train_loss  = 0.0
         
-        # coefficients for loss terms
-        alpha = 1       # BCE reconstruction
-        beta  = 0.1     # KLD latent
-        gamma = 0.1     # SL smoothness
-
         # Start looping over batches for the training dataset
         for batch_idx, (data_n, data , _, _ ) in enumerate(train_loader):
 
@@ -443,11 +452,17 @@ def main(args):
             BCE, KLD, SL = loss_function(recon_batch,data.view(-1,n_comp,t_max, n_stations),mu,logvar)
             
             # loss with coeffs
-            loss = alpha*BCE + beta*KLD + gamma*SL
-            # loss = BCE + KLD + SL
+            BCE *= alpha
+            KLD *= beta
+            SL  *= gamma
+            loss = BCE + KLD + SL
             
             #Loss is the mean over all examples in this batch. Default behaviour of criterion.
             train_loss += loss.item()
+            BCE_train_loss += BCE.item()
+            KLD_train_loss += KLD.item()
+            SL_train_loss  += SL.item()
+            
 
             # Do backprop
             loss.backward()
@@ -479,8 +494,11 @@ def main(args):
         nbatches = batch_idx+1
         # Save train loss for this epoch
         train_losses.append(train_loss/nbatches)
+        BCE_train_losses.append(BCE_train_loss/nbatches)
+        KLD_train_losses.append(KLD_train_loss/nbatches)
+        SL_train_losses.append(SL_train_loss/nbatches)
 
-        # CHeckpoint interval is not implemented yet.
+        # Checkpoint interval is not implemented yet.
         #if  idr_torch.rank==0 and epoch % check_interval:
 
         #    torch.save(Pmodel.module.state_dict(), modelname +"_CHECK_{}.pth".format(epoch))
@@ -499,7 +517,12 @@ def main(args):
         #    if m.__class__.__name__.startswith('Dropout'):
                 # print("switching dropout on " + str(m.__class__.__name__))
         #        m.train()
-        test_loss = 0
+        
+        test_loss = 0.0
+        BCE_val_loss = 0.0
+        KLD_val_loss = 0.0
+        SL_val_loss  = 0.0
+        
         # No gradients are computed here.
         with torch.no_grad():
             if idr_torch.rank ==0: val_start_dataload = time()
@@ -517,8 +540,15 @@ def main(args):
                 # tBCE, tKLD = loss_function(recon_batch, data.view(-1,n_comp,t_max, n_stations), mu, logvar)
                 tBCE, tKLD, tSL = loss_function(recon_batch, data.view(-1,n_comp,t_max, n_stations), mu, logvar)
                 # tloss = tBCE + tKLD
-                tloss = alpha*tBCE + beta*tKLD + gamma*tSL
+                tBCE *= alpha
+                tKLD *= beta
+                tSL  *= gamma
+                tloss = tBCE + tKLD + tSL
+                
                 test_loss += tloss.item()
+                BCE_val_loss += tBCE
+                KLD_val_loss += tKLD
+                SL_val_loss  += tSL
 
                 if idr_torch.rank == 0: stop_testing = time()
 
@@ -531,7 +561,7 @@ def main(args):
 
                     if idr_torch.rank == 0: val_start_dataload = time()
 
-                if i == 0 and idr_torch.rank==0:
+                if i == 0 and idr_torch.rank==0:    # (first batch, rank 0)
                     n = min(data.size(0), 8)
                     comparison = torch.cat([data[:n,0].view(n,1,t_max,n_stations),
                                         data_n[:n,0].view(n,1,t_max,n_stations),
@@ -541,23 +571,29 @@ def main(args):
                                    modelname + "_epoch" + str(epoch) + '_recon.png', 
                                    nrow=n, normalize=True, scale_each=True, padding=10)
                     
-                    ####### Plot comparison/acc using matplotlib+numpy:
+################### Plot comparison/acc using matplotlib+numpy: ###############################################
                     n = min(data.size(0),5)
-                    # n_selec = np.arange(0,n+1,1) # select first 5 images in dataset
-                    n_selec = np.random.randint(0,data.size(0),size=n) # select randomly 5 images in dataset
+                    n_selec = np.arange(0,n+1,1) # select first 5 images in dataset
+                    # n_selec = np.random.randint(0,data.size(0),size=n) # select randomly 5 images in dataset
                     input_images  = data_n[n_selec,0].view(n,1,t_max,n_stations) #(N,C,H,W) 
                     target_images = data[n_selec,0].view(n,1,t_max,n_stations)
                     output_images = recon_batch[n_selec,0].view(n,1,t_max,n_stations)
-                    ####### SEE VISUALS.PY FOR PLOTS #######
-                    
-                        
-                ############## INSERT COMAPRISON OF OUTPUT INPUT, ACCURACY, ETC and save as png ###################
+                    # plot acc_map and comp map (from visuals.py star import)
+                    acc_map  = plot_multi_acc_map(output_images, target_images, clip=1, clip_bad=1, 
+                                                 fig_name= modelname+"_epoch"+str(epoch)+"_accmap", path='')
+                    comp_map = plot_multi_comp_map(output_images, target_images,
+                                                 fig_name= modelname+"_epoch"+str(epoch)+"_compmap", path='')
+
 
 
 
         nbatches = i+1
         test_loss /= nbatches
         val_losses.append(test_loss)
+        
+        BCE_val_losses.append(BCE_val_loss/nbatches)
+        KLD_val_losses.append(KLD_val_loss/nbatches)
+        SL_val_losses.append(SL_val_loss/nbatches)
 
 
 
@@ -591,6 +627,12 @@ def main(args):
     # For the moment save lossess for each rank. These will be averaged later
     np.savetxt(modelname +  "RANK_{}_train_losses.txt".format(idr_torch.rank), np.array(train_losses))
     np.savetxt(modelname +  "RANK_{}_val_losses.txt".format(idr_torch.rank), np.array(val_losses))
+    
+    BCE_loss = np.array( ['BCE x'+str(alpha), np.array(BCE_train_losses), np.array(BCE_val_losses) ] )
+    KLD_loss = np.array( ['KLD x'+str(beta),  np.array(KLD_train_losses), np.array(KLD_val_losses) ] )
+    SL_loss  = np.array( ['SL x'+str(gamma),  np.array(SL_train_losses),  np.array(SL_val_losses)  ] )
+    all_sublosses = np.array([BCE_loss, KLD_loss, SL_loss])
+    np.save(modelname +  "RANK_{}_all_sublosses.npy".format(idr_torch.rank),all_sublosses)
 
     # MASTER NODE will save some stuff and copy some files in output folder
     if idr_torch.rank==0:
@@ -608,10 +650,17 @@ def main(args):
         shutil.copy2(st_file, modelname +"_stat_input.txt")
         shutil.copy2("Classes.py", modelname +"_Classes.py")
         shutil.copy2("./run_script.sh", modelname +"_run_script.sh")
+        
+################### PLOT RANK_0 losses (not sure if here all .txt files were saved yet) ######
+        train_avg_gpu, val_avg_gpu = get_loss_arrays(modelname, path='', gpus = idr_torch.size)[:2]
+        plot_loss_vs_epoch(train_avg_gpu, val_avg_gpu, fig_name=modelname+'_gpu_loss_vs_epoch', path='')
+        plot_different_losses(all_sublosses, fig_name=modelname+'_allsublosses_vs_epoch',path='')
+        
 
 
     cleanup()
-    
+
+
     
 
 
