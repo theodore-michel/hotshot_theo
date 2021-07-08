@@ -172,7 +172,7 @@ class DVAE_WSC(nn.Module):
         self.n_chan = n_chan
         self.height = 320
         self.width =  72
-        self.h_dim  = 4 
+        self.h_dim  = 8 
         self.latent_dim = latent_dim
         self.skips = skips # do we do the skips?
         
@@ -258,11 +258,11 @@ class DVAE_WSC(nn.Module):
         out = self.prep_deconv(out)
         
         #decoder
-        if bool(self.skips[2]) : out += for_skip1     # output of conv3 is added to input of deconv1
+        if bool(self.skips[2]) : out = out +  for_skip1     # output of conv3 is added to input of deconv1
         out = self.deconv1(out)
-        if bool(self.skips[1]) : out += for_skip2     # output of conv2 is added to input of deconv2
+        if bool(self.skips[1]) : out = out + for_skip2     # output of conv2 is added to input of deconv2
         out = self.deconv2(out)
-        if bool(self.skips[0]) : out += for_skip3     # output of conv1 is added to input of deconv3
+        if bool(self.skips[0]) : out = out + for_skip3     # output of conv1 is added to input of deconv3
         out = self.deconv3(out)
         
         
@@ -328,7 +328,7 @@ class Adv_net(nn.Module):
 class HDF5Dataset(torch.utils.data.Dataset):
 
   'Characterizes a dataset for PyTorch'
-  def __init__(self, list_IDs, n_stat, t_max, n_comp,database_path="../DATABASES/run_db13.hdf5"):
+  def __init__(self, list_IDs, n_stat, t_max, n_comp, dshift = None, database_path="../DATABASES/run_db13.hdf5"):
         'Initialization'
         super(HDF5Dataset, self).__init__()
         
@@ -337,6 +337,7 @@ class HDF5Dataset(torch.utils.data.Dataset):
         self.n_comp = n_comp
         self.database_path = database_path
         self.list_IDs = list_IDs
+        self.dshift = dshift
 
   def open_hdf5(self):
         self.file = h5py.File(self.database_path, 'r')
@@ -354,9 +355,12 @@ class HDF5Dataset(torch.utils.data.Dataset):
         # Select sample
         ID = self.list_IDs[index]
         
-        # Get a time shift at random between 0 and tmax
-        shift = np.random.randint(0,self.t_max+1)
-        shift = 0   # if 0: centered on earthquake origin time
+        # Deterministic shift
+        if self.dshift is not None:
+            shift = self.dshift
+
+        else:# Get a time shift at random between 0 and tmax
+            shift = np.random.randint(0,self.t_max+1)
      
         # starting sample
         t1 = 350-shift

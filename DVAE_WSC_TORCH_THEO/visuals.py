@@ -19,7 +19,6 @@ Call as import in run_train_model_torch.py
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
-import torch
 import os
 
 ### Read .txt files of losses for each rank for each epoch (mean over batch) and plot losses vs epochs (include margins)
@@ -66,22 +65,29 @@ def plot_loss_vs_epoch(train_loss,val_loss,fig_name='loss_vs_epoch_fig',path=os.
     directory) with given fig_name.'''
     
     epochs = np.arange(len(train_loss))
+    # erase first 4 epochs since loss descales the plot
+    erase = min(train_loss.shape[0],4)
+    
     figure, plot = plt.subplots(1,1)
+    figure.set_size_inches((12.0, 12.0), forward=False)
     
     plot.plot(epochs, train_loss, label = "train")
     plot.plot(epochs, val_loss,'-.', label = "validation")
     
     plot.set_xlabel('Epochs')
     plot.set_ylabel('Loss (avg over GPUs)')
+    plot.set_ylim(top=min(train_loss[erase],val_loss[erase]),
+                  bottom = 0.9*min(min(train_loss),min(val_loss)))
     plot.tick_params(labelright=True, right=True)
     
     plot.legend(loc="upper right")
     plot.set_title("Average loss over all GPUs vs epochs")
     
+    figure.tight_layout()
     # plt.show()
     
     # save plot as png
-    figure.savefig(path+fig_name+'.png',format='png',bbox_inches='tight')
+    figure.savefig(path+fig_name+'.png',bbox_inches='tight',dpi=300)
     
     #return(path+fig_name)
 
@@ -97,6 +103,7 @@ def plot_multiloss_vs_epoch(train_losses,val_losses, legend_labels,fig_name='los
     
     epochs = np.arange(train_losses.shape[0])
     numPlt = train_losses.shape[1]
+    erase = min(epochs.shape[0],4)
     
     if numPlt != len(legend_labels):
         print("{} curves to plot but {} legend labels given".format(numPlt,len(legend_labels)))
@@ -104,9 +111,12 @@ def plot_multiloss_vs_epoch(train_losses,val_losses, legend_labels,fig_name='los
     
     colors = cm.rainbow(np.linspace(0,1,numPlt))
     figure, plot = plt.subplots(1,1)
+    figure.set_size_inches((12.0, 12.0), forward=False)
     for i in range(numPlt):
-        plot.plot(epochs, train_losses[i],    c=colors[i], label = "train " + legend_labels[i])
-        plot.plot(epochs, val_losses[i],'-.', c=colors[i], label = "validation " + legend_labels[i])
+        plot.plot(epochs, train_losses[:,i],    c=colors[i], label = "train " + legend_labels[i])
+        plot.plot(epochs, val_losses[:,i],'-.', c=colors[i], label = "val " + legend_labels[i])
+        plot.set_ylim(top=min(val_losses[erase,i],train_losses[erase,i]), 
+                      bottom = 0.9*min(min(train_losses[:,i]),min(val_losses[:,i])))
     
     plot.set_xlabel('Epochs')
     plot.set_ylabel('Losses')
@@ -115,10 +125,11 @@ def plot_multiloss_vs_epoch(train_losses,val_losses, legend_labels,fig_name='los
     plot.legend(loc="upper right")
     plot.set_title("Average losses over all batches vs Epochs")
     
+    figure.tight_layout()
     # plt.show()
     
     # save plot as png
-    figure.savefig(path+fig_name+'.png',format='png',bbox_inches='tight')
+    figure.savefig(path+fig_name+'.png',bbox_inches='tight',dpi=300)
     
     #return(path+fig_name)
     
@@ -157,6 +168,7 @@ def plot_multi_acc_map(output, target, clip=1, clip_bad=1, fig_name="accuracy_ma
     acc_min,acc_max = acc_np.min(),acc_np.max()
     
     fig, axes = plt.subplots(nrows=3, ncols=n)
+    fig.set_size_inches((12.0, 12.0), forward=False)
     for col in range(n):
         # output
         imOut  = axes[0,col].imshow(out_np[col], cmap='gray', aspect='auto', interpolation='none')
@@ -170,9 +182,10 @@ def plot_multi_acc_map(output, target, clip=1, clip_bad=1, fig_name="accuracy_ma
     fig.colorbar(imAcc, ax=axes.ravel().tolist(), label="accuracy",
                  orientation = "horizontal", pad = 0.01, aspect=40)
     fig.suptitle("Accuracy map of denoiser output")
+    fig.tight_layout()
     # plt.show()
     
-    fig.savefig(path+fig_name+'.png',format='png',bbox_inches='tight')
+    fig.savefig(path+fig_name+'.png',bbox_inches='tight',dpi=300)
     
     return(acc_np)
     
@@ -188,6 +201,7 @@ def plot_multi_comp_map(output, target, fig_name="comparison_map_fig", path=os.g
     comp_min,comp_max = comp_np.min(),comp_np.max()
     
     fig, axes = plt.subplots(nrows=3, ncols=n)
+    fig.set_size_inches((12.0, 12.0), forward=False)
     for col in range(n):
         # output
         imOut  = axes[0,col].imshow(out_np[col], cmap='gray', aspect='auto', interpolation='none')
@@ -201,9 +215,10 @@ def plot_multi_comp_map(output, target, fig_name="comparison_map_fig", path=os.g
     fig.colorbar(imComp, ax=axes.ravel().tolist(), label="difference",
                  orientation = "horizontal", pad = 0.01, aspect=40)
     fig.suptitle("Comparison map of denoiser output and target")
+    fig.tight_layout()
     # plt.show()
     
-    fig.savefig(path+fig_name+'.png',format='png',bbox_inches='tight')
+    fig.savefig(path+fig_name+'.png',bbox_inches='tight',dpi=300)
     
     return(comp_np)
 
@@ -217,24 +232,35 @@ def plot_different_losses(loss_array, fig_name="different_losses_fig", path=os.g
     
     n_comp  = loss_array.shape[0]
     n_epoch = loss_array[0][1].shape[0]
+    erase   = min(n_epoch,4)
     val_too = loss_array.shape[1]==3 # ['name_of_comp', [train_loss], [val_loss]] val loss is optional
     
     fig, axes = plt.subplots(nrows=1, ncols=n_comp)
+    fig.set_size_inches((12.0, 12.0), forward=False)
     colors = cm.rainbow(np.linspace(0,1,n_comp))
     for col in range(n_comp):
         axes[col].plot(np.arange(0,n_epoch,step=1), loss_array[col,1], 
-                       c=colors[col], label=loss_array[col,0]+' train loss')
+                       c=colors[col], label=loss_array[col,0]+' train')
+        axes[col].set_ylim(top=loss_array[col,1][erase],
+                               bottom = 0.9*min(loss_array[col,1]))
         #if validation loss, plot as well
-        if val_too: axes[col].plot(np.arange(0,n_epoch,step=1), loss_array[col,2], '-.', 
-                                   c=colors[col], label=loss_array[col,0]+' val loss')
-        axes[col].set_title(loss_array[col,0] + ' loss component')
+        if val_too: 
+            axes[col].plot(np.arange(0,n_epoch,step=1), loss_array[col,2], '-.', 
+                                   c=colors[col], label=loss_array[col,0]+' val')
+            axes[col].set_ylim(top=loss_array[col,1][erase],
+                               bottom = 0.9*min(min(loss_array[col,1]),min(loss_array[col,2])))
+        axes[col].set_title(loss_array[col,0] + ' loss')
         axes[col].tick_params(right=True,labelright=True)
         axes[col].set_ylabel('Loss')
         axes[col].set_xlabel('Epochs')
         axes[col].legend(loc='upper right')
+
     fig.suptitle('Loss function components vs Epochs')
+    fig.tight_layout()
     # plt.show()
-    fig.savefig(path+fig_name+'.png',format='png',bbox_inches='tight')
+    
+    fig.savefig(path+fig_name+'.png',bbox_inches='tight',dpi=300)
+    
     # return(path+figname)
 
 
