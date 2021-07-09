@@ -175,22 +175,22 @@ class DVAE_WSC(nn.Module):
         self.h_dim  = 8 
         self.latent_dim = latent_dim
         self.skips = skips # do we do the skips?
-        
+        alphaELU = 0 #ELU=ReLU, maybe 0.001?
         
         self.conv1 = nn.Sequential(
                                     nn.Conv2d(self.n_chan, self.h_dim*2, 3,2,1),
                                     nn.BatchNorm2d(self.h_dim*2), # added batchnorm so output is similar to deconv3 input
-                                    nn.ELU()
+                                    nn.ELU(alpha=alphaELU)
                                     )
         self.conv2 = nn.Sequential(
                                     nn.Conv2d(self.h_dim*2,self.h_dim*4, 3,2,1),
                                     nn.BatchNorm2d(self.h_dim*4),
-                                    nn.ELU()
+                                    nn.ELU(alpha=alphaELU)
                                     )
         self.conv3 = nn.Sequential(
                                     nn.Conv2d(self.h_dim*4,self.h_dim*8,3,2,1),
                                     nn.BatchNorm2d(self.h_dim*8),
-                                    nn.ELU()
+                                    nn.ELU(alpha=alphaELU)
                                     )
         
         
@@ -201,23 +201,23 @@ class DVAE_WSC(nn.Module):
         
         self.dec1 = nn.Sequential(nn.Linear(self.latent_dim, indim),
                                   nn.BatchNorm1d(indim),
-                                  nn.ELU()
+                                  nn.ELU(alpha=alphaELU)
                                   )
         
         
         self.deconv1 = nn.Sequential(   # will be receiving skip connection of conv3
                                      nn.ConvTranspose2d(self.h_dim*8, self.h_dim*4, 2, 2),
                                      nn.BatchNorm2d(self.h_dim*4),
-                                     nn.ELU()
+                                     nn.ELU(alpha=alphaELU)
                                      )
         self.deconv2 = nn.Sequential( # will be receiving skip connection of conv2
                                      nn.ConvTranspose2d(self.h_dim*4, self.h_dim*2 ,2, 2),
                                      nn.BatchNorm2d(self.h_dim*2),
-                                     nn.ELU()
+                                     nn.ELU(alpha=alphaELU)
                                      )
         self.deconv3 = nn.Sequential(
                                     nn.ConvTranspose2d(self.h_dim*2, self.n_chan, 2,2),
-                                    nn.Sigmoid()
+                                    nn.Sigmoid(alpha=alphaELU)
                                     )
         
         
@@ -279,22 +279,23 @@ class Adv_net(nn.Module):
         self.n_chan = n_chan
         self.height = 320
         self.width =  72
-        self.h_dim  = 4 
+        self.h_dim  = 8 
+        alphaELU = 0
         
         self.conv1 = nn.Sequential( # 2 conv2d layers
                                     nn.Conv2d(self.n_chan, self.h_dim*2, 3,2,1),
                                     nn.BatchNorm2d(self.h_dim*2), 
-                                    nn.ELU(),
+                                    nn.ELU(alpha=alphaELU),
                                     
                                     nn.Conv2d(self.h_dim*2,self.h_dim*4, 3,2,1),
                                     nn.BatchNorm2d(self.h_dim*4),
-                                    nn.ELU()
+                                    nn.ELU(alpha=alphaELU)
                                     )
         
         self.conv2 = nn.Sequential( # 2 conv2d layers
                                     nn.Conv2d(self.h_dim*4,self.h_dim*8,3,2,1),
                                     nn.BatchNorm2d(self.h_dim*8),
-                                    nn.ELU(),
+                                    nn.ELU(alpha=alphaELU),
                                     
                                     nn.Conv2d(self.h_dim*8, self.h_dim*16,3,2,1),
                                     nn.BatchNorm2d(self.h_dim*16),

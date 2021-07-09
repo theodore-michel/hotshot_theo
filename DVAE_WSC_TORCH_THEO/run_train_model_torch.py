@@ -168,11 +168,11 @@ def smoothness(images, h_coeff, v_coeff):       # supposes (N,C,H,W) format for 
 
 def loss_function(recon_x, x, mu, logvar,bceCoeff=1, kldCoeff=1, slCoeff=1):
     # reconstruction loss:
-    recon_loss  = bceCoeff * F.binary_cross_entropy(recon_x, x, reduction='mean') #/(128*72*320)     # try 'mean'?
+    recon_loss  = bceCoeff * F.binary_cross_entropy(recon_x, x, reduction='sum') # /(320*72) for avg over all batch images 
     
     # smoothness loss:
-    smooth_loss = slCoeff * smoothness(recon_x, h_coeff=2, v_coeff=1) # more important that signal be smooth through time (not space)
-    
+    smooth_loss = slCoeff * smoothness(recon_x, h_coeff=1, v_coeff=2) # more important that signal be smooth through time (not space)
+        
     # latent loss :
     latent_loss = kldCoeff * (-0.5) * torch.sum(1 + logvar - mu.pow(2) - logvar.exp())
 
@@ -559,10 +559,13 @@ def main(PROCESS_RANK, WORLD_SIZE, args):
     train_losses = []
     val_losses = []
     
-    # coefficients for loss terms
-    alpha = 25       # BCE reconstruction
-    beta  = 0.005     # KLD latent
-    gamma = 50     # SL smoothness
+######## coefficients for loss terms
+    # BCE reconstruction loss
+    alpha = 1   # default = 1
+    # KLD latent loss
+    beta  = 0.1 # default = 1     
+    # SL smooth loss
+    gamma = 0 # without smoothing
         
     BCE_train_losses, BCE_val_losses = [],[]
     KLD_train_losses, KLD_val_losses = [],[]

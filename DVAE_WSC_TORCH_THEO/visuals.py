@@ -76,8 +76,8 @@ def plot_loss_vs_epoch(train_loss,val_loss,fig_name='loss_vs_epoch_fig',path=os.
     
     plot.set_xlabel('Epochs')
     plot.set_ylabel('Loss (avg over GPUs)')
-    up_bound_95 = max(np.quantile(train_loss,q=0.95), 
-                      np.quantile(val_loss,q=0.95))
+    up_bound_95 = max(np.quantile(train_loss,q=0.85), 
+                      np.quantile(val_loss,q=0.85))
     low_bound   = 0.85 * min(train_loss.min(), val_loss.min())
     plot.set_ylim(bottom=low_bound,
                   top=up_bound_95)
@@ -92,7 +92,7 @@ def plot_loss_vs_epoch(train_loss,val_loss,fig_name='loss_vs_epoch_fig',path=os.
     # plt.show()
     
     # save plot as png
-    figure.savefig(path+fig_name+'.png',bbox_inches='tight',dpi=300)
+    figure.savefig(path+fig_name+'.png',bbox_inches='tight',dpi=100)
     plt.close(figure)
     
     #return(path+fig_name)
@@ -123,8 +123,8 @@ def plot_multiloss_vs_epoch(train_losses,val_losses, legend_labels,fig_name='los
         plot.plot(epochs, val_losses[:,i],'-.', c=colors[i], label = "val " + legend_labels[i])
         # plot.set_ylim(top=min(val_losses[erase,i],train_losses[erase,i]), 
         #               bottom = 0.9*min(min(train_losses[:,i]),min(val_losses[:,i])))
-        up_bound_95 = max(np.quantile(train_losses[:,i],q=0.95), 
-                          np.quantile(val_losses[:,i],q=0.95))
+        up_bound_95 = max(np.quantile(train_losses[:,i],q=0.85), 
+                          np.quantile(val_losses[:,i],q=0.85))
         low_bound   = 0.85 * min(train_losses[:,i].min(), val_losses[:,i].min())
         plot.set_ylim(bottom=low_bound,
                       top=up_bound_95)
@@ -140,7 +140,7 @@ def plot_multiloss_vs_epoch(train_losses,val_losses, legend_labels,fig_name='los
     # plt.show()
     
     # save plot as png
-    figure.savefig(path+fig_name+'.png',bbox_inches='tight',dpi=300)
+    figure.savefig(path+fig_name+'.png',bbox_inches='tight',dpi=100)
     plt.close(figure)
     
     #return(path+fig_name)
@@ -196,7 +196,7 @@ def plot_multi_acc_map(output, target, clip=1, clip_bad=1, fig_name="accuracy_ma
     fig.suptitle("Accuracy map of denoiser output")
     # plt.show()
     
-    fig.savefig(path+fig_name+'.png',bbox_inches='tight',dpi=300)
+    fig.savefig(path+fig_name+'.png',bbox_inches='tight',dpi=100)
     plt.close(fig)
     
     return(acc_np)
@@ -229,7 +229,7 @@ def plot_multi_comp_map(output, target, fig_name="comparison_map_fig", path=os.g
     fig.suptitle("Comparison map of denoiser output and target")
     # plt.show()
     
-    fig.savefig(path+fig_name+'.png',bbox_inches='tight',dpi=300)
+    fig.savefig(path+fig_name+'.png',bbox_inches='tight',dpi=100)
     plt.close(fig)
     
     return(comp_np)
@@ -255,7 +255,7 @@ def plot_different_losses(loss_array, fig_name="different_losses_fig", path=os.g
                        c=colors[col], label=loss_array[col,0]+' train')
         # axes[col].set_ylim(top=loss_array[col,1][erase],
         #                        bottom = 0.9*min(loss_array[col,1]))
-        up_bound_95 = np.quantile(loss_array[col,1],q=0.95)
+        up_bound_95 = np.quantile(loss_array[col,1],q=0.85)
         low_bound   = 0.85 * loss_array[col,1].min()
         axes[col].set_ylim(bottom=low_bound,
                       top=up_bound_95)
@@ -263,8 +263,8 @@ def plot_different_losses(loss_array, fig_name="different_losses_fig", path=os.g
         if val_too: 
             axes[col].plot(np.arange(0,n_epoch,step=1), loss_array[col,2], '-.', 
                                    c=colors[col], label=loss_array[col,0]+' val')
-            up_bound_95 = max(np.quantile(loss_array[col,1],q=0.95), 
-                              np.quantile(loss_array[col,2],q=0.95))
+            up_bound_95 = max(np.quantile(loss_array[col,1],q=0.85), 
+                              np.quantile(loss_array[col,2],q=0.85))
             low_bound   = 0.85 * min(loss_array[col,1].min(), 
                                      loss_array[col,2].min())
             axes[col].set_ylim(bottom=low_bound,
@@ -281,7 +281,7 @@ def plot_different_losses(loss_array, fig_name="different_losses_fig", path=os.g
     fig.tight_layout()
     # plt.show()
     
-    fig.savefig(path+fig_name+'.png',bbox_inches='tight',dpi=300)
+    fig.savefig(path+fig_name+'.png',bbox_inches='tight',dpi=100)
     plt.close(fig)
     # return(path+figname)
 
