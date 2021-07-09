@@ -560,9 +560,9 @@ def main(PROCESS_RANK, WORLD_SIZE, args):
     val_losses = []
     
     # coefficients for loss terms
-    alpha = 1       # BCE reconstruction
-    beta  = 0.1     # KLD latent
-    gamma = 0.1     # SL smoothness
+    alpha = 25       # BCE reconstruction
+    beta  = 0.005     # KLD latent
+    gamma = 50     # SL smoothness
         
     BCE_train_losses, BCE_val_losses = [],[]
     KLD_train_losses, KLD_val_losses = [],[]
@@ -743,23 +743,23 @@ def main(PROCESS_RANK, WORLD_SIZE, args):
                                    nrow=n, normalize=True, scale_each=True, padding=10)
                     
 ################### Plot comparison/acc using matplotlib+numpy: ###############################################
-                    n = min(data.size(0),5)
-                    # n_selec = np.arange(0,n,1) # select first n images in dataset
-                    # n_selec = np.random.randint(0,data.size(0),size=n) # select randomly n images in dataset
-                    
-                    input_images  = data_n[:n,0].view(n,1,t_max,n_stations) #(N,C,H,W) 
-                    target_images = data[:n,0].view(n,1,t_max,n_stations)
-                    output_images = recon_batch[:n,0].view(n,1,t_max,n_stations)
-                    
-                    # plot acc_map and comp map (from visuals.py star import)
-                    acc_map  = plot_multi_acc_map(output_images, target_images, clip=1, clip_bad=0.5, # 50% relative error = 0 in accuracy
-                                                  fig_name= plotsname+"_epoch"+str(epoch)+"_accmap", path='')
-                    
-                    comp_map = plot_multi_comp_map(output_images, target_images,
-                                                   fig_name= plotsname+"_epoch"+str(epoch)+"_compmap", path='')
-                    
-                    rm_noise = plot_multi_comp_map(input_images, output_images,
-                                                   fig_name= plotsname+"_epoch"+str(epoch)+"_noisemap",path='')
+                        n = min(data.size(0),5)
+                        # n_selec = np.arange(0,n,1) # select first n images in dataset
+                        # n_selec = np.random.randint(0,data.size(0),size=n) # select randomly n images in dataset
+                        
+                        input_images  = data_n[:n,0].view(n,1,t_max,n_stations) #(N,C,H,W) 
+                        target_images = data[:n,0].view(n,1,t_max,n_stations)
+                        output_images = recon_batch[:n,0].view(n,1,t_max,n_stations)
+                        
+                        # plot acc_map and comp map (from visuals.py star import)
+                        acc_map  = plot_multi_acc_map(output_images, target_images, clip=1, clip_bad=0.5, # 50% relative error = 0 in accuracy
+                                                      fig_name= plotsname+"_epoch"+str(epoch)+"_accmap", path='')
+                        
+                        comp_map = plot_multi_comp_map(output_images, target_images,
+                                                       fig_name= plotsname+"_epoch"+str(epoch)+"_compmap", path='')
+                        
+                        rm_noise = plot_multi_comp_map(input_images, output_images,
+                                                       fig_name= plotsname+"_epoch"+str(epoch)+"_noisemap",path='')
 
 
 

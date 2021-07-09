@@ -65,8 +65,8 @@ def plot_loss_vs_epoch(train_loss,val_loss,fig_name='loss_vs_epoch_fig',path=os.
     directory) with given fig_name.'''
     
     epochs = np.arange(len(train_loss))
-    # erase first 4 epochs since loss descales the plot
-    erase = min(train_loss.shape[0],4)
+    # erase first 5 epochs since loss descales the plot
+    # erase = min(train_loss.shape[0],5)-1
     
     figure, plot = plt.subplots(1,1)
     figure.set_size_inches((12.0, 12.0), forward=False)
@@ -76,8 +76,13 @@ def plot_loss_vs_epoch(train_loss,val_loss,fig_name='loss_vs_epoch_fig',path=os.
     
     plot.set_xlabel('Epochs')
     plot.set_ylabel('Loss (avg over GPUs)')
-    plot.set_ylim(top=min(train_loss[erase],val_loss[erase]),
-                  bottom = 0.9*min(min(train_loss),min(val_loss)))
+    up_bound_95 = max(np.quantile(train_loss,q=0.95), 
+                      np.quantile(val_loss,q=0.95))
+    low_bound   = 0.85 * min(train_loss.min(), val_loss.min())
+    plot.set_ylim(bottom=low_bound,
+                  top=up_bound_95)
+    # plot.set_ylim(top=min(train_loss[erase],val_loss[erase]),
+    #               bottom = 0.9*min(min(train_loss),min(val_loss)))
     plot.tick_params(labelright=True, right=True)
     
     plot.legend(loc="upper right")
@@ -88,6 +93,7 @@ def plot_loss_vs_epoch(train_loss,val_loss,fig_name='loss_vs_epoch_fig',path=os.
     
     # save plot as png
     figure.savefig(path+fig_name+'.png',bbox_inches='tight',dpi=300)
+    plt.close(figure)
     
     #return(path+fig_name)
 
@@ -103,7 +109,7 @@ def plot_multiloss_vs_epoch(train_losses,val_losses, legend_labels,fig_name='los
     
     epochs = np.arange(train_losses.shape[0])
     numPlt = train_losses.shape[1]
-    erase = min(epochs.shape[0],4)
+    # erase = min(epochs.shape[0],5)-1
     
     if numPlt != len(legend_labels):
         print("{} curves to plot but {} legend labels given".format(numPlt,len(legend_labels)))
@@ -115,8 +121,13 @@ def plot_multiloss_vs_epoch(train_losses,val_losses, legend_labels,fig_name='los
     for i in range(numPlt):
         plot.plot(epochs, train_losses[:,i],    c=colors[i], label = "train " + legend_labels[i])
         plot.plot(epochs, val_losses[:,i],'-.', c=colors[i], label = "val " + legend_labels[i])
-        plot.set_ylim(top=min(val_losses[erase,i],train_losses[erase,i]), 
-                      bottom = 0.9*min(min(train_losses[:,i]),min(val_losses[:,i])))
+        # plot.set_ylim(top=min(val_losses[erase,i],train_losses[erase,i]), 
+        #               bottom = 0.9*min(min(train_losses[:,i]),min(val_losses[:,i])))
+        up_bound_95 = max(np.quantile(train_losses[:,i],q=0.95), 
+                          np.quantile(val_losses[:,i],q=0.95))
+        low_bound   = 0.85 * min(train_losses[:,i].min(), val_losses[:,i].min())
+        plot.set_ylim(bottom=low_bound,
+                      top=up_bound_95)
     
     plot.set_xlabel('Epochs')
     plot.set_ylabel('Losses')
@@ -130,6 +141,7 @@ def plot_multiloss_vs_epoch(train_losses,val_losses, legend_labels,fig_name='los
     
     # save plot as png
     figure.savefig(path+fig_name+'.png',bbox_inches='tight',dpi=300)
+    plt.close(figure)
     
     #return(path+fig_name)
     
@@ -167,7 +179,7 @@ def plot_multi_acc_map(output, target, clip=1, clip_bad=1, fig_name="accuracy_ma
     acc_np  = acc_map(out_np, targ_np, clip=clip, clip_bad=clip_bad)
     acc_min,acc_max = acc_np.min(),acc_np.max()
     
-    fig, axes = plt.subplots(nrows=3, ncols=n)
+    fig, axes = plt.subplots(nrows=3, ncols=n, constrained_layout=True)
     fig.set_size_inches((12.0, 12.0), forward=False)
     for col in range(n):
         # output
@@ -182,10 +194,10 @@ def plot_multi_acc_map(output, target, clip=1, clip_bad=1, fig_name="accuracy_ma
     fig.colorbar(imAcc, ax=axes.ravel().tolist(), label="accuracy",
                  orientation = "horizontal", pad = 0.01, aspect=40)
     fig.suptitle("Accuracy map of denoiser output")
-    fig.tight_layout()
     # plt.show()
     
     fig.savefig(path+fig_name+'.png',bbox_inches='tight',dpi=300)
+    plt.close(fig)
     
     return(acc_np)
     
@@ -200,7 +212,7 @@ def plot_multi_comp_map(output, target, fig_name="comparison_map_fig", path=os.g
     comp_np = out_np - targ_np
     comp_min,comp_max = comp_np.min(),comp_np.max()
     
-    fig, axes = plt.subplots(nrows=3, ncols=n)
+    fig, axes = plt.subplots(nrows=3, ncols=n, constrained_layout=True)
     fig.set_size_inches((12.0, 12.0), forward=False)
     for col in range(n):
         # output
@@ -215,10 +227,10 @@ def plot_multi_comp_map(output, target, fig_name="comparison_map_fig", path=os.g
     fig.colorbar(imComp, ax=axes.ravel().tolist(), label="difference",
                  orientation = "horizontal", pad = 0.01, aspect=40)
     fig.suptitle("Comparison map of denoiser output and target")
-    fig.tight_layout()
     # plt.show()
     
     fig.savefig(path+fig_name+'.png',bbox_inches='tight',dpi=300)
+    plt.close(fig)
     
     return(comp_np)
 
@@ -232,7 +244,7 @@ def plot_different_losses(loss_array, fig_name="different_losses_fig", path=os.g
     
     n_comp  = loss_array.shape[0]
     n_epoch = loss_array[0][1].shape[0]
-    erase   = min(n_epoch,4)
+    # erase   = min(n_epoch,5)-1
     val_too = loss_array.shape[1]==3 # ['name_of_comp', [train_loss], [val_loss]] val loss is optional
     
     fig, axes = plt.subplots(nrows=1, ncols=n_comp)
@@ -241,14 +253,24 @@ def plot_different_losses(loss_array, fig_name="different_losses_fig", path=os.g
     for col in range(n_comp):
         axes[col].plot(np.arange(0,n_epoch,step=1), loss_array[col,1], 
                        c=colors[col], label=loss_array[col,0]+' train')
-        axes[col].set_ylim(top=loss_array[col,1][erase],
-                               bottom = 0.9*min(loss_array[col,1]))
+        # axes[col].set_ylim(top=loss_array[col,1][erase],
+        #                        bottom = 0.9*min(loss_array[col,1]))
+        up_bound_95 = np.quantile(loss_array[col,1],q=0.95)
+        low_bound   = 0.85 * loss_array[col,1].min()
+        axes[col].set_ylim(bottom=low_bound,
+                      top=up_bound_95)
         #if validation loss, plot as well
         if val_too: 
             axes[col].plot(np.arange(0,n_epoch,step=1), loss_array[col,2], '-.', 
                                    c=colors[col], label=loss_array[col,0]+' val')
-            axes[col].set_ylim(top=loss_array[col,1][erase],
-                               bottom = 0.9*min(min(loss_array[col,1]),min(loss_array[col,2])))
+            up_bound_95 = max(np.quantile(loss_array[col,1],q=0.95), 
+                              np.quantile(loss_array[col,2],q=0.95))
+            low_bound   = 0.85 * min(loss_array[col,1].min(), 
+                                     loss_array[col,2].min())
+            axes[col].set_ylim(bottom=low_bound,
+                          top=up_bound_95)
+            # axes[col].set_ylim(top=loss_array[col,1][erase],
+            #                    bottom = 0.9*min(min(loss_array[col,1]),min(loss_array[col,2])))
         axes[col].set_title(loss_array[col,0] + ' loss')
         axes[col].tick_params(right=True,labelright=True)
         axes[col].set_ylabel('Loss')
@@ -260,7 +282,7 @@ def plot_different_losses(loss_array, fig_name="different_losses_fig", path=os.g
     # plt.show()
     
     fig.savefig(path+fig_name+'.png',bbox_inches='tight',dpi=300)
-    
+    plt.close(fig)
     # return(path+figname)
 
 
