@@ -217,7 +217,7 @@ class DVAE_WSC(nn.Module):
                                      )
         self.deconv3 = nn.Sequential(
                                     nn.ConvTranspose2d(self.h_dim*2, self.n_chan, 2,2),
-                                    nn.Sigmoid(alpha=alphaELU)
+                                    nn.Sigmoid()
                                     )
         
         
