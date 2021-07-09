@@ -717,9 +717,9 @@ def main(PROCESS_RANK, WORLD_SIZE, args):
                 tloss = tBCE + tKLD + tSL
                 
                 test_loss    += tloss.item()
-                BCE_val_loss += tBCE
-                KLD_val_loss += tKLD
-                SL_val_loss  += tSL
+                BCE_val_loss += tBCE.item()
+                KLD_val_loss += tKLD.item()
+                SL_val_loss  += tSL.item()
 
                 if PROCESS_RANK == 0: stop_testing = time()
 
