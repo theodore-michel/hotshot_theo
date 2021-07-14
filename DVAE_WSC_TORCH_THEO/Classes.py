@@ -75,91 +75,101 @@ class DistributedEvalSampler(Sampler):
         """
         self.epoch = epoch
 
-class DVAE(nn.Module):
-    def __init__(self, n_chan,latent_dim):
-        super(DVAE, self).__init__()
+class DAE(nn.Module):
+    def __init__(self, n_chan, bn_dim, skips='000'): #bn_dm = bottleneck dim
+        super(DAE, self).__init__()
         
         
         self.n_chan = n_chan
         self.height = 320
         self.width =  72
         self.h_dim  = 8 
-        self.latent_dim = latent_dim
-        self.enc = nn.Sequential(
+        self.bn_dim = bn_dim
+        self.skips = skips # do we do the skips?
+        alphaELU = 0 #if 0, ELU=ReLU, maybe 0.2?
+        
+        self.conv1 = nn.Sequential(
                                     nn.Conv2d(self.n_chan, self.h_dim*2, 3,2,1),
-                                    nn.LeakyReLU(0.2),
-
-                                    
+                                    nn.BatchNorm2d(self.h_dim*2), # added batchnorm so output is similar to deconv3 input
+                                    nn.ELU(alpha=alphaELU)
+                                    )
+        self.conv2 = nn.Sequential(
                                     nn.Conv2d(self.h_dim*2,self.h_dim*4, 3,2,1),
                                     nn.BatchNorm2d(self.h_dim*4),
-                                    nn.LeakyReLU(0.2),
-
-                                    
+                                    nn.ELU(alpha=alphaELU)
+                                    )
+        self.conv3 = nn.Sequential(
                                     nn.Conv2d(self.h_dim*4,self.h_dim*8,3,2,1),
                                     nn.BatchNorm2d(self.h_dim*8),
-                                    nn.LeakyReLU(0.2)
-
-
+                                    nn.ELU(alpha=alphaELU)
                                     )
+        
         
         indim = self.h_dim*8 * (self.height//8) * (self.width//8)
-        self.z_mean = nn.Linear(indim,self.latent_dim)
-        self.z_log_var = nn.Linear(indim,self.latent_dim)
         
         
-        self.dec1 = nn.Sequential(nn.Linear(self.latent_dim, indim),
+        self.bn = nn.Linear(indim,self.bn_dim)
+        
+        
+        self.dec1 = nn.Sequential(nn.Linear(self.bn_dim, indim),
                                   nn.BatchNorm1d(indim),
-                                  nn.ReLU()
+                                  nn.ELU(alpha=alphaELU)
                                   )
-        self.dec2 = nn.Sequential(nn.ConvTranspose2d(self.h_dim*8, self.h_dim*4, 2, 2),
-                                  nn.BatchNorm2d(self.h_dim*4),
-                                  nn.ReLU(),
-                                  
-                                  nn.ConvTranspose2d(self.h_dim*4, self.h_dim*2 ,2, 2),
-                                  nn.BatchNorm2d(self.h_dim*2),
-                                  nn.ReLU(),
-                                  
-                                  nn.ConvTranspose2d(self.h_dim*2, self.n_chan, 2,2),
-                                  nn.Sigmoid()
+        
+        
+        self.deconv1 = nn.Sequential(   # will be receiving skip connection of conv3
+                                     nn.ConvTranspose2d(self.h_dim*8, self.h_dim*4, 2, 2),
+                                     nn.BatchNorm2d(self.h_dim*4),
+                                     nn.ELU(alpha=alphaELU)
+                                     )
+        self.deconv2 = nn.Sequential( # will be receiving skip connection of conv2
+                                     nn.ConvTranspose2d(self.h_dim*4, self.h_dim*2 ,2, 2),
+                                     nn.BatchNorm2d(self.h_dim*2),
+                                     nn.ELU(alpha=alphaELU)
+                                     )
+        self.deconv3 = nn.Sequential(
+                                    nn.ConvTranspose2d(self.h_dim*2, self.n_chan, 2,2),
+                                    nn.Sigmoid()
                                     )
         
-        # self.t_conv4 = nn.Sequential(
-        #                             nn.ConvTranspose2d(h_dim*2, self.n_chan, 2, stride=2),
-        #                             nn.Sigmoid()
-        #                             )
         
+        self.skip = nn.Identity()
 
 
-    def encode(self, e):
-        e = self.enc(e)
-        
-        input_dim = self.h_dim*8 * self.height//8 * self.width//8
-        
-        h1 = e.view(-1,input_dim)
-        
-        return self.z_mean(h1), self.z_log_var(h1)
-
-    def reparameterize(self, mu, logvar):
-        std = torch.exp(0.5*logvar)
-        eps = torch.randn_like(std)
-        return mu + eps*std
-
-    def decode(self, inp):
-        
-        # input_dim = self.latent_dim*8 * self.height//8 * self.width//8
+    def prep_deconv(self, inp):
+        # inp is output of dec1
         d_input = inp.view(-1,self.h_dim*8, self.height//8 , self.width//8)
-        h3 = self.dec2(d_input)
+        return d_input
 
-        
-        return h3
 
     def forward(self, x):
-        mu, logvar = self.encode(x)
-        z = self.reparameterize(mu, logvar)
-        z = self.dec1(z)
-        z = self.decode(z)
+
+        # encoder
+        out = self.conv1(x)
+        for_skip3 = self.skip(out)
+        out = self.conv2(out)
+        for_skip2 = self.skip(out)
+        out = self.conv3(out)
+        for_skip1 = self.skip(out)
         
-        return z.view(-1,self.n_chan, self.height,self.width), mu, logvar
+        # bottleneck
+        out = self.bn(out)
+        out = self.dec1(out)
+        out = self.prep_deconv(out)
+        
+        #decoder
+        if bool(self.skips[2]) : out = out +  for_skip1     # output of conv3 is added to input of deconv1
+        out = self.deconv1(out)
+        if bool(self.skips[1]) : out = out + for_skip2     # output of conv2 is added to input of deconv2
+        out = self.deconv2(out)
+        if bool(self.skips[0]) : out = out + for_skip3     # output of conv1 is added to input of deconv3
+        out = self.deconv3(out)
+        
+        
+        
+        return out.view(-1,self.n_chan, self.height,self.width)
+
+
 
 
 class DVAE_WSC(nn.Module):
@@ -175,7 +185,7 @@ class DVAE_WSC(nn.Module):
         self.h_dim  = 8 
         self.latent_dim = latent_dim
         self.skips = skips # do we do the skips?
-        alphaELU = 0 #ELU=ReLU, maybe 0.001?
+        alphaELU = 0.2 #if 0, ELU=ReLU, maybe 0.2?
         
         self.conv1 = nn.Sequential(
                                     nn.Conv2d(self.n_chan, self.h_dim*2, 3,2,1),
@@ -409,14 +419,15 @@ class HDF5Dataset(torch.utils.data.Dataset):
         scale = 1e-8
         X = np.nan_to_num(X)
         X = np.clip(X,-1.0*scale,scale)
-        X /= 2*scale
-        X += 0.5 # now X is between 0 and 1
+        X /= scale
+        X += 1 # now X is between 0 and 2
+        # other normalizations: [-1,1] (0cent), [0,1] (05cent), [0,2] (1cent)
         
         # Clip and Scale labels
         label = np.nan_to_num(label)
-        label = np.clip(label,-1.0*scale,scale) #not necessary but we never know...
-        label /= 2*scale
-        label += 0.5 # now label is between 0 and 1
+        label /= scale
+        label += 1 # now label is between 0 and 2
+        # other normalizations: [-1,1] (0cent), [0,1] (05cent), [0,2] (1cent)
 
         # Got to swap axes because pytorch has channel first
         X = np.swapaxes(X,-1,0)

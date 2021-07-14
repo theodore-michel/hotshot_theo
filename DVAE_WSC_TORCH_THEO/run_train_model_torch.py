@@ -103,6 +103,9 @@ def parse_args():
 
     parser.add_argument('--test_mode', type=str, default='BEST', choices=['BEST', 'LAST'],
                         help='Use BEST (lower validation loss) or LAST model for predictions on test set.')
+    
+    parser.add_argument('--loss', type=str, default='BCE', choices=['BCE', 'MSE'],
+                        help='Use BCE or MSE loss for reconstruction loss in network loss function.')
 
 
     return check_args(parser.parse_args())
@@ -166,10 +169,10 @@ def smoothness(images, h_coeff, v_coeff):       # supposes (N,C,H,W) format for 
     
     return h_loss*h_coeff + v_loss*v_coeff
 
-def loss_function(recon_x, x, mu, logvar,bceCoeff=1, kldCoeff=1, slCoeff=1):
+def loss_function(recon_x, x, mu, logvar,bceCoeff=1, kldCoeff=1, slCoeff=1, recArg = 'BCE'):
     # reconstruction loss:
-    recon_loss  = bceCoeff * F.binary_cross_entropy(recon_x, x, reduction='sum') # /(320*72) for avg over all batch images 
-    
+    if recArg=='BCE': recon_loss  = bceCoeff * F.binary_cross_entropy(recon_x, x, reduction='sum') # /(320*72) for avg over all batch images 
+    if recArg=='MSE': recon_loss  = bceCoeff * torch.mean( torch.pow((recon_x - x),2) ) #recommended bceCoeff=1e3, kldCoeff=1e-3 1e-4
     # smoothness loss:
     smooth_loss = slCoeff * smoothness(recon_x, h_coeff=1, v_coeff=2) # more important that signal be smooth through time (not space)
         
@@ -635,7 +638,8 @@ def main(PROCESS_RANK, WORLD_SIZE, args):
             # Evaluate the loss for this batch
             BCE, KLD, SL = loss_function(recon_batch, data.view(-1,n_comp,t_max, n_stations),
                                          mu, logvar, 
-                                         bceCoeff=alpha, kldCoeff=beta, slCoeff=gamma)
+                                         bceCoeff=alpha, kldCoeff=beta, slCoeff=gamma,
+                                         recArg = args.loss)
 
             loss = BCE + KLD + SL
             
@@ -715,7 +719,8 @@ def main(PROCESS_RANK, WORLD_SIZE, args):
 
                 tBCE, tKLD, tSL = loss_function(recon_batch, data.view(-1,n_comp,t_max, n_stations),
                                                 mu, logvar,
-                                                bceCoeff=alpha, kldCoeff=beta, slCoeff=gamma)
+                                                bceCoeff=alpha, kldCoeff=beta, slCoeff=gamma,
+                                                recArg=args.loss)
 
                 tloss = tBCE + tKLD + tSL
                 

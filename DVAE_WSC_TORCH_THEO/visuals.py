@@ -78,7 +78,7 @@ def plot_loss_vs_epoch(train_loss,val_loss,fig_name='loss_vs_epoch_fig',path=os.
     plot.set_ylabel('Loss (avg over GPUs)')
     up_bound_95 = max(np.quantile(train_loss,q=0.85), 
                       np.quantile(val_loss,q=0.85))
-    low_bound   = 0.85 * min(train_loss.min(), val_loss.min())
+    low_bound   = min(train_loss.min(), val_loss.min())
     plot.set_ylim(bottom=low_bound,
                   top=up_bound_95)
     # plot.set_ylim(top=min(train_loss[erase],val_loss[erase]),
@@ -125,7 +125,7 @@ def plot_multiloss_vs_epoch(train_losses,val_losses, legend_labels,fig_name='los
         #               bottom = 0.9*min(min(train_losses[:,i]),min(val_losses[:,i])))
         up_bound_95 = max(np.quantile(train_losses[:,i],q=0.85), 
                           np.quantile(val_losses[:,i],q=0.85))
-        low_bound   = 0.85 * min(train_losses[:,i].min(), val_losses[:,i].min())
+        low_bound   = min(train_losses[:,i].min(), val_losses[:,i].min())
         plot.set_ylim(bottom=low_bound,
                       top=up_bound_95)
     
@@ -256,7 +256,7 @@ def plot_different_losses(loss_array, fig_name="different_losses_fig", path=os.g
         # axes[col].set_ylim(top=loss_array[col,1][erase],
         #                        bottom = 0.9*min(loss_array[col,1]))
         up_bound_95 = np.quantile(loss_array[col,1],q=0.85)
-        low_bound   = 0.85 * loss_array[col,1].min()
+        low_bound   = loss_array[col,1].min()
         axes[col].set_ylim(bottom=low_bound,
                       top=up_bound_95)
         #if validation loss, plot as well
@@ -265,7 +265,7 @@ def plot_different_losses(loss_array, fig_name="different_losses_fig", path=os.g
                                    c=colors[col], label=loss_array[col,0]+' val')
             up_bound_95 = max(np.quantile(loss_array[col,1],q=0.85), 
                               np.quantile(loss_array[col,2],q=0.85))
-            low_bound   = 0.85 * min(loss_array[col,1].min(), 
+            low_bound   = min(loss_array[col,1].min(), 
                                      loss_array[col,2].min())
             axes[col].set_ylim(bottom=low_bound,
                           top=up_bound_95)
