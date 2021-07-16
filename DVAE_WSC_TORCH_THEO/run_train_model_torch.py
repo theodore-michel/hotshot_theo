@@ -10,7 +10,7 @@ import os, shutil, argparse, sys
 from time import time
 import torch
 from torch import  optim
-from Classes import HDF5Dataset, DVAE, DistributedEvalSampler, DVAE_WSC
+from Classes import HDF5Dataset, DAE, DistributedEvalSampler, DVAE_WSC
 import matplotlib
 from visuals import *
 import random

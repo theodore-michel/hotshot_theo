@@ -86,7 +86,7 @@ class DAE(nn.Module):
         self.h_dim  = 8 
         self.bn_dim = bn_dim
         self.skips = skips # do we do the skips?
-        alphaELU = 0 #if 0, ELU=ReLU, maybe 0.2?
+        alphaELU = 0.2 #if 0, ELU=ReLU, maybe 0.2?
         
         self.conv1 = nn.Sequential(
                                     nn.Conv2d(self.n_chan, self.h_dim*2, 3,2,1),
@@ -105,14 +105,14 @@ class DAE(nn.Module):
                                     )
         
         
-        indim = self.h_dim*8 * (self.height//8) * (self.width//8)
+        self.indim = self.h_dim*8 * (self.height//8) * (self.width//8)
         
         
-        self.bn = nn.Linear(indim,self.bn_dim)
+        self.bn = nn.Linear(self.indim, self.bn_dim)
         
         
-        self.dec1 = nn.Sequential(nn.Linear(self.bn_dim, indim),
-                                  nn.BatchNorm1d(indim),
+        self.dec1 = nn.Sequential(nn.Linear(self.bn_dim, self.indim),
+                                  nn.BatchNorm1d(self.indim),
                                   nn.ELU(alpha=alphaELU)
                                   )
         
@@ -140,7 +140,11 @@ class DAE(nn.Module):
         # inp is output of dec1
         d_input = inp.view(-1,self.h_dim*8, self.height//8 , self.width//8)
         return d_input
-
+    
+    def prep_bn(self, inp, dim):
+        # inp is output of conv3
+        output = inp.view(-1,dim)
+        return(output)
 
     def forward(self, x):
 
@@ -153,6 +157,7 @@ class DAE(nn.Module):
         for_skip1 = self.skip(out)
         
         # bottleneck
+        out = self.prep_bn(out, self.indim)
         out = self.bn(out)
         out = self.dec1(out)
         out = self.prep_deconv(out)
